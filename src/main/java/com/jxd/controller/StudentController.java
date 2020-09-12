@@ -4,6 +4,7 @@ import com.jxd.model.Student;
 import com.jxd.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class StudentController {
     public String adminAdd_admina(){
         return "adminStudent";
     }
+    @RequestMapping("/getAllStudent_Teacher")
     public List<Student> getAllStudent_Teacher(){
         return null;
     }
