@@ -16,7 +16,7 @@ import java.util.List;
 public class StudentController {
     @Autowired
     IStudentService studentService;
-    public String adminAdd_admina(){
+    public String adminAdd_adminaa(){
         return "adminStudent";
     }
     public List<Student> getAllStudent_Teacher(){
