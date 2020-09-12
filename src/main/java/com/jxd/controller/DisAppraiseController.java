@@ -3,6 +3,8 @@ package com.jxd.controller;
 import com.jxd.service.IDisAppraiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Liang Yue
@@ -13,4 +15,8 @@ import org.springframework.stereotype.Controller;
 public class DisAppraiseController {
     @Autowired
     IDisAppraiseService disAppraiseService;
+    @RequestMapping("/makeAppraise_Manage")
+    public String makeAppraise_Manage(){
+        return "empMakeAppraise";
+    }
 }
