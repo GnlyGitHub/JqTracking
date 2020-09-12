@@ -1,9 +1,12 @@
 package com.jxd.service.impl;
 
 import com.jxd.dao.IClassDao;
+import com.jxd.model.Class;
 import com.jxd.service.IClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Liang Yue
@@ -14,4 +17,9 @@ import org.springframework.stereotype.Service;
 public class ClassServiceImpl implements IClassService {
     @Autowired
     IClassDao classDao;
+
+    @Override
+    public List<Class> getAllSClassBytId_Teacher(Integer tId) {
+        return classDao.getAllSClassBytId_Teacher(tId);
+    }
 }
