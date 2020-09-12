@@ -10,8 +10,17 @@ public class DisAppraise {
     private Integer appraiseId;//评价分项id
     private Integer classId;//班期id
     private Integer mId;//项目经理id
+    private Integer number;
 
     public DisAppraise() {
+    }
+
+    public DisAppraise(Integer id, Integer appraiseId, Integer classId, Integer mId, Integer number) {
+        this.id = id;
+        this.appraiseId = appraiseId;
+        this.classId = classId;
+        this.mId = mId;
+        this.number = number;
     }
 
     public DisAppraise(Integer id, Integer appraiseId, Integer classId, Integer mId) {
@@ -57,5 +66,13 @@ public class DisAppraise {
 
     public void setmId(Integer mId) {
         this.mId = mId;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }
