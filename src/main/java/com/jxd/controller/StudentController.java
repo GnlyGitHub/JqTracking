@@ -24,6 +24,7 @@ public class StudentController {
     public List<Student> getAllStudent_Teacher(){
         return null;
     }
+    @RequestMapping("getAllStudent_Manage")
     public List<Student> getAllStudent_Manage(){
         return null;
     }
