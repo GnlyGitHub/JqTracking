@@ -21,32 +21,13 @@ public class Student {
     private String sRemarks;//备注
     private Integer sClass;//班期
     private Integer deptNo;//部门编号
-    private String sJob;//职务
+    private Integer jobId;//职务
     private String sHireDate;//入职日期
 
     public Student() {
     }
 
-    public Student(String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, String sJob, String sHireDate) {
-        this.sName = sName;
-        this.sSex = sSex;
-        this.sNation = sNation;
-        this.sBirthday = sBirthday;
-        this.sPlace = sPlace;
-        this.sMarry = sMarry;
-        this.sPhone = sPhone;
-        this.sIdCard = sIdCard;
-        this.sSchool = sSchool;
-        this.sMajor = sMajor;
-        this.sPhoto = sPhoto;
-        this.sRemarks = sRemarks;
-        this.sClass = sClass;
-        this.deptNo = deptNo;
-        this.sJob = sJob;
-        this.sHireDate = sHireDate;
-    }
-
-    public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, String sJob, String sHireDate) {
+    public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate) {
         this.sId = sId;
         this.sName = sName;
         this.sSex = sSex;
@@ -62,7 +43,26 @@ public class Student {
         this.sRemarks = sRemarks;
         this.sClass = sClass;
         this.deptNo = deptNo;
-        this.sJob = sJob;
+        this.jobId = jobId;
+        this.sHireDate = sHireDate;
+    }
+
+    public Student(String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate) {
+        this.sName = sName;
+        this.sSex = sSex;
+        this.sNation = sNation;
+        this.sBirthday = sBirthday;
+        this.sPlace = sPlace;
+        this.sMarry = sMarry;
+        this.sPhone = sPhone;
+        this.sIdCard = sIdCard;
+        this.sSchool = sSchool;
+        this.sMajor = sMajor;
+        this.sPhoto = sPhoto;
+        this.sRemarks = sRemarks;
+        this.sClass = sClass;
+        this.deptNo = deptNo;
+        this.jobId = jobId;
         this.sHireDate = sHireDate;
     }
 
@@ -186,12 +186,12 @@ public class Student {
         this.deptNo = deptNo;
     }
 
-    public String getsJob() {
-        return sJob;
+    public Integer getJobId() {
+        return jobId;
     }
 
-    public void setsJob(String sJob) {
-        this.sJob = sJob;
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public String getsHireDate() {
