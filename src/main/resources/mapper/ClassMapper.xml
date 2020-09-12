@@ -3,5 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IClassDao">
 
+    <!--List<Class> getAllSClassBytId_Teacher(Integer tId);-->
+    <select id="getAllSClassBytId_Teacher" resultType="Class">
+        select classId,className,startDate,endDate,tid
+        from class
+        where tid=#{tid} order by classId desc
+    </select>
 
 </mapper>
