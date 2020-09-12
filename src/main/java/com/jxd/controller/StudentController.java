@@ -19,4 +19,7 @@ public class StudentController {
     public List<Student> getAllStudent_Teacher(){
         return null;
     }
+    public List<Student> getAllStudent_Manage(){
+        return null;
+    }
 }
