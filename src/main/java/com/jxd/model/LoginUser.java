@@ -7,21 +7,21 @@ package com.jxd.model;
  */
 public class LoginUser {
     private Integer uId;//序号
-    private String userId;//用户名
+    private Integer userId;//用户名
     private String password;//密码
     private Integer role;//登录角色
 
     public LoginUser() {
     }
 
-    public LoginUser(Integer uId, String userId, String password, Integer role) {
+    public LoginUser(Integer uId, Integer userId, String password, Integer role) {
         this.uId = uId;
         this.userId = userId;
         this.password = password;
         this.role = role;
     }
 
-    public LoginUser(String userId, String password, Integer role) {
+    public LoginUser(Integer userId, String password, Integer role) {
         this.userId = userId;
         this.password = password;
         this.role = role;
@@ -35,11 +35,11 @@ public class LoginUser {
         this.uId = uId;
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
