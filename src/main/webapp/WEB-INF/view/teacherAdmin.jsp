@@ -26,7 +26,7 @@
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">金桥工程学员跟踪系统(管理员)</div>
+        <div class="layui-logo">金桥学员跟踪系统</div>
         <!-- 头部区域 -->
         <ul class="layui-nav layui-layout-left">
         </ul>
@@ -42,7 +42,7 @@
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <!-- 左侧导航区域 -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item"><a href="">教师管理</a></li>
                 <li class="layui-nav-item"><a href="">项目经理管理</a></li>
@@ -66,7 +66,7 @@
             <script type="text/html" id="toolbarDemo">
                 <div align="right">
                     <div class="layui-input-inline" style="padding-right: 600px">
-                        <h2>教师名单管理</h2>
+                        <h2>教师管理</h2>
                     </div>
                     <div class="layui-input-inline">
                         <input id="filter" type="text" placeholder="请输入姓名" class="layui-input">
@@ -79,7 +79,8 @@
             </script>
 
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
+                <a class="layui-btn layui-btn-xs" lay-event="rePwd">重置密码</a>
+                <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
             </script>
 
@@ -104,20 +105,17 @@
             ,toolbar: '#toolbarDemo' //添加工具栏
             ,height: 450
             ,width: 1080
-            ,url: '/getAllTeacher1' //数据接口
+            ,url: '/getAllTeacher' //数据接口
             ,page: true
             ,limit: 8
             ,limits:[8,15,20]
             ,cols: [[
-                {type: 'checkbox'}
-                ,{field: 'id', title: '工号', width:90, sort: true}
-                ,{field: 'name', title: '姓名', width:90}
-                ,{field: 'sex', title: '性别', width:70}
-                ,{field: 'birthday', title: '出生年月', width:110}
-                ,{field: 'degree', title: '学历', width:90}
-                ,{field: 'title', title: '职称', width:90}
-                ,{field: 'grade', title: '入职时间', width:110}
-                ,{field: 'collegeName', title: '学院', width:180, templet: '#titleTpl'}
+                /*{type: 'checkbox'}*/
+                {field: 'tId', title: '工号', width:90, sort: true}
+                ,{field: 'tName', title: '姓名', width:90}
+                ,{field: 'tSex', title: '性别', width:70}
+                ,{field: 'tBirthday', title: '出生年月', width:110}
+                ,{field: 'tPhone', title: '电话', width:180}
                 ,{fixed: 'right', title:'操作', width:180, align:'center', toolbar: '#barDemo'}
             ]]
         });
@@ -127,7 +125,7 @@
                     var filter = $("#filter").val();//获取过滤条件
                     //重新加载表格
                     table.reload("demo",{
-                        where:{name:filter},
+                        where:{tName:filter},
                         page:{
                             curr:1
                         }
@@ -137,6 +135,15 @@
                     layer.open({
                         type:2,
                         title:'添加教师',
+                        content:'aaddTeacher',
+                        shadeClose:true,
+                        area:['460px','510px']
+                    });
+                    break;
+                case 'rePwd':
+                    layer.open({
+                        type:2,
+                        title:'重置密码',
                         content:'aaddTeacher',
                         shadeClose:true,
                         area:['460px','510px']

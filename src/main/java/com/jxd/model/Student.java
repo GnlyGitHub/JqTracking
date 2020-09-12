@@ -23,11 +23,9 @@ public class Student {
     private Integer deptNo;//部门编号
     private Integer jobId;//职务
     private String sHireDate;//入职日期
+    private Integer projectId;//项目编号
 
-    public Student() {
-    }
-
-    public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate) {
+    public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate, Integer projectId) {
         this.sId = sId;
         this.sName = sName;
         this.sSex = sSex;
@@ -45,9 +43,10 @@ public class Student {
         this.deptNo = deptNo;
         this.jobId = jobId;
         this.sHireDate = sHireDate;
+        this.projectId = projectId;
     }
 
-    public Student(String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate) {
+    public Student(String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate, Integer projectId) {
         this.sName = sName;
         this.sSex = sSex;
         this.sNation = sNation;
@@ -64,6 +63,18 @@ public class Student {
         this.deptNo = deptNo;
         this.jobId = jobId;
         this.sHireDate = sHireDate;
+        this.projectId = projectId;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    public Student() {
     }
 
     public Integer getsId() {

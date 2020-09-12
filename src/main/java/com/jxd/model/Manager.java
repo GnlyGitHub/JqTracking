@@ -12,25 +12,36 @@ public class Manager {
     private String mPhone;//手机号
     private String mBirthday;//生日
     private Integer deptNo;//部门编号
+    private Integer projectId;//项目编号
 
-    public Manager() {
-    }
-
-    public Manager(Integer mId, String mName, Integer mSex, String mPhone, String mBirthday, Integer deptNo) {
+    public Manager(Integer mId, String mName, Integer mSex, String mPhone, String mBirthday, Integer deptNo, Integer projectId) {
         this.mId = mId;
         this.mName = mName;
         this.mSex = mSex;
         this.mPhone = mPhone;
         this.mBirthday = mBirthday;
         this.deptNo = deptNo;
+        this.projectId = projectId;
     }
 
-    public Manager(String mName, Integer mSex, String mPhone, String mBirthday, Integer deptNo) {
+    public Manager(String mName, Integer mSex, String mPhone, String mBirthday, Integer deptNo, Integer projectId) {
         this.mName = mName;
         this.mSex = mSex;
         this.mPhone = mPhone;
         this.mBirthday = mBirthday;
         this.deptNo = deptNo;
+        this.projectId = projectId;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    public Manager() {
     }
 
     public Integer getmId() {
