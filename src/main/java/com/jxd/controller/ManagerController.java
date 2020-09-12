@@ -3,6 +3,7 @@ package com.jxd.controller;
 import com.jxd.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Liang Yue
@@ -13,4 +14,9 @@ import org.springframework.stereotype.Controller;
 public class ManagerController {
     @Autowired
     IManagerService managerService;
+
+    @RequestMapping("/adminManagerList")
+    public String adminTeacherList(){
+        return "adminManagerList";
+    }
 }

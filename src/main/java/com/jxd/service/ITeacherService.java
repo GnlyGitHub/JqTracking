@@ -20,4 +20,11 @@ public interface ITeacherService {
      * @return 教师列表
      */
     List<Teacher> getTeacher_admin(Integer pageSize, Integer pageIndex, String name);
+
+    /**
+     * 添加教师
+     * @param teacher 要添加的教师
+     * @return 是否添加成功
+     */
+    boolean addTeacher_admin(Teacher teacher);
 }

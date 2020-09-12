@@ -27,4 +27,9 @@ public class TeacherServiceImpl implements ITeacherService {
     public List<Teacher> getTeacher_admin(Integer pageSize, Integer pageIndex, String tName) {
         return teacherDao.getTeacher_admin(pageSize,pageIndex,tName);
     }
+
+    @Override
+    public boolean addTeacher_admin(Teacher teacher) {
+        return teacherDao.addTeacher_admin(teacher);
+    }
 }
