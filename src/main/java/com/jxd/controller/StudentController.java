@@ -19,6 +19,9 @@ public class StudentController {
     public String adminAdd_admin(){
         return "adminStudent";
     }
+    public List<Student> getAllStudent_Teacher(){
+        return null;
+    }
     public List<Student> getAllStudent_Manage(){
         return null;
     }
