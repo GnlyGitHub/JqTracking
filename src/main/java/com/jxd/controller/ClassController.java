@@ -4,6 +4,7 @@ import com.jxd.model.Class;
 import com.jxd.service.IClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,10 +20,10 @@ public class ClassController {
     @Autowired
     IClassService classService;
 
-    @RequestMapping("/getAllSClassBytId_Teacher")
-    @ResponseBody
-    List<Class> getAllSClassBytId_Teacher(Integer tId){
-        List<Class> list = classService.getAllSClassBytId_Teacher(tId);
-        return list;
+    @RequestMapping("/studentAppraise")
+    public String studentAppraise_Teacher(Model model){
+        List<Class> list = classService.getAllSClassBytId_Teacher(1001);
+        model.addAttribute("sClasses",list);
+        return "studentAppraise";
     }
 }

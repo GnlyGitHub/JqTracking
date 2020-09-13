@@ -1,5 +1,7 @@
 package com.jxd.model;
 
+import java.util.List;
+
 /**
  * @author Liang Yue
  * @description 课程分配
@@ -9,7 +11,6 @@ public class DisSubject {
     private Integer id;//编号
     private Integer subjectId;//课程id
     private Integer classId;//班期id
-
     public DisSubject() {
     }
 
