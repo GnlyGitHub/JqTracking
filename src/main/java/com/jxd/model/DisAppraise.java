@@ -1,5 +1,7 @@
 package com.jxd.model;
 
+import java.util.List;
+
 /**
  * @author Liang Yue
  * @description TODO
@@ -11,6 +13,60 @@ public class DisAppraise {
     private Integer classId;//班期id
     private Integer mId;//项目经理id
     private Integer number;
+    private Class aClass;
+    private List<Appraise> appraises;
+
+    public Class getaClass() {
+        return aClass;
+    }
+
+    public void setaClass(Class aClass) {
+        this.aClass = aClass;
+    }
+
+    public List<Appraise> getAppraises() {
+        return appraises;
+    }
+
+    public void setAppraises(List<Appraise> appraises) {
+        this.appraises = appraises;
+    }
+
+    public DisAppraise(Integer appraiseId, Integer classId, Integer mId, Integer number, Class aClass, List<Appraise> appraises) {
+        this.appraiseId = appraiseId;
+        this.classId = classId;
+        this.mId = mId;
+        this.number = number;
+        this.aClass = aClass;
+        this.appraises = appraises;
+    }
+
+    public DisAppraise(Integer id, Integer appraiseId, Integer classId, Integer mId, Integer number, Class aClass) {
+        this.id = id;
+        this.appraiseId = appraiseId;
+        this.classId = classId;
+        this.mId = mId;
+        this.number = number;
+        this.aClass = aClass;
+    }
+
+    public DisAppraise(Integer appraiseId, Integer classId, Integer mId, Integer number, Class aClass) {
+        this.appraiseId = appraiseId;
+        this.classId = classId;
+        this.mId = mId;
+        this.number = number;
+        this.aClass = aClass;
+    }
+
+    public DisAppraise(Integer id, Integer appraiseId, Integer classId, Integer mId, Integer number, Class aClass, List<Appraise> appraises) {
+        this.id = id;
+        this.appraiseId = appraiseId;
+        this.classId = classId;
+        this.mId = mId;
+        this.number = number;
+        this.aClass = aClass;
+        this.appraises = appraises;
+    }
 
     public DisAppraise() {
     }

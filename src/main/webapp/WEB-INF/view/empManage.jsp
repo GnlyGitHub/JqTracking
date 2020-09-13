@@ -14,13 +14,13 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">新闻系统后台管理</div>
+        <div class="layui-logo">项目经理管理后台</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="img/admin.jpg" class="layui-nav-img">
-                    ${}
+                    ${sessionScope.manage.mName}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>

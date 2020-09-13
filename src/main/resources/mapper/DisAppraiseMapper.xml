@@ -2,6 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IDisAppraiseDao">
-
-
+<select id="getAllSizeAppaise_Manage" resultMap="app1">
+    select DISTINCT c.classId classId,d.mid mid,d.number number
+    ,c.classname className,c.startDate startDate,c.endDate endDate,
+    c.tid tId from disappraise d
+    inner  join class c on c.classid=d.classid
+    where d.mid=#{manageId}
+     <if test="mname!=null and mname!=''">
+        and c.classname like '%' #{mname} '%'
+        </if>
+        order by d.classid desc,d.number desc
+</select>
+    <resultMap id="app1" type="DisAppraise">
+        <id column="id" property="id"></id>
+        <result column="classId" property="classId"></result>
+        <result column="mid" property="mId"></result>
+        <result column="number" property="number"></result>
+        <association property="aClass" javaType="Class">
+            <result column="className" property="className"></result>
+            <result column="startDate" property="startDate"></result>
+            <result column="endDate" property="endDate"></result>
+            <result column="tId" property="tId"></result>
+        </association>
+    </resultMap>
+<select id="getAllAppaise_Manage" resultMap="app2">
+    select DISTINCT c.classId classId,d.mid mid,d.number number
+    ,c.classname className,c.startDate startDate,c.endDate endDate,
+    c.tid tId from disappraise d
+    inner  join class c on c.classid=d.classid
+    where d.mid=#{manageId}
+    <if test="mname!=null and mname!=''">
+        and c.classname like '%' #{mname} '%'
+    </if>
+    order by d.classid desc,d.number desc
+    limit ${(page-1)*limit},${limit}
+</select>
+    <resultMap id="app2" type="DisAppraise">
+        <id column="id" property="id"></id>
+        <result column="classId" property="classId"></result>
+        <result column="mid" property="mId"></result>
+        <result column="number" property="number"></result>
+        <association property="aClass" javaType="Class">
+            <result column="className" property="className"></result>
+            <result column="startDate" property="startDate"></result>
+            <result column="endDate" property="endDate"></result>
+            <result column="tId" property="tId"></result>
+        </association>
+    </resultMap>
 </mapper>
