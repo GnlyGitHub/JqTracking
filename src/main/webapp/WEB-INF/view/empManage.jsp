@@ -16,14 +16,11 @@
     <div class="layui-header">
         <div class="layui-logo">新闻系统后台管理</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="backStageManagement.jsp">网站访问量：${applicationScope.count}</a></li>
-        </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="img/admin.jpg" class="layui-nav-img">
-                    ${sessionScope.aname}
+                    ${}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
