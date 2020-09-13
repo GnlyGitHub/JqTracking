@@ -2,13 +2,13 @@
   Created by IntelliJ IDEA.
   User: liangyurj
   Date: 2020/9/12
-  Time: 9:28
+  Time: 17:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>教师管理</title>
+    <title>项目经理管理</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
@@ -44,8 +44,8 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域 -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item"><a href="">教师管理</a></li>
-                <li class="layui-nav-item"><a href="">项目经理管理</a></li>
+                <li class="layui-nav-item"><a href="adminTeacherList">教师管理</a></li>
+                <li class="layui-nav-item layui-this"><a href="adminManagerList">项目经理管理</a></li>
                 <li class="layui-nav-item"><a href="">学生管理</a></li>
                 <li class="layui-nav-item"><a href="">课程管理</a></li>
                 <li class="layui-nav-item"><a href="">班期管理</a></li>
@@ -68,7 +68,7 @@
                     <div class="layui-input-inline" style="padding-right: 600px">
                         <h2>教师管理</h2>
                     </div>
-                    <div class="layui-input-inline">
+                    <div class="layui-input-inline" style="margin-right: 10px">
                         <input id="filter" type="text" placeholder="请输入姓名" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
@@ -92,6 +92,14 @@
         © jxdinfo.com - 底部固定区域
     </div>
 
+    <script type="text/html" id="titleTpl">
+        {{#  if(d.tSex == 1){ }}
+        男
+        {{#  } else { }}
+        女
+        {{#  } }}
+    </script>
+
 </div>
 <script>
     layui.use(['element','table','layer'], function(){
@@ -105,18 +113,18 @@
             ,toolbar: '#toolbarDemo' //添加工具栏
             ,height: 450
             ,width: 1080
-            ,url: '/getAllTeacher' //数据接口
+            ,url: '/getAllTeacher_admin' //数据接口
             ,page: true
             ,limit: 8
             ,limits:[8,15,20]
             ,cols: [[
                 /*{type: 'checkbox'}*/
-                {field: 'tId', title: '工号', width:90, sort: true}
-                ,{field: 'tName', title: '姓名', width:90}
-                ,{field: 'tSex', title: '性别', width:70}
-                ,{field: 'tBirthday', title: '出生年月', width:110}
-                ,{field: 'tPhone', title: '电话', width:180}
-                ,{fixed: 'right', title:'操作', width:180, align:'center', toolbar: '#barDemo'}
+                {field: 'tId', title: '工号', width:100, sort: true}
+                ,{field: 'tName', title: '姓名', width:120}
+                ,{field: 'tSex', title: '性别', width:100, templet: '#titleTpl'}
+                ,{field: 'tBirthday', title: '出生年月', width:250}
+                ,{field: 'tPhone', title: '电话', width:250}
+                ,{fixed: 'right', title:'操作', width:250, align:'center', toolbar: '#barDemo'}
             ]]
         });
         table.on('toolbar(test)', function(obj){
