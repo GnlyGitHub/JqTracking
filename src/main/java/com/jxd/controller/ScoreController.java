@@ -1,9 +1,13 @@
 package com.jxd.controller;
 
+import com.jxd.model.Class;
 import com.jxd.service.IScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @author Liang Yue
@@ -14,9 +18,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ScoreController {
     @Autowired
     IScoreService scoreService;
-
-    @RequestMapping("/studentAppraise")
-    public String studentAppraise_Teacher(){
-        return "studentAppraise";
-    }
 }
