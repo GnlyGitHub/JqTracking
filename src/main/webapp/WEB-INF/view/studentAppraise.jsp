@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ANA
@@ -31,7 +32,8 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="#">
-                    ${sessionScope.userame}
+                    1001
+                    <%--${sessionScope.userame}--%>
                 </a>
             </li>
             <li class="layui-nav-item"><a href="ALogoutServlet">退出</a></li>
@@ -41,7 +43,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item"><a href="studentAppraise">学生评价</a></li>
                 <li class="layui-nav-item"><a href="">修改密码</a></li>
             </ul>
@@ -53,33 +55,35 @@
         <div style="padding: 15px;">
             <div align="center">
                 <h1 style="margin: 30px 0px 20px 0px">学生列表</h1>
+                <div class="layui-input-inline">
+                    <label class="layui-form-label">班期</label>
+                    <div class="layui-input-inline">
+                        <select name="sClass" id="sClass">
+                            <c:forEach var="c" items="${sClasses}">
+                                <option value="${c.classId}"><c:out value="${c.className}"/></option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
                 <table id="demo" lay-filter="test"></table>
             </div>
         </div>
     </div>
 
 
-        </div>
-    </div>
+</div>
+</div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © jxdinfo.com - 底部固定区域
-    </div>
+<div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © jxdinfo.com - 底部固定区域
+</div>
 
 </div>
 <script type="text/html" id="toolbarDemo">
     <div align="right">
         <div class="layui-input-inline">
-            <label class="layui-form-label">班期</label>
-            <div class="layui-input-block">
-                <select name="sClass" id="sClass">
-
-                </select>
-            </div>
-        </div>
-        <div class="layui-input-inline">
-            <input type="text" id="filter1" placeholder="请输入姓名" class="layui-input">
+            <input type="text" id="sName" placeholder="请输入姓名" class="layui-input">
         </div>
 
         <div class="layui-input-inline">
@@ -93,65 +97,79 @@
     <button class="layui-btn layui-btn-sm" lay-event="see">查看</button>
 </script>
 <script>
-    layui.use(['element','table','layer'], function(){
+    layui.use(['element', 'table', 'layer'], function () {
         var element = layui.element;
         var table = layui.table;
         var layer = layui.layer;
         var $ = layui.$;
-        var tId = 1001;
+        var sClass = $("#sClass").val();
 
         table.render({
             elem: '#demo'
-            ,toolbar: '#toolbarDemo' //添加工具栏
-            ,height: 550
-            ,width: 1400
-            ,url: '/getAllTeacher1' //数据接口
-            ,page: true
-            ,limit: 8
-            ,limits:[8,15,20]
-            ,cols: [[
-                {type: 'checkbox'}
-                ,{field: 'id', title: '工号', width:90, sort: true}
-                ,{field: 'name', title: '姓名', width:90}
-                ,{field: 'sex', title: '性别', width:70}
-                ,{field: 'birthday', title: '出生年月', width:110}
-                ,{field: 'degree', title: '学历', width:90}
-                ,{field: 'title', title: '职称', width:90}
-                ,{fixed: 'right', title:'操作', width:180, align:'center', toolbar: '#barDemo'}
+            , toolbar: '#toolbarDemo' //添加工具栏
+            , height: 550
+            , width: 1400
+            , url: '/getAllStudent_Teacher' //数据接口
+            , page: false
+            , limit: 3
+            , limits: [8, 15, 20]
+            , cols: [[
+
+                 {type: 'numbers', title: '序号', width: 150}
+                , {field: 'sId', title: '学号', width: 200, sort: true}
+                , {field: 'sName', title: '姓名', width: 150}
+                , {field: 'sSex', title: '性别', width: 100}
+                , {field: 'sSchool', title: '学校', width: 200}
+                , {field: 'sMajor', title: '专业', width: 250}
+                , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#barDemo'}
             ]]
         });
         //头工具栏事件
-        table.on('toolbar(test)', function(obj){
-            if(obj.event === 'query'){
+        table.on('toolbar(test)', function (obj) {
+            if (obj.event === 'query') {
+                var sName = $("#sName").val();
+                table.reload("demo", {//demo对应的是table的id
+                    where: {
+                         sName: sName
+                    },//where对应的是过滤条件
+                    page: {
+                        curr: 1
+                    }
+                });
             }
         });
         //操作栏
-        table.on('tool(test)', function(obj){
+        table.on('tool(test)', function (obj) {
             var data = obj.data;//获取当前行数据
-            if(obj.event === 'appraise'){
-                layer.open({
+            if (obj.event === 'appraise') {
+                layer.open({});
+            } else if (obj.event === 'edit') {
 
-                });
-            } else if(obj.event === 'edit'){
-
-            }else if(obj.event === 'see'){
+            } else if (obj.event === 'see') {
 
             }
         });
-        //获取期数下拉列表
-        $.ajax({
-            type:'GET',
-            url:'getAllSClassBytId_Teacher?tId='+ tId,
-            dataType:'json',
-            success:function(data){
-                // 返回成功的数据
-                for(var i=0; i<data.length; i++){
-                    $('#sClass').append("<option value='"+data[i].classId+"'>"+data[i].className+"</option>");
+
+        $("#sClass").change(function () {
+            table.reload("demo", {//demo对应的是table的id
+                where: {
+                    sClass: $("#sClass").val()
+                },//where对应的是过滤条件
+                page: {
+                    curr: 1
                 }
+            });
+        });
+        table.reload("demo", {//demo对应的是table的id
+            where: {
+                sClass: $("#sClass").val()
+            },//where对应的是过滤条件
+            page: {
+                curr: 1
             }
         });
+
     });
 </script>
-
 </body>
 </html>

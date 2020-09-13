@@ -3,5 +3,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IStudentDao">
 
+    <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
+    <select id="getAllStudent_Teacher" resultType="Student">
+        select sId,sName,sSex,sSchool,sMajor from student
+        <where>
+            <if test="sClass != null and sClass != ''">
+                sClass = #{sClass}
+            </if>
+            <if test="sName != null and sName != ''">
+                and sName like '%' #{sName} '%'
+            </if>
+        </where>
+        order by sid desc
+    </select>
 
+    <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
+    <select id="getAllStudentByPage_Teacher" resultType="Student">
+        select sId,sName,sSex,sSchool,sMajor from student
+        <where>
+            <if test="sClass != null and sClass != ''">
+                sClass = #{sClass}
+            </if>
+            <if test="sName != null and sName != ''">
+                and sName like '%' #{sName} '%'
+            </if>
+        </where>
+        order by sid desc
+        limit ${pageSize * (pageIndex - 1)}, ${pageSize}
+    </select>
 </mapper>
