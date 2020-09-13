@@ -148,15 +148,6 @@
                         area:['455px','380px']
                     });
                     break;
-                case 'rePwd':
-                    layer.open({
-                        type:2,
-                        title:'重置密码',
-                        content:'aaddTeacher',
-                        shadeClose:true,
-                        area:['460px','510px']
-                    });
-                    break;
             }
         });
 
@@ -166,9 +157,9 @@
                 layer.open({
                     type:2,
                     title:'修改教师信息',
-                    content:"eeditTeacher?id=" + data.id,
+                    content:"adminEditTeacher?tId=" + data.tId,
                     shadeClose:true,
-                    area:['460px','550px'],
+                    area:['455px','400px'],
                     end:function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();
@@ -177,10 +168,10 @@
             } else if(obj.event === 'delete'){
                 layer.confirm('确定要删除吗？', function(index){
                     $.ajax({
-                        url:'delTeacherById',
+                        url:'delTeacherById_admin',
                         type:'post',
                         data:{
-                            id:data.id
+                            tId:data.tId
                         },
                         success:function (data) {
                             if (data == "true"){
@@ -189,13 +180,25 @@
                                 layer.msg("删除失败")
                             }
                             table.reload("demo",function () {
-                                url:'getAllTeacher1'
+                                url:'getAllTeacher_admin'
                             })
                         },
                         error:function () {
                             layer.msg("执行失败")
                         }
                     })
+                });
+            } else if (obj.event === 'rePwd') {
+                layer.open({
+                    type:2,
+                    title:'重置密码',
+                    content:'adminRePwdTeacher?tId=' + data.tId,
+                    shadeClose:true,
+                    area:['400px','330px'],
+                    end:function () {
+                        //刷新当前页
+                        $(".layui-laypage-btn").click();
+                    }
                 });
             }
         });

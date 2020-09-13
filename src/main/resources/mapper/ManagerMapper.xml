@@ -2,6 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IManagerDao">
+    <sql id="BaseSql1">
+        mId,mName,mSex,mPhone,mBirthday,deptNo,projectId
+    </sql>
 
+    <!--List<Manager> getAllManager_admin(String mName);-->
+    <select id="getAllManager_admin" resultType="Manager">
+        select
+        <include refid="BaseSql1"></include>
+        from manager
+        <if test="mName != null and mName != ''">
+            where mName like '%' #{mName} '%'
+        </if>
+        order by mId desc
+    </select>
 
+    <!--List<Manager> getManager_admin(Integer pageSize, Integer pageIndex, String mName);-->
+    <select id="getManager_admin" resultType="Manager">
+        select
+        <include refid="BaseSql1"></include>
+        from manager
+        <if test="mName != null and mName != ''">
+            where mName like '%' #{mName} '%'
+        </if>
+        order by mId desc
+        limit ${pageSize * (pageIndex - 1)}, ${pageSize}
+    </select>
+
+    <!--boolean addManager_admin(Manager manager);-->
+    <insert id="addManager_admin">
+        insert into manager (mName,mSex,mPhone,mBirthday,deptNo,projectId)
+        values (#{mName},#{mSex},#{mPhone},#{mBirthday},#{deptNo},#{projectId})
+    </insert>
+    <!--boolean delManager_admin(Integer mId);-->
+    <delete id="delManager_admin">
+        delete from manager where mId=#{mId}
+    </delete>
+
+    <!--Manager getManagerById_admin(Integer mId);-->
+    <select id="getManagerById_admin" resultType="Manager">
+        select
+        <include refid="BaseSql1"></include>
+        from manager
+        where mId=#{mId}
+    </select>
+
+    <!--boolean editManagerById_admin(Manager manager);-->
+    <update id="editManagerById_admin">
+        update manager set
+        mName=#{mName},mSex=#{mSex},mPhone=#{mPhone},mBirthday=#{mBirthday},deptNo=#{deptNo},projectId=#{projectId}
+        where mId=#{mId}
+    </update>
+
+    <!--Integer getCurManager_admin();-->
+    <select id="getCurManager_admin" resultType="Manager">
+        select max(mId) from manager
+    </select>
 </mapper>
