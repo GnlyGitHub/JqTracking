@@ -27,4 +27,31 @@ public interface ITeacherService {
      * @return 是否添加成功
      */
     boolean addTeacher_admin(Teacher teacher);
+
+    /**
+     * 根据工号删除教师
+     * @param tId 工号
+     * @return 是否删除成功
+     */
+    boolean delTeacherById_admin(Integer tId);
+
+    /**
+     * 根据工号获取教师信息
+     * @param tId 工号
+     * @return 要获取的教师
+     */
+    Teacher getTeacherById_admin(Integer tId);
+
+    /**
+     * 根据工号修改老师信息
+     * @param teacher 要修改的老师
+     * @return 是否修改成功
+     */
+    boolean editTeacherById_admin(Teacher teacher);
+
+    /**
+     * 获取新增教师的id
+     * @return 新增教师的id
+     */
+    Integer getCurTeacherId_admin();
 }

@@ -27,6 +27,16 @@ public class LoginUser {
         this.role = role;
     }
 
+    public LoginUser(Integer userId, String password) {
+        this.userId = userId;
+        this.password = password;
+    }
+
+    public LoginUser(Integer userId, Integer role) {
+        this.userId = userId;
+        this.role = role;
+    }
+
     public Integer getuId() {
         return uId;
     }

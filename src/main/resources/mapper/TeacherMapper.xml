@@ -35,4 +35,27 @@
         values (#{tName},#{tSex},#{tBirthday},#{tPhone},#{deptNo})
     </insert>
 
+    <!-- boolean delTeacherById_admin(Integer tId);-->
+    <delete id="delTeacherById_admin">
+        delete from teacher where tId=#{tId}
+    </delete>
+
+    <!--Teacher getTeacherById_admin(Integer tId);-->
+    <select id="getTeacherById_admin" resultType="Teacher">
+        select
+        <include refid="BaseSql1"></include>
+        from teacher
+        where tId=#{tId}
+    </select>
+
+    <!--boolean editTeacherById_admin(Teacher teacher);-->
+    <update id="editTeacherById_admin">
+        update teacher set tName=#{tName},tSex=#{tSex},tPhone=#{tPhone},tBirthday=#{tBirthday}
+        where tId=#{tId}
+    </update>
+
+    <!--Integer getCurTeacherId_admin();-->
+    <select id="getCurTeacherId_admin" resultType="Integer">
+        select max(tId) from teacher
+    </select>
 </mapper>

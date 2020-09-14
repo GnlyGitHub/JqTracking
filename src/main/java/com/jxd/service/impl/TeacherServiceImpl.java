@@ -32,4 +32,24 @@ public class TeacherServiceImpl implements ITeacherService {
     public boolean addTeacher_admin(Teacher teacher) {
         return teacherDao.addTeacher_admin(teacher);
     }
+
+    @Override
+    public boolean delTeacherById_admin(Integer tId) {
+        return teacherDao.delTeacherById_admin(tId);
+    }
+
+    @Override
+    public Teacher getTeacherById_admin(Integer tId) {
+        return teacherDao.getTeacherById_admin(tId);
+    }
+
+    @Override
+    public boolean editTeacherById_admin(Teacher teacher) {
+        return teacherDao.editTeacherById_admin(teacher);
+    }
+
+    @Override
+    public Integer getCurTeacherId_admin() {
+        return teacherDao.getCurTeacherId_admin();
+    }
 }

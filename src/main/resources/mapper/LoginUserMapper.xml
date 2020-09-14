@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.ILoginUserDao">
+    <!--boolean addLoginUser_admin(LoginUser loginUser);-->
+    <insert id="addLoginUser_admin">
+        insert into loginuser (userId, password, role)
+        values (#{userId}, '123456', #{role})
+    </insert>
 
+    <!-- boolean delLoginUser_admin(Integer userId);-->
+    <delete id="delLoginUser_admin">
+        delete from loginuser where userId=#{userId}
+    </delete>
+
+    <!--boolean editLoginUser_admin(LoginUser loginUser);-->
+    <update id="editLoginUser_admin">
+        update loginuser set password=#{password} where userId=#{userId}
+    </update>
 
 </mapper>
