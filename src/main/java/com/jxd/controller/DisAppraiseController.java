@@ -2,16 +2,19 @@ package com.jxd.controller;
 
 import com.jxd.model.Appraise;
 import com.jxd.model.DisAppraise;
+import com.jxd.model.Manager;
 import com.jxd.model.Student;
 import com.jxd.service.IDisAppraiseService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,5 +46,78 @@ public class DisAppraiseController {
 @RequestMapping("AddDisAppraise_Manage")
     public String AddDisAppraise_Manage(){
         return "empAddDisAppraise";
+    }
+    @RequestMapping("AddDisAppraiseData_Manage")
+    @ResponseBody
+    public Boolean AddDisAppraiseData_Manage( String appraiseIds,Integer mId,Integer classId,Integer number){
+        JSONArray appraises= JSONArray.fromObject(appraiseIds);
+        Integer md=mId;
+        Integer classD=classId;
+        Integer m=number;
+        Boolean isInser=false;
+        for (int i=0;i<appraises.size();i++){
+            DisAppraise disAppraise=new DisAppraise(appraises.getInt(i),classD,md,m);
+            isInser=disAppraiseService.insertDisAppraise_Manage(disAppraise);
+        }
+        return isInser;
+    }
+    @ResponseBody
+    @RequestMapping(value = "checkDisAppraise_Manage")
+    public List<DisAppraise> checkDisAppraise_Manage(Integer classId,Integer number,Integer mId){
+            List<DisAppraise> list=disAppraiseService.checkDisAppraise_Manage(mId,classId,number);
+            return list;
+    }
+    @RequestMapping(value = "detailDisAppraise_Manage")
+    public String detailDisAppraise_Manage(Integer classId, String className,Integer number, Integer mId , Model model){
+        List<DisAppraise> list=disAppraiseService.checkDisAppraise_Manage(mId,classId,number);
+        model.addAttribute("className",className);
+        JSONArray jsonArray = JSONArray.fromObject(list);
+        model.addAttribute("list",jsonArray);
+        return "empDetailDisAppraise";
+    }
+    @RequestMapping(value = "editDisAppraise_Manage")
+    public String editDisAppraise_Manage(Integer classId, String className,Integer number, Integer mId , Model model){
+        List<DisAppraise> list=disAppraiseService.checkDisAppraise_Manage(mId,classId,number);
+        model.addAttribute("classId",classId);
+        model.addAttribute("className",className);
+        JSONArray jsonArray = JSONArray.fromObject(list);
+        model.addAttribute("list",jsonArray);
+        return "empEditDisAppraise";
+    }
+    @RequestMapping("editDisAppraiseData_Manage")
+    @ResponseBody
+    public Boolean editDisAppraiseData_Manage(String appraiseIds,Integer mId,Integer classId,Integer number){
+        JSONArray appraises= JSONArray.fromObject(appraiseIds);
+        boolean isInsert=false;
+        boolean isDel=false;
+        List<DisAppraise> list=disAppraiseService.checkDisAppraise_Manage(mId,classId,number);
+        List<DisAppraise> list1=new ArrayList<>();
+        List<DisAppraise> list2=new ArrayList<>();
+        for (int i=0;i<appraises.size();i++){
+            for (int j=0;j<list.size();j++){
+                if (appraises.getInt(i)!=list.get(j).getAppraiseId()){
+                    if (j+1==list.size()){
+                        DisAppraise disAppraise=new DisAppraise(appraises.getInt(i),classId,mId,number);
+                        list1.add(disAppraise);
+                    }
+                }else {
+                    break;
+                }
+            }
+        }
+        for (int i=0;i<list.size();i++){
+            for (int j=0;j<appraises.size();j++){
+                if (appraises.getInt(j)!=list.get(i).getAppraiseId()){
+                    if (j+1==appraises.size()){
+                        DisAppraise disAppraise=new DisAppraise(list.get(i).getAppraiseId(),classId,mId,number);
+                        list2.add(disAppraise);
+                    }
+                }else {
+                    break;
+                }
+            }
+        }
+
+        return isDel&&isInsert;
     }
 }

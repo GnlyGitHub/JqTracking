@@ -18,4 +18,10 @@ public interface IClassService {
      * @return 班期列表
      */
     List<Class> getAllClass_admin();
+    /**
+     * @Description 获得所有的班级数据
+     *Param []
+     * @return java.util.List<com.jxd.model.Class>
+     */
+    List<Class> getAllClass_Manage();
 }

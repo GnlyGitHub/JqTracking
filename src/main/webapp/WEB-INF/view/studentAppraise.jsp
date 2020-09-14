@@ -44,7 +44,7 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item"><a href="studentAppraise">学生评价</a></li>
+                <li class="layui-nav-item layui-this"><a href="studentAppraise">学生评价</a></li>
                 <li class="layui-nav-item"><a href="">修改密码</a></li>
             </ul>
         </div>
@@ -55,8 +55,9 @@
         <div style="padding: 15px;">
             <div align="center">
                 <h1 style="margin: 30px 0px 20px 0px">学生列表</h1>
-                <div class="layui-input-inline">
-                    <label class="layui-form-label">班期</label>
+                <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">班期:</label>
                     <div class="layui-input-inline">
                         <select name="sClass" id="sClass">
                             <c:forEach var="c" items="${sClasses}">
@@ -65,6 +66,7 @@
                         </select>
                     </div>
                 </div>
+                </form>
                 <table id="demo" lay-filter="test"></table>
             </div>
         </div>
@@ -92,35 +94,35 @@
     </div>
 </script>
 <script type="text/html" id="barDemo">
-    <button class="layui-btn layui-btn-sm" lay-event="appraise">评论</button>
+    <button class="layui-btn layui-btn-sm" lay-event="appraise">评价</button>
     <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
     <button class="layui-btn layui-btn-sm" lay-event="see">查看</button>
 </script>
 <script>
-    layui.use(['element', 'table', 'layer'], function () {
-        var element = layui.element;
+    layui.use(['element', 'table', 'layer', 'form'], function () {
         var table = layui.table;
         var layer = layui.layer;
         var $ = layui.$;
+        var form = layui.form;
         var sClass = $("#sClass").val();
 
         table.render({
             elem: '#demo'
             , toolbar: '#toolbarDemo' //添加工具栏
-            , height: 550
+            , height: 500
             , width: 1400
             , url: '/getAllStudent_Teacher' //数据接口
             , page: false
-            , limit: 3
-            , limits: [8, 15, 20]
+            , limit: 5
+            , limits: [5, 15, 20]
             , cols: [[
-
                  {type: 'numbers', title: '序号', width: 150}
                 , {field: 'sId', title: '学号', width: 200, sort: true}
                 , {field: 'sName', title: '姓名', width: 150}
-                , {field: 'sSex', title: '性别', width: 100}
+                , {field: 'sSex', title: '性别', width: 100, templet: function(d){if(d.sSex == 1){return '男'}else{return '女'}}}
                 , {field: 'sSchool', title: '学校', width: 200}
                 , {field: 'sMajor', title: '专业', width: 250}
+                , {field: 'sClass', title: '班期id', width: 250, hide:true}
                 , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#barDemo'}
             ]]
         });
@@ -141,8 +143,10 @@
         //操作栏
         table.on('tool(test)', function (obj) {
             var data = obj.data;//获取当前行数据
+            var classId = data.sClass;
+            //评论
             if (obj.event === 'appraise') {
-                layer.open({});
+                location.href='studentAddAppraise?classId=' + classId
             } else if (obj.event === 'edit') {
 
             } else if (obj.event === 'see') {
@@ -150,7 +154,8 @@
             }
         });
 
-        $("#sClass").change(function () {
+        //下拉框改变事件
+        form.on("select", function(){
             table.reload("demo", {//demo对应的是table的id
                 where: {
                     sClass: $("#sClass").val()
@@ -160,6 +165,7 @@
                 }
             });
         });
+
         table.reload("demo", {//demo对应的是table的id
             where: {
                 sClass: $("#sClass").val()

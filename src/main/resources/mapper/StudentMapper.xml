@@ -5,7 +5,7 @@
 
     <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
     <select id="getAllStudent_Teacher" resultType="Student">
-        select sId,sName,sSex,sSchool,sMajor from student
+        select sId,sName,sSex,sSchool,sMajor,sClass from student
         <where>
             <if test="sClass != null and sClass != ''">
                 sClass = #{sClass}
@@ -19,7 +19,7 @@
 
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
     <select id="getAllStudentByPage_Teacher" resultType="Student">
-        select sId,sName,sSex,sSchool,sMajor from student
+        select sId,sName,sSex,sSchool,sMajor,sClass from student
         <where>
             <if test="sClass != null and sClass != ''">
                 sClass = #{sClass}

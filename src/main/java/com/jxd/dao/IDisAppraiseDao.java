@@ -3,6 +3,7 @@ package com.jxd.dao;
 import com.jxd.model.Appraise;
 import com.jxd.model.DisAppraise;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -19,4 +20,16 @@ public interface IDisAppraiseDao {
      * @return java.util.List<com.jxd.model.Appraise>
      */
     List<DisAppraise> getAllAppaise_Manage(@Param("mname") String mname, @Param("limit") Integer limit, @Param("page") Integer page, @Param("manageId") Integer manageId);
+    /**
+     * @Description 插入一个分配表
+     *Param [disAppraise]
+     * @return java.lang.Boolean
+     */
+    Boolean insertDisAppraise_Manage(DisAppraise disAppraise);
+    /**
+     * @Description 返回该经历的某期表
+     *Param [classId, number]
+     * @return java.lang.Boolean
+     */
+    List<DisAppraise> checkDisAppraise_Manage(@Param("mId") Integer mId, @Param("classId") Integer classId,@Param("number") Integer number);
 }

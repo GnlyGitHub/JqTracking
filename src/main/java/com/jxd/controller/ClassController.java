@@ -22,11 +22,17 @@ public class ClassController {
     @Autowired
     IClassService classService;
 
+    //老师获取班级列表并转发到老师评价主页面
     @RequestMapping("/studentAppraise")
     public String studentAppraise_Teacher(Model model){
         List<Class> list = classService.getAllSClassBytId_Teacher(1001);
         model.addAttribute("sClasses",list);
         return "studentAppraise";
+    }
+    @ResponseBody
+    @RequestMapping("getAllClass_Manage")
+    public List<Class> getAllClass_Manage(){
+return classService.getAllClass_Manage();
     }
 
     @RequestMapping(value = "/getAllClass_admin", produces = "text/html;charset=utf-8")

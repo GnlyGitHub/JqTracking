@@ -15,4 +15,9 @@
         select classId,className,startDate,endDate,tId
         from class
     </select>
+<select id="getAllClass_Manage" resultType="Class">
+     select classId,className,startDate,endDate,tid
+        from class
+        order by classId desc
+</select>
 </mapper>

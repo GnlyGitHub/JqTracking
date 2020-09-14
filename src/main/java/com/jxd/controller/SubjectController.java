@@ -1,8 +1,13 @@
 package com.jxd.controller;
 
+import com.jxd.model.Subject;
 import com.jxd.service.ISubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @author Liang Yue
@@ -13,4 +18,12 @@ import org.springframework.stereotype.Controller;
 public class SubjectController {
     @Autowired
     ISubjectService subjectService;
+
+    //老师获取评分项转发至评分页面
+    @RequestMapping("/studentAddAppraise")
+    public String studentAddAppraise_Teacher(Integer classId,Model model){
+        List<Subject> list =  subjectService.getSubjectByClassId_Teacher(classId);
+        model.addAttribute("list",list);
+        return "studentAddAppraise";
+    }
 }
