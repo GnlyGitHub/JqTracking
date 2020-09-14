@@ -23,8 +23,10 @@ import java.util.List;
 public class StudentController {
     @Autowired
     IStudentService studentService;
-    public String adminAdd_adminasa(){
-        return "adminStudent";
+
+    @RequestMapping("/adminStudentList")
+    public String adminStudentList(){
+        return "adminStudentList";
     }
 
     @RequestMapping("/getAllStudent_Teacher")
@@ -51,5 +53,19 @@ public class StudentController {
     @RequestMapping("getAllStudent_Manage")
     public List<Student> getAllStudent_Manage(){
         return null;
+    }
+
+    @RequestMapping(value = "/getAllStudent_admin", produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String getAllStudent_admin(Integer limit, Integer page, String sName, Integer sClass){
+        List<Student> list = studentService.getAllStudent_admin(sClass,sName);
+        List<Student> list1 = studentService.getStudent_admin(limit,page,sClass,sName);
+        JSONArray jsonArray = JSONArray.fromObject(list1);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("count",list.size());
+        jsonObject.put("data",jsonArray);
+        return jsonObject.toString();
     }
 }

@@ -1,6 +1,7 @@
 package com.jxd.dao;
 
 import com.jxd.model.Manager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface IManagerDao {
      * @param mName 项目经理姓名
      * @return 项目经理列表
      */
-    List<Manager> getAllManager_admin(String mName);
+    List<Manager> getAllManager_admin(@Param("mName") String mName);
 
     /**
      * 根据分页及姓名获取项目经理列表
@@ -19,7 +20,7 @@ public interface IManagerDao {
      * @param mName 项目经理姓名
      * @return 项目经理列表
      */
-    List<Manager> getManager_admin(Integer pageSize, Integer pageIndex, String mName);
+    List<Manager> getManager_admin(@Param("pageSize") Integer pageSize, @Param("pageIndex") Integer pageIndex, @Param("mName") String mName);
 
     /**
      * 添加项目经理

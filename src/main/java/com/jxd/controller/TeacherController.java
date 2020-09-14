@@ -73,8 +73,8 @@ public class TeacherController {
     @ResponseBody
     public String delTeacherById_admin(Integer tId){
         boolean isDel = teacherService.delTeacherById_admin(tId);
-        boolean idDelLogin = loginUserService.delLoginUser_admin(tId);
-        return String.valueOf(isDel && idDelLogin);
+        boolean isDelLogin = loginUserService.delLoginUser_admin(tId);
+        return String.valueOf(isDel && isDelLogin);
     }
 
     @RequestMapping("/getTeacherById_admin")

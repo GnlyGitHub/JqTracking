@@ -7,45 +7,103 @@
     </sql>
 
     <!--List<Manager> getAllManager_admin(String mName);-->
-    <select id="getAllManager_admin" resultType="Manager">
+    <select id="getAllManager_admin" resultMap="getAllManagerMap">
         select
-        <include refid="BaseSql1"></include>
-        from manager
+        m.mId mId, m.mName mName,m.mSex mSex,m.mPhone mPhone,m.mBirthday mBirthday,m.deptNo deptNo,m.projectId projectId,
+        d.deptName deptName, p.projectName projectName
+        from manager m, dept d, project p
+        where m.deptNo=d.deptNo and m.projectId=p.projectId
         <if test="mName != null and mName != ''">
-            where mName like '%' #{mName} '%'
+            and m.mName like '%' #{mName} '%'
         </if>
-        order by mId desc
+        order by m.mId desc
     </select>
+    <resultMap id="getAllManagerMap" type="Manager">
+        <id column="mId" property="mId"></id>
+        <result column="mName" property="mName"></result>
+        <result column="mSex" property="mSex"></result>
+        <result column="mPhone" property="mPhone"></result>
+        <result column="mBirthday" property="mBirthday"></result>
+        <result column="deptNo" property="deptNo"></result>
+        <result column="projectId" property="projectId"></result>
+        <association property="dept" javaType="Dept">
+            <id column="deptNo" property="deptNo"></id>
+            <result column="deptName" property="deptName"></result>
+        </association>
+        <association property="project" javaType="Project">
+            <id column="projectId" property="projectId"></id>
+            <result column="projectName" property="projectName"></result>
+        </association>
+    </resultMap>
 
     <!--List<Manager> getManager_admin(Integer pageSize, Integer pageIndex, String mName);-->
-    <select id="getManager_admin" resultType="Manager">
+    <select id="getManager_admin" resultMap="getManagerMap">
         select
-        <include refid="BaseSql1"></include>
-        from manager
+        m.mId mId, m.mName mName,m.mSex mSex,m.mPhone mPhone,m.mBirthday mBirthday,m.deptNo deptNo,m.projectId projectId,
+        d.deptName deptName, p.projectName projectName
+        from manager m, dept d, project p
+        where m.deptNo=d.deptNo and m.projectId=p.projectId
         <if test="mName != null and mName != ''">
-            where mName like '%' #{mName} '%'
+            and m.mName like '%' #{mName} '%'
         </if>
-        order by mId desc
+        order by m.mId desc
         limit ${pageSize * (pageIndex - 1)}, ${pageSize}
     </select>
+    <resultMap id="getManagerMap" type="Manager">
+        <id column="mId" property="mId"></id>
+        <result column="mName" property="mName"></result>
+        <result column="mSex" property="mSex"></result>
+        <result column="mPhone" property="mPhone"></result>
+        <result column="mBirthday" property="mBirthday"></result>
+        <result column="deptNo" property="deptNo"></result>
+        <result column="projectId" property="projectId"></result>
+        <association property="dept" javaType="Dept">
+            <id column="deptNo" property="deptNo"></id>
+            <result column="deptName" property="deptName"></result>
+        </association>
+        <association property="project" javaType="Project">
+            <id column="projectId" property="projectId"></id>
+            <result column="projectName" property="projectName"></result>
+        </association>
+    </resultMap>
 
     <!--boolean addManager_admin(Manager manager);-->
     <insert id="addManager_admin">
         insert into manager (mName,mSex,mPhone,mBirthday,deptNo,projectId)
         values (#{mName},#{mSex},#{mPhone},#{mBirthday},#{deptNo},#{projectId})
     </insert>
+
     <!--boolean delManager_admin(Integer mId);-->
     <delete id="delManager_admin">
         delete from manager where mId=#{mId}
     </delete>
 
     <!--Manager getManagerById_admin(Integer mId);-->
-    <select id="getManagerById_admin" resultType="Manager">
+    <select id="getManagerById_admin" resultMap="getManagerByIdMap">
         select
-        <include refid="BaseSql1"></include>
-        from manager
-        where mId=#{mId}
+        m.mId mId, m.mName mName,m.mSex mSex,m.mPhone mPhone,m.mBirthday mBirthday,m.deptNo deptNo,m.projectId projectId,
+        d.deptName deptName, p.projectName projectName
+        from manager m, dept d, project p
+        where m.deptNo=d.deptNo and m.projectId=p.projectId
+        and m.mId=#{mId}
     </select>
+    <resultMap id="getManagerByIdMap" type="Manager">
+        <id column="mId" property="mId"></id>
+        <result column="mName" property="mName"></result>
+        <result column="mSex" property="mSex"></result>
+        <result column="mPhone" property="mPhone"></result>
+        <result column="mBirthday" property="mBirthday"></result>
+        <result column="deptNo" property="deptNo"></result>
+        <result column="projectId" property="projectId"></result>
+        <association property="dept" javaType="Dept">
+            <id column="deptNo" property="deptNo"></id>
+            <result column="deptName" property="deptName"></result>
+        </association>
+        <association property="project" javaType="Project">
+            <id column="projectId" property="projectId"></id>
+            <result column="projectName" property="projectName"></result>
+        </association>
+    </resultMap>
 
     <!--boolean editManagerById_admin(Manager manager);-->
     <update id="editManagerById_admin">
@@ -55,7 +113,7 @@
     </update>
 
     <!--Integer getCurManager_admin();-->
-    <select id="getCurManager_admin" resultType="Manager">
+    <select id="getCurManager_admin" resultType="Integer">
         select max(mId) from manager
     </select>
 </mapper>

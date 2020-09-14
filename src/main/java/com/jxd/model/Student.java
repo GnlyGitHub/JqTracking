@@ -21,9 +21,18 @@ public class Student {
     private String sRemarks;//备注
     private Integer sClass;//班期
     private Integer deptNo;//部门编号
-    private Integer jobId;//职务
+    private Integer jobId;//职务编号
     private String sHireDate;//入职日期
     private Integer projectId;//项目编号
+    private Class aClass;//班期
+
+    public Class getaClass() {
+        return aClass;
+    }
+
+    public void setaClass(Class aClass) {
+        this.aClass = aClass;
+    }
 
     public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate, Integer projectId) {
         this.sId = sId;

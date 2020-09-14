@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IManagerService {
     /**
-     * 根据项目获取项目经理列表
+     * 根据姓名获取项目经理列表
      * @param mName 项目经理姓名
      * @return 项目经理列表
      */

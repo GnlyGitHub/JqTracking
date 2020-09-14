@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: liangyurj
-  Date: 2020/9/12
-  Time: 17:43
+  Date: 2020/9/14
+  Time: 19:07
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>项目经理管理</title>
+    <title>学生管理</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
@@ -45,8 +45,8 @@
             <!-- 左侧导航区域 -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item"><a href="adminTeacherList">教师管理</a></li>
-                <li class="layui-nav-item layui-this"><a href="adminManagerList">项目经理管理</a></li>
-                <li class="layui-nav-item"><a href="adminStudentList">学生管理</a></li>
+                <li class="layui-nav-item"><a href="adminManagerList">项目经理管理</a></li>
+                <li class="layui-nav-item layui-this"><a href="adminStudentList">学生管理</a></li>
                 <li class="layui-nav-item"><a href="">课程管理</a></li>
                 <li class="layui-nav-item"><a href="">班期管理</a></li>
                 <li class="layui-nav-item"><a href="">评分项管理</a></li>
@@ -65,9 +65,20 @@
 
             <script type="text/html" id="toolbarDemo">
                 <div align="right">
-                    <div class="layui-input-inline" style="padding-right: 600px">
-                        <h2>项目经理管理</h2>
+                    <div class="layui-input-inline" style="padding-right: 20px">
+                        <div class="layui-input-inline">
+                            <h2>项目经理管理</h2>
+                        </div>
+                        <div class="layui-input-inline" style="padding-left: 280px">
+                            <label style="font-size: 15px">选择班期&nbsp;&nbsp;</label>
+                            <div class="layui-input-inline">
+                                <select id="sClass" name="sClass" lay-filter="test" lay-verify="required">
+                                    <option value="">所有班期</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="layui-input-inline" style="margin-right: 10px">
                         <input id="filter" type="text" placeholder="请输入姓名" class="layui-input">
                     </div>
@@ -79,7 +90,6 @@
             </script>
 
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="rePwd">重置密码</a>
                 <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
             </script>
@@ -93,7 +103,7 @@
     </div>
 
     <script type="text/html" id="titleTpl">
-        {{#  if(d.mSex == 1){ }}
+        {{#  if(d.sSex == 1){ }}
         男
         {{#  } else { }}
         女
@@ -102,55 +112,76 @@
 
 </div>
 <script>
-    layui.use(['element','table','layer'], function(){
+    layui.use(['element','table','layer','form'], function(){
         var element = layui.element;
         var table = layui.table;
         var layer = layui.layer;
         var $ = layui.$;
+        var form = layui.form;
 
         table.render({
             elem: '#demo'
             ,toolbar: '#toolbarDemo' //添加工具栏
             ,height: 450
             ,width: 1080
-            ,url: '/getAllManager_admin' //数据接口
+            ,url: '/getAllStudent_admin' //数据接口
             ,page: true
             ,limit: 8
             ,limits:[8,15,20]
-            //,dataType:"json"
             ,cols: [[
                 /*{type: 'checkbox'}*/
-                {field: 'mId', title: '工号', width:80, sort: true}
-                ,{field: 'mName', title: '姓名', width:80}
-                ,{field: 'mSex', title: '性别', width:80, templet: '#titleTpl'}
-                ,{field: 'mBirthday', title: '出生年月', width:120}
-                ,{field: 'mPhone', title: '电话', width:150}
-                ,{field: 'dept.deptName', title: '部门', width:150, templet: function (data) {
-                        return data.dept.deptName
+                {field: 'sId', title: '工号', width:80, sort: true}
+                ,{field: 'sName', title: '姓名', width:100}
+                ,{field: 'sSex', title: '性别', width:80, templet: '#titleTpl'}
+                ,{field: 'sBirthday', title: '出生年月', width:120}
+                ,{field: 'sSchool', title: '学校', width:170}
+                ,{field: 'sMajor', title: '专业', width:200}
+                ,{field: 'sClass', title: '班期号', width:150, hide:true}
+                ,{field: 'className', title: '班期', width:150, templet: function (data) {
+                        return data.aClass.className
                     }}
-                ,{field: 'project.projectName ', title: '项目', width:155, templet: function (data) {
-                        return data.project.projectName
-                    }}
-                ,{fixed: 'right', title:'操作', width:250, align:'center', toolbar: '#barDemo'}
+                ,{fixed: 'right', title:'操作', width:170, align:'center', toolbar: '#barDemo'}
             ]]
         });
+
+        var getAllClass = function(){
+            $.ajax({
+                url: '/getAllClass_admin',
+                dataType: 'json',
+                data:{'state': 0},
+                type: 'post',
+                success: function (data) {
+                    $.each(data.data, function (index, item) {
+                        $('#sClass').append(new Option(item.className, item.classId));//下拉菜单里添加元素
+                    });
+                    layui.form.render("select");
+                }
+            });
+        };
+
+        getAllClass();
+
         table.on('toolbar(test)', function(obj){
             switch(obj.event){
                 case 'query':
-                    var filter = $("#filter").val();//获取过滤条件
+                    var filter = $("#filter").val();
                     //重新加载表格
                     table.reload("demo",{
-                        where:{mName:filter},
+                        where:{
+                            sName: filter,
+                            sClass: $("#sClass").val()
+                        },
                         page:{
                             curr:1
                         }
                     });
+                    getAllClass();
                     break;
                 case 'add':
                     layer.open({
                         type:2,
-                        title:'添加项目经理',
-                        content:'adminAddManager',
+                        title:'添加学生',
+                        content:'adminAddStudent',
                         shadeClose:true,
                         area:['455px','510px']
                     });
@@ -163,8 +194,8 @@
             if(obj.event === 'update'){
                 layer.open({
                     type:2,
-                    title:'修改项目经理信息',
-                    content:"adminEditManager?mId=" + data.mId,
+                    title:'修改学生信息',
+                    content:"adminEditStudent?sId=" + data.sId,
                     shadeClose:true,
                     area:['455px','500px'],
                     end:function () {
@@ -175,10 +206,10 @@
             } else if(obj.event === 'delete'){
                 layer.confirm('确定要删除吗？', function(index){
                     $.ajax({
-                        url:'delManagerById_admin',
+                        url:'delStudentById_admin',
                         type:'post',
                         data:{
-                            mId:data.mId
+                            sId:data.sId
                         },
                         success:function (data) {
                             if (data == "true"){
@@ -187,25 +218,13 @@
                                 layer.msg("删除失败")
                             }
                             table.reload("demo",function () {
-                                url:'getAllManager_admin'
+                                url:'getAllStudent_admin'
                             })
                         },
                         error:function () {
                             layer.msg("执行失败")
                         }
                     })
-                });
-            } else if (obj.event === 'rePwd') {
-                layer.open({
-                    type:2,
-                    title:'重置密码',
-                    content:'adminRePwdManager?mId=' + data.mId,
-                    shadeClose:true,
-                    area:['400px','330px'],
-                    end:function () {
-                        //刷新当前页
-                        $(".layui-laypage-btn").click();
-                    }
                 });
             }
         });
