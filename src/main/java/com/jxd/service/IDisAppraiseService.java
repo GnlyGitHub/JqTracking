@@ -18,4 +18,16 @@ public interface IDisAppraiseService {
      * @return java.util.List<com.jxd.model.Appraise>
      */
     List<DisAppraise> getAllAppaise_Manage(String mname, Integer limit, Integer page,Integer manageId);
+    /**
+     * @Description 插入一个分配表
+     *Param [disAppraise]
+     * @return java.lang.Boolean
+     */
+    Boolean insertDisAppraise_Manage(DisAppraise disAppraise);
+/**
+ * @Description 返回该经历的某期分配表的集合
+ *Param [classId, number]
+ * @return java.lang.Boolean
+ */
+    List<DisAppraise> checkDisAppraise_Manage(Integer mId,Integer classId,Integer number);
 }

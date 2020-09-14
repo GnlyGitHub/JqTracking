@@ -12,4 +12,10 @@ public interface IClassDao {
      * @return java.util.List<com.jxd.model.Class>
      **/
     List<Class> getAllSClassBytId_Teacher(Integer tId);
+    /**
+     * @Description 获得所有的班级数据
+     *Param []
+     * @return java.util.List<com.jxd.model.Class>
+     */
+    List<Class> getAllClass_Manage();
 }

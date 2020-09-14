@@ -22,4 +22,9 @@ public class ClassServiceImpl implements IClassService {
     public List<Class> getAllSClassBytId_Teacher(Integer tId) {
         return classDao.getAllSClassBytId_Teacher(tId);
     }
+
+    @Override
+    public List<Class> getAllClass_Manage() {
+        return classDao.getAllClass_Manage();
+    }
 }

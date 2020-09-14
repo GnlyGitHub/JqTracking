@@ -77,9 +77,10 @@
                 {type: 'checkbox'}
                 ,{type:'numbers',title:'序号'}
                 ,{field:'id',title:'评价表编号',hide:true}
-                ,{field:'aClass.className',title:'班期名',width:150,templet: function (data) {
+                ,{field:'className',title:'班期名',width:150,templet: function (data) {
                         return data.aClass.className;
                     }}
+                ,{field:'classId',title:'班期名',width:150,hide: true}
                 ,{field:'number',title:'在职状态',width:120,templet: '#titleTpl'}
                 ,{fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
             ]]
@@ -102,7 +103,7 @@
                         title: '新增评论表',
                         content: 'AddDisAppraise_Manage',
                         shadeClose: true,    //点击遮罩关闭弹框
-                        area: ['450px', '500px']
+                        area: ['350px', '500px']
                     })
                     break;
                 case 'delete':
@@ -113,7 +114,7 @@
                     if (data.length < 1) {
                         layer.msg("请选择要删除的数据！")
                     } else {
-                        layer.confirm('确定要删除吗？','学生删除',function () {
+                        layer.confirm('确定要删除吗？','删除评价表',function () {
                             var ids = "";
                             for (var i = 0; i < data.length; i++) {
                                 ids +=data[i].id + ",";
@@ -149,13 +150,13 @@
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'detail'){
-                var empnos = data.mid;
-                //根据员工编号获取员工信息
-                //location.href="GetEmpByEmpnoServlet?empnos="+empnos;
+                var classId = data.classId;
+                var number=data.number;
+                var className=data.aClass.className;
                 layer.open({
                     type: 2, //弹出完整div，type：1弹出隐藏div
-                    title: '新闻查看',
-                    content: 'DetailJurgeServlet?mid=' + empnos,
+                    title: '评价表查看',
+                    content: 'detailDisAppraise_Manage?classId=' + classId+'&number='+number+'&className='+className+'&mId='+${sessionScope.manage.mId},
                     shadeClose: true,    //点击遮罩关闭弹框
                     area: ['380px', '460px']
                 })
@@ -191,20 +192,15 @@
                 }else if (data.length>1){
                     layer.msg("只能选择一条数据进行编辑")
                 }else {
-                    //获取要编辑的员工编号
-                    var empnos = data.mid;
-                    //根据员工编号获取员工信息
-                    //location.href="GetEmpByEmpnoServlet?empnos="+empnos;
+                    var classId = data.classId;
+                    var number=data.number;
+                    var className=data.aClass.className;
                     layer.open({
                         type: 2, //弹出完整div，type：1弹出隐藏div
-                        title: '新闻编辑',
-                        content: 'GetMsgByMidServlet?mid=' + empnos,
+                        title: '评价表编辑',
+                        content: 'editDisAppraise_Manage?classId=' + classId+'&number='+number+'&className='+className+'&mId='+${sessionScope.manage.mId},
                         shadeClose: true,    //点击遮罩关闭弹框
-                        area: ['450px', '500px'],
-                        end: function () {
-                            //最后来通过点击当前页按钮来刷新当前页
-                            $(".layui-laypage-btn").click();
-                        }
+                        area: ['380px', '460px']
                     })
                 }
             }

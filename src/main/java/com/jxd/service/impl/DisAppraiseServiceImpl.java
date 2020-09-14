@@ -27,4 +27,14 @@ public class DisAppraiseServiceImpl implements IDisAppraiseService {
     public List<DisAppraise> getAllAppaise_Manage(String mname, Integer limit, Integer page, Integer manageId) {
         return disAppraiseDao.getAllAppaise_Manage(mname,limit,page,manageId);
     }
+
+    @Override
+    public Boolean insertDisAppraise_Manage(DisAppraise disAppraise) {
+        return disAppraiseDao.insertDisAppraise_Manage(disAppraise);
+    }
+
+    @Override
+    public List<DisAppraise> checkDisAppraise_Manage(Integer mId, Integer classId, Integer number) {
+        return disAppraiseDao.checkDisAppraise_Manage(mId,classId,number);
+    }
 }

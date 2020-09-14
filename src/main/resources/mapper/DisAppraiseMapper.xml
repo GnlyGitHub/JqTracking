@@ -49,4 +49,11 @@
             <result column="tId" property="tId"></result>
         </association>
     </resultMap>
+    <insert id="insertDisAppraise_Manage">
+        insert into disappraise(appraiseid,classid,mid,number) values (#{appraiseId},#{classId},#{mId},#{number})
+    </insert>
+    <select id="checkDisAppraise_Manage" resultType="DisAppraise">
+        select id,appraiseid,classid,mid,number from disappraise
+        where classid=#{classId} and mId=#{mId} and number=#{number}
+    </select>
 </mapper>

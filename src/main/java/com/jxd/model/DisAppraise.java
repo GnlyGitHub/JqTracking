@@ -28,6 +28,13 @@ public class DisAppraise {
         return appraises;
     }
 
+    public DisAppraise(Integer appraiseId, Integer classId, Integer mId, Integer number) {
+        this.appraiseId = appraiseId;
+        this.classId = classId;
+        this.mId = mId;
+        this.number = number;
+    }
+
     public void setAppraises(List<Appraise> appraises) {
         this.appraises = appraises;
     }
@@ -77,13 +84,6 @@ public class DisAppraise {
         this.classId = classId;
         this.mId = mId;
         this.number = number;
-    }
-
-    public DisAppraise(Integer id, Integer appraiseId, Integer classId, Integer mId) {
-        this.id = id;
-        this.appraiseId = appraiseId;
-        this.classId = classId;
-        this.mId = mId;
     }
 
     public DisAppraise(Integer appraiseId, Integer classId, Integer mId) {

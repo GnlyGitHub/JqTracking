@@ -26,4 +26,9 @@ public class ClassController {
         model.addAttribute("sClasses",list);
         return "studentAppraise";
     }
+    @ResponseBody
+    @RequestMapping("getAllClass_Manage")
+    public List<Class> getAllClass_Manage(){
+return classService.getAllClass_Manage();
+    }
 }
