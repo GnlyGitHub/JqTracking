@@ -20,6 +20,7 @@ public class ClassController {
     @Autowired
     IClassService classService;
 
+    //老师获取班级列表并转发到老师评价主页面
     @RequestMapping("/studentAppraise")
     public String studentAppraise_Teacher(Model model){
         List<Class> list = classService.getAllSClassBytId_Teacher(1001);

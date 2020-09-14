@@ -3,5 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.ISubjectDao">
 
-
+    <!--List<Subject> getSubjectByClassId_Teacher(Integer classId);-->
+    <select id="getSubjectByClassId_Teacher" resultType="subject">
+        select s.subjectid,s.subject
+        from subject s left join dissubject d on
+        s.subjectid = d.subjectid
+        where d.classid = #{classId}
+    </select>
 </mapper>
