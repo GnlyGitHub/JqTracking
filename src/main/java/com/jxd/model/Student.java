@@ -34,6 +34,29 @@ public class Student {
         this.aClass = aClass;
     }
 
+    public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry,
+                   String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate, Integer projectId, Class aClass) {
+        this.sId = sId;
+        this.sName = sName;
+        this.sSex = sSex;
+        this.sNation = sNation;
+        this.sBirthday = sBirthday;
+        this.sPlace = sPlace;
+        this.sMarry = sMarry;
+        this.sPhone = sPhone;
+        this.sIdCard = sIdCard;
+        this.sSchool = sSchool;
+        this.sMajor = sMajor;
+        this.sPhoto = sPhoto;
+        this.sRemarks = sRemarks;
+        this.sClass = sClass;
+        this.deptNo = deptNo;
+        this.jobId = jobId;
+        this.sHireDate = sHireDate;
+        this.projectId = projectId;
+        this.aClass = aClass;
+    }
+
     public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate, Integer projectId) {
         this.sId = sId;
         this.sName = sName;

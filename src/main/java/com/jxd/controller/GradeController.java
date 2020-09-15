@@ -16,6 +16,6 @@ public class GradeController {
     IGradeService gradeService;
     @RequestMapping("empAppraise_Manage")
     public String empAppraise_Manage(){
-        return "empAppraise";
+        return "empGrade";
     }
 }

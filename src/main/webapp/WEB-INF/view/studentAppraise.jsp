@@ -144,11 +144,25 @@
         table.on('tool(test)', function (obj) {
             var data = obj.data;//获取当前行数据
             var classId = data.sClass;
+            var sId = data.sId;
             //评论
             if (obj.event === 'appraise') {
-                location.href='studentAddAppraise?classId=' + classId
+                layer.open({
+                    type: 2,//弹出完整jsp，type=1：弹出隐藏div
+                    title: '添加评价',
+                    content: 'studentAddAppraise?classId=' + classId + '&sId=' + sId,
+                    shadeClose: true, //点击遮罩，关闭弹窗
+                    area: ['500px', '700px']
+                });
+                //location.href='studentAddAppraise?classId=' + classId + '&sId=' + sId
             } else if (obj.event === 'edit') {
-
+                layer.open({
+                    type: 2,//弹出完整jsp，type=1：弹出隐藏div
+                    title: '编辑评价',
+                    content: 'getAllScoreBySId_Teacher?sId=' + sId,
+                    shadeClose: true, //点击遮罩，关闭弹窗
+                    area: ['500px', '700px']
+                });
             } else if (obj.event === 'see') {
 
             }

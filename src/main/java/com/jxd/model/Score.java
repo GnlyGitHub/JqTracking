@@ -12,12 +12,28 @@ public class Score {
     private Integer subjectId;//课程id
     private String score;//成绩
     private String appraiser;//评价人
+    private String subject;
 
     public Score() {
     }
 
+    public Score(Integer sId, Integer subjectId, String score, String appraiser, String subject) {
+        this.sId = sId;
+        this.subjectId = subjectId;
+        this.score = score;
+        this.appraiser = appraiser;
+        this.subject = subject;
+    }
+
     public Score(Integer id, Integer sId, Integer subjectId, String score, String appraiser) {
         this.id = id;
+        this.sId = sId;
+        this.subjectId = subjectId;
+        this.score = score;
+        this.appraiser = appraiser;
+    }
+
+    public Score(Integer sId, Integer subjectId, String score, String appraiser) {
         this.sId = sId;
         this.subjectId = subjectId;
         this.score = score;
@@ -35,6 +51,14 @@ public class Score {
         this.sId = sId;
         this.subjectId = subjectId;
         this.score = score;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getAppraiser() {

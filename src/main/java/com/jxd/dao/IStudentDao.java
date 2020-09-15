@@ -66,4 +66,17 @@ public interface IStudentDao {
      * @return 是否修改成功
      */
     boolean editStudentById_admin(Student student);
+    /**
+     * @Description 根据筛选条件获得员工数量
+     *Param [classId, empName, empId, projectId]
+     * @return java.util.List<com.jxd.model.Student>
+     */
+    List<Student> GetAllSizeStudent_Manage(@Param("classId") Integer classId, @Param("empName")String empName, @Param("empId")String empId, @Param("projectId")Integer projectId);
+    /**
+     * @Description 得到每页的数据
+     *Param [classId, empName, empId, projectId, limit, page]
+     * @return java.util.List<com.jxd.model.Student>
+     */
+    List<Student> GetAllPageStudent_Manage(@Param("classId") Integer classId, @Param("empName")String empName, @Param("empId")String empId,
+                                           @Param("projectId")Integer projectId,@Param("limit") Integer limit,@Param("page") Integer page);
 }
