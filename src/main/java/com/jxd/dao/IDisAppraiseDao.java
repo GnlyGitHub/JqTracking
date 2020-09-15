@@ -32,4 +32,22 @@ public interface IDisAppraiseDao {
      * @return java.lang.Boolean
      */
     List<DisAppraise> checkDisAppraise_Manage(@Param("mId") Integer mId, @Param("classId") Integer classId,@Param("number") Integer number);
+    /**
+     * @Description 批量插入
+     *Param [list]
+     * @return boolean
+     */
+    boolean insertBatchDisAppraise_Manage(List<DisAppraise> list);
+    /**
+     * @Description 编辑批量删除
+     *Param [list]
+     * @return boolean
+     */
+    boolean delBatchDisAppraise_Manage( List<DisAppraise> list);
+    /**
+     * @Description 删除批量删除
+     *Param [list]
+     * @return boolean
+     */
+    boolean deleteDisAppraise_Manage(List<DisAppraise> list);
 }

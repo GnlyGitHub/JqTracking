@@ -9,6 +9,16 @@
 <html>
 <head>
     <title>员工评价表</title>
+    <link href="../../static/layui/css/layui.css" rel="stylesheet">
+    <script src="../../static/layui/layui.js"></script>
+    <style>
+        .layui-table-tool-self {
+            display: none;
+        }
+        .layui-icon-ok  {
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
 

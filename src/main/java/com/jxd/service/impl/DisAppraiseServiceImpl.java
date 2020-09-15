@@ -37,4 +37,19 @@ public class DisAppraiseServiceImpl implements IDisAppraiseService {
     public List<DisAppraise> checkDisAppraise_Manage(Integer mId, Integer classId, Integer number) {
         return disAppraiseDao.checkDisAppraise_Manage(mId,classId,number);
     }
+
+    @Override
+    public boolean insertBatchDisAppraise_Manage(List<DisAppraise> list) {
+        return disAppraiseDao.insertBatchDisAppraise_Manage(list);
+    }
+
+    @Override
+    public boolean delBatchDisAppraise_Manage(List<DisAppraise> list) {
+        return disAppraiseDao.delBatchDisAppraise_Manage(list);
+    }
+
+    @Override
+    public boolean deleteDisAppraise_Manage(List<DisAppraise> list) {
+        return disAppraiseDao.deleteDisAppraise_Manage(list);
+    }
 }

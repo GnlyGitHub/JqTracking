@@ -52,11 +52,6 @@
     三年
     {{# } }}
 </script>
-<script type="text/html" id="titleTp2">
-    {{#  if(true){ }}
-
-    {{# } }}
-</script>
 <script>
     layui.use(['table', 'layer','jquery'], function () {
         var table = layui.table;
@@ -115,16 +110,19 @@
                         layer.msg("请选择要删除的数据！")
                     } else {
                         layer.confirm('确定要删除吗？','删除评价表',function () {
-                            var ids = "";
+                            var ids = [];
                             for (var i = 0; i < data.length; i++) {
-                                ids +=data[i].id + ",";
+                                var disapp={}
+                                disapp.classId=data[i].classId;
+                                disapp.number=data[i].number;
+                                disapp.mId=${sessionScope.manage.mId}
+                                ids[i]=disapp
                             }
-                            ids = ids.substring(0, ids.length - 1);
                             $.ajax({
-                                url: 'deleteStudent',
+                                url: 'delDisAppraiseData_Manage',
                                 type: 'post',
                                 data: {
-                                    id: ids
+                                    delApp:JSON.stringify(ids)
                                 },
                                 success: function (data) {
                                     if (true==data) {
@@ -133,7 +131,7 @@
                                         layer.msg("删除失败")
                                     }
                                     table.reload("demo", function () {
-                                        url:'GetAllStudent'
+                                        url:'/GetAllAppraise_Manage/${sessionScope.manage.mId}'
                                     })
                                 },
                                 error: function () {
@@ -162,14 +160,17 @@
                 })
             } else if(layEvent === 'del'){
                 layer.confirm('确定要删除吗？','删除新闻',function () {
-                    var empNums = "";
-                    empNums +=data.mid + ",";
-                    empNums = empNums.substring(0, empNums.length - 1);
+                        var ids = [];
+                        var disapp={}
+                        disapp.classId=data.classId;
+                        disapp.number=data.number;
+                        disapp.mId=${sessionScope.manage.mId}
+                            ids[0]=disapp
                     $.ajax({
-                        url: 'DeleteMsgServlet',
+                        url: 'delDisAppraiseData_Manage',
                         type: 'post',
                         data: {
-                            mid: empNums
+                            delApp:JSON.stringify(ids)
                         },
                         success: function (data) {
                             if (data) {
@@ -178,7 +179,7 @@
                                 layer.msg("删除失败")
                             }
                             table.reload("demo", function () {
-                                url:'GetAllMsgServlet'
+                                url:'/GetAllAppraise_Manage/${sessionScope.manage.mId}'
                             })
                         },
                         error: function () {
@@ -200,7 +201,11 @@
                         title: '评价表编辑',
                         content: 'editDisAppraise_Manage?classId=' + classId+'&number='+number+'&className='+className+'&mId='+${sessionScope.manage.mId},
                         shadeClose: true,    //点击遮罩关闭弹框
-                        area: ['380px', '460px']
+                        area: ['380px', '460px'],
+                        end: function () {
+                            //最后来通过点击当前页按钮来刷新当前页
+                            $(".layui-laypage-btn").click();
+                        }
                     })
                 }
             }

@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IDisAppraiseDao">
-<select id="getAllSizeAppaise_Manage" resultMap="app1">
-    select DISTINCT c.classId classId,d.mid mid,d.number number
-    ,c.classname className,c.startDate startDate,c.endDate endDate,
-    c.tid tId from disappraise d
-    inner  join class c on c.classid=d.classid
-    where d.mid=#{manageId}
-     <if test="mname!=null and mname!=''">
-        and c.classname like '%' #{mname} '%'
+    <select id="getAllSizeAppaise_Manage" resultMap="app1">
+        select DISTINCT c.classId classId,d.mid mid,d.number number
+        ,c.classname className,c.startDate startDate,c.endDate endDate,
+        c.tid tId from disappraise d
+        inner join class c on c.classid=d.classid
+        where d.mid=#{manageId}
+        <if test="mname!=null and mname!=''">
+            and c.classname like '%' #{mname} '%'
         </if>
         order by d.classid desc,d.number desc
-</select>
+    </select>
     <resultMap id="app1" type="DisAppraise">
         <id column="id" property="id"></id>
         <result column="classId" property="classId"></result>
@@ -25,18 +25,18 @@
             <result column="tId" property="tId"></result>
         </association>
     </resultMap>
-<select id="getAllAppaise_Manage" resultMap="app2">
-    select DISTINCT c.classId classId,d.mid mid,d.number number
-    ,c.classname className,c.startDate startDate,c.endDate endDate,
-    c.tid tId from disappraise d
-    inner  join class c on c.classid=d.classid
-    where d.mid=#{manageId}
-    <if test="mname!=null and mname!=''">
-        and c.classname like '%' #{mname} '%'
-    </if>
-    order by d.classid desc,d.number desc
-    limit ${(page-1)*limit},${limit}
-</select>
+    <select id="getAllAppaise_Manage" resultMap="app2">
+        select DISTINCT c.classId classId,d.mid mid,d.number number
+        ,c.classname className,c.startDate startDate,c.endDate endDate,
+        c.tid tId from disappraise d
+        inner join class c on c.classid=d.classid
+        where d.mid=#{manageId}
+        <if test="mname!=null and mname!=''">
+            and c.classname like '%' #{mname} '%'
+        </if>
+        order by d.classid desc,d.number desc
+        limit ${(page-1)*limit},${limit}
+    </select>
     <resultMap id="app2" type="DisAppraise">
         <id column="id" property="id"></id>
         <result column="classId" property="classId"></result>
@@ -56,4 +56,21 @@
         select id,appraiseid,classid,mid,number from disappraise
         where classid=#{classId} and mId=#{mId} and number=#{number}
     </select>
+    <insert id="insertBatchDisAppraise_Manage">
+        insert into disappraise(appraiseid,classid,mid,number) values
+        <foreach collection="list" item="disappraise" separator=",">
+            (#{disappraise.appraiseId},#{disappraise.classId},#{disappraise.mId},#{disappraise.number})
+        </foreach>
+
+    </insert>
+    <delete id="delBatchDisAppraise_Manage">
+        <foreach collection="list" item="disappraise" separator=";" >
+            delete from disappraise where (appraiseid= #{disappraise.appraiseId} and classid=#{disappraise.classId} and number=#{disappraise.number} and mid=#{disappraise.mId})
+        </foreach>
+    </delete>
+    <delete id="deleteDisAppraise_Manage">
+        <foreach collection="list" item="disappraise" separator=";" >
+            delete from disappraise where (classid=#{disappraise.classId} and number=#{disappraise.number} and mid=#{disappraise.mId})
+        </foreach>
+    </delete>
 </mapper>
