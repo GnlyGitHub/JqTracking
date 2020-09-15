@@ -86,8 +86,8 @@ public class DisAppraise {
         this.number = number;
     }
 
-    public DisAppraise(Integer appraiseId, Integer classId, Integer mId) {
-        this.appraiseId = appraiseId;
+    public DisAppraise(Integer number, Integer classId, Integer mId) {
+        this.number = number;
         this.classId = classId;
         this.mId = mId;
     }

@@ -130,10 +130,10 @@
                         success: function (data) {
                             if (true == data) {
                                 layer.msg("编辑成功", {icon: 6, time: 1500});
-                                setTimeout('closeAdd()', 1000)
+                                setTimeout('close()', 1000)
                             } else {
                                 layer.msg("编辑失败", {icon: 5, time: 1500})
-                                setTimeout('closeAdd()', 1000)
+                                setTimeout('close()', 1000)
                             }
                         },
                         error: function () {
@@ -146,8 +146,10 @@
                 }
             })
         });
-    var closeAdd = function () {
-        parent.location.reload();//刷新父页面
+    //关闭当前层
+    var close = function () {
+        var index = parent.layer.getFrameIndex(window.name);//获取当前iframe层的索引
+        parent.layer.close(index);
     }
 </script>
 </body>
