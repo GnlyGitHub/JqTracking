@@ -8,6 +8,8 @@ import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -134,4 +136,22 @@ public class StudentController {
         map.put("msg", "");
         return map;
     }
+    @RequestMapping("GetAllStudent_Manage/{projectId}")
+    @ResponseBody
+     public JSONObject GetAllStudent_Manage(Integer classId, String empName, String empId, @PathVariable("projectId") Integer projectId, Integer limit, Integer page){
+            List<Student> list=studentService.GetAllSizeStudent_Manage(classId,empName,empId,projectId);
+            List<Student> list1=studentService.GetAllPageStudent_Manage(classId,empName,empId,projectId,limit,page);
+            JSONArray jsonArray=JSONArray.fromObject(list1);
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("code",0);
+            jsonObject.put("msg","");
+            jsonObject.put("count",list.size());
+            jsonObject.put("data",jsonArray);
+            return jsonObject;
+     }
+     @RequestMapping("detailEmpMsg_Manage")
+     public String detailEmpMsg_Manage(){
+
+        return "empDetailMsg";
+     }
 }

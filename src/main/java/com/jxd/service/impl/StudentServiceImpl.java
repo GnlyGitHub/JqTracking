@@ -58,4 +58,14 @@ public class StudentServiceImpl implements IStudentService {
         return studentDao.editStudentById_admin(student);
     }
 
+    @Override
+    public List<Student> GetAllSizeStudent_Manage(Integer classId, String empName, String empId, Integer projectId) {
+        return studentDao.GetAllSizeStudent_Manage(classId,empName,empId,projectId);
+    }
+
+    @Override
+    public List<Student> GetAllPageStudent_Manage(Integer classId, String empName, String empId, Integer projectId, Integer limit, Integer page) {
+        return studentDao.GetAllPageStudent_Manage(classId,empName,empId,projectId,limit,page);
+    }
+
 }

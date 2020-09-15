@@ -70,4 +70,16 @@ public interface IStudentService {
      * @return 是否修改成功
      */
     boolean editStudentById_admin(Student student);
+    /**
+     * @Description 根据筛选条件获得员工数量
+     *Param [classId, empName, empId, projectId]
+     * @return java.util.List<com.jxd.model.Student>
+     */
+    List<Student> GetAllSizeStudent_Manage(Integer classId, String empName, String empId, Integer projectId);
+    /**
+     * @Description 得到每页的数据
+     *Param [classId, empName, empId, projectId, limit, page]
+     * @return java.util.List<com.jxd.model.Student>
+     */
+    List<Student> GetAllPageStudent_Manage(Integer classId, String empName, String empId, Integer projectId,Integer limit, Integer page);
 }

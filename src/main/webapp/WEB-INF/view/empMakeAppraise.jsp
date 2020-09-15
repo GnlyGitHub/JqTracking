@@ -62,7 +62,7 @@
             elem: '#demo'
             , toolbar: '#toolbarDemo'//添加工具栏
             , height: 400
-            , width: 650
+            , width: 550
             ,even:true
             , url: '/GetAllAppraise_Manage/${sessionScope.manage.mId}' //数据接口
             , page: true //开启分页
