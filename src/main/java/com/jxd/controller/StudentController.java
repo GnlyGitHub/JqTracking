@@ -1,6 +1,8 @@
 package com.jxd.controller;
 
+import com.jxd.model.Job;
 import com.jxd.model.Student;
+import com.jxd.service.IJobService;
 import com.jxd.service.IStudentService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -31,6 +33,8 @@ import static java.util.UUID.randomUUID;
 public class StudentController {
     @Autowired
     IStudentService studentService;
+    @Autowired
+    IJobService jobService;
 
     @RequestMapping("/adminStudentList")
     public String adminStudentList() {
@@ -40,6 +44,11 @@ public class StudentController {
     @RequestMapping("/adminAddStudent")
     public String adminAddStudent(){
         return "adminAddStudent";
+    }
+
+    @RequestMapping("/adminEditStudent")
+    public String adminEditStudent(){
+        return "adminEditStudent";
     }
 
     @RequestMapping("/getAllStudent_Teacher")
@@ -102,9 +111,6 @@ public class StudentController {
                 dateStr = simpleDateFormat.format(date);
                 String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
                 File files = new File(filepath);
-
-                //打印查看上传路径
-                System.out.println(filepath);
                 if (!files.getParentFile().exists()) {
                     files.getParentFile().mkdirs();
                 }
@@ -114,7 +120,7 @@ public class StudentController {
                 map.put("code", 0);
                 map.put("msg", "");
                 map.put("data", map2);
-                map2.put("src", "/images/" + dateStr + "/" + uuid + "." + prefix);
+                map2.put("src", "/img/" + dateStr + "/" + uuid + "." + prefix);
                 return map;
             }
         } catch (Exception e) {
@@ -133,5 +139,46 @@ public class StudentController {
         map.put("code", 1);
         map.put("msg", "");
         return map;
+    }
+
+    @RequestMapping(value = "/getAllJobByDeptNo_admin", produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String getAllJobByDeptNo_admin(Integer deptNo){
+        List<Job> list = jobService.getAllJobByDeptNo_admin(deptNo);
+        JSONArray jsonArray = JSONArray.fromObject(list);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count", list.size());
+        jsonObject.put("data", jsonArray);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping("/addStudent_admin")
+    @ResponseBody
+    public String addStudent_admin(Student student){
+        boolean isAdd = studentService.addStudent_admin(student);
+        return String.valueOf(isAdd);
+    }
+
+    @RequestMapping("/editStudentById_admin")
+    @ResponseBody
+    public String editStudentById_admin(Student student){
+        boolean isEdit = studentService.editStudentById_admin(student);
+        return String.valueOf(isEdit);
+    }
+
+    @RequestMapping("/getStudentById_admin")
+    @ResponseBody
+    public Student getStudentById_admin(Integer sId){
+        Student student = studentService.getStudentById_admin(sId);
+        return student;
+    }
+
+    @RequestMapping("/delStudentById_admin")
+    @ResponseBody
+    public String delStudentById_admin(Integer sId){
+        boolean isDel = studentService.delStudent_admin(sId);
+        return String.valueOf(isDel);
     }
 }

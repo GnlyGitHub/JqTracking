@@ -22,4 +22,34 @@ public class AppraiseServiceImpl implements IAppraiseService {
     public List<Appraise> getAllAppraise_Manage() {
         return appraiseDao.getAllAppraise_Manage();
     }
+
+    @Override
+    public List<Appraise> getAllAppraise_admin(String appraise) {
+        return appraiseDao.getAllAppraise_admin(appraise);
+    }
+
+    @Override
+    public List<Appraise> getAppraise_admin(Integer pageSize, Integer pageIndex, String appraise) {
+        return appraiseDao.getAppraise_admin(pageSize,pageIndex,appraise);
+    }
+
+    @Override
+    public boolean addAppraise_admin(Appraise appraise) {
+        return appraiseDao.addAppraise_admin(appraise);
+    }
+
+    @Override
+    public boolean delAppraise_admin(Integer appraiseId) {
+        return appraiseDao.delAppraise_admin(appraiseId);
+    }
+
+    @Override
+    public Appraise getAppraiseById_admin(Integer appraiseId) {
+        return appraiseDao.getAppraiseById_admin(appraiseId);
+    }
+
+    @Override
+    public boolean editAppraiseById_admin(Appraise appraise) {
+        return appraiseDao.editAppraiseById_admin(appraise);
+    }
 }

@@ -183,7 +183,7 @@
                         title:'添加学生',
                         content:'adminAddStudent',
                         shadeClose:true,
-                        area:['455px','510px']
+                        area:['700px','500px']
                     });
                     break;
             }
@@ -195,9 +195,9 @@
                 layer.open({
                     type:2,
                     title:'修改学生信息',
-                    content:"adminEditStudent?sId=" + data.sId,
+                    content:"adminEditStudent?sId=" + data.sId + "&sPlace=" + data.sPlace,
                     shadeClose:true,
-                    area:['455px','500px'],
+                    area:['700px','500px'],
                     end:function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();
