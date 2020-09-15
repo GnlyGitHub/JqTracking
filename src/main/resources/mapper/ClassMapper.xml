@@ -9,6 +9,12 @@
         from class
         where tid=#{tid} order by classId desc
     </select>
+
+    <!--List<Class> getAllClass_admin();-->
+    <select id="getAllClass_admin" resultType="Class">
+        select classId,className,startDate,endDate,tId
+        from class
+    </select>
 <select id="getAllClass_Manage" resultType="Class">
      select classId,className,startDate,endDate,tid
         from class

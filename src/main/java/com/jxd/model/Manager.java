@@ -13,6 +13,24 @@ public class Manager {
     private String mBirthday;//生日
     private Integer deptNo;//部门编号
     private Integer projectId;//项目编号
+    private Dept dept;//部门
+    private Project project;//项目
+
+    public Dept getDept() {
+        return dept;
+    }
+
+    public void setDept(Dept dept) {
+        this.dept = dept;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public Manager(Integer mId, String mName, Integer mSex, String mPhone, String mBirthday, Integer deptNo, Integer projectId) {
         this.mId = mId;

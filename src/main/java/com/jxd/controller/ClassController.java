@@ -2,6 +2,8 @@ package com.jxd.controller;
 
 import com.jxd.model.Class;
 import com.jxd.service.IClassService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,5 +33,18 @@ public class ClassController {
     @RequestMapping("getAllClass_Manage")
     public List<Class> getAllClass_Manage(){
 return classService.getAllClass_Manage();
+    }
+
+    @RequestMapping(value = "/getAllClass_admin", produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String getAllClass_admin(){
+        List<Class> list = classService.getAllClass_admin();
+        JSONArray jsonArray = JSONArray.fromObject(list);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("count",list.size());
+        jsonObject.put("data",jsonArray);
+        return jsonObject.toString();
     }
 }

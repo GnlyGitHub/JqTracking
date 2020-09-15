@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IProjectDao">
+    <!--List<Project> getAllProject_admin();-->
+    <select id="getAllProject_admin" resultType="Project">
+        select projectId, projectName, deptNo from project
+    </select>
 
+    <!--List<Project> getProjectByDeptNo_admin(Integer deptNo);-->
+    <select id="getProjectByDeptNo_admin" resultType="Project">
+        select projectId, projectName, deptNo from project
+        where deptNo=#{deptNo}
+    </select>
 
 </mapper>

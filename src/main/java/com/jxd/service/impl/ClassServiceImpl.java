@@ -24,6 +24,11 @@ public class ClassServiceImpl implements IClassService {
     }
 
     @Override
+    public List<Class> getAllClass_admin() {
+        return classDao.getAllClass_admin();
+    }
+
+    @Override
     public List<Class> getAllClass_Manage() {
         return classDao.getAllClass_Manage();
     }
