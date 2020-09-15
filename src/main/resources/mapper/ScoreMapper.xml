@@ -3,5 +3,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IScoreDao">
 
+    <!--boolean addScore_Teacher(boolean addScore_Teacher(List<Score> list););-->
+    <insert id="addScore_Teacher">
+        insert into score(sId,subjectId,score,appraiser)
+        values
+        <foreach collection="list" item="score" separator=",">
+            (#{score.sId},#{score.subjectId},#{score.score},#{score.appraiser})
+        </foreach>
+    </insert>
 
+    <!--boolean editScore_Teacher(List<Score> list);-->
+    <update id="editScore_Teacher">
+        <foreach collection="list" item="sc" separator=";">
+            update score set
+            score=#{sc.score}
+            where sId=#{sc.sId} and subjectId=#{sc.subjectId}
+        </foreach>
+    </update>
+
+    <!--List<Score> getScoreBySId_Teacher(Integer sId);-->
+    <select id="getScoreBySId_Teacher" resultType="Score">
+        select sc.sId, sc.subjectId, sc.score, sc.appraiser, su.subjectId, su.subject
+        from score sc left join subject su
+        on sc.subjectId = su.subjectId
+        where sc.Sid = #{sId}
+    </select>
 </mapper>

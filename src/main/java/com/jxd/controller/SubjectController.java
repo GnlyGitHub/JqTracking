@@ -21,9 +21,10 @@ public class SubjectController {
 
     //老师获取评分项转发至评分页面
     @RequestMapping("/studentAddAppraise")
-    public String studentAddAppraise_Teacher(Integer classId,Model model){
+    public String studentAddAppraise_Teacher(Integer classId,Integer sId,Model model){
         List<Subject> list =  subjectService.getSubjectByClassId_Teacher(classId);
         model.addAttribute("list",list);
+        model.addAttribute("sId",sId);
         return "studentAddAppraise";
     }
 }

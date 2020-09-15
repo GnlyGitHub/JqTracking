@@ -2,47 +2,47 @@
 <%--
   Created by IntelliJ IDEA.
   User: ANA
-  Date: 2020/9/14
-  Time: 9:00
+  Date: 2020/9/15
+  Time: 15:15
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>评论</title>
+    <title>评分编辑页面</title>
     <link href="../../static/layui/css/layui.css" rel="stylesheet">
     <script src="../../static/layui/layui.js"></script>
 </head>
 <body>
 <div style="display: flex;justify-content: center">
-<div class="layui-form" action="">
-    <c:forEach var="i" items="${list}">
-        <c:choose>
-            <c:when test="${i.subject eq '评价'}">
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">${i.subject}</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="${i.subjectId}" placeholder="请输入评价内容" class="layui-textarea"></input>
+    <div class="layui-form" action="">
+        <c:forEach var="i" items="${list}">
+            <c:choose>
+                <c:when test="${i.subject eq '评价'}">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">${i.subject}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="${i.subjectId}" value="${i.score}" class="layui-textarea"></input>
+                        </div>
                     </div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">${i.subject}</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="${i.subjectId}" required lay-verify="required" placeholder="请输入成绩" autocomplete="off" class="layui-input">
+                </c:when>
+                <c:otherwise>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">${i.subject}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="${i.subjectId}" required lay-verify="required" value="${i.score}" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
-                </div>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" id="formDemo" lay-submit lay-filter="formDemo">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="formDemo" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <script>
@@ -75,19 +75,19 @@
                 var postData = JSON.stringify(array);
 
                 $.ajax({
-                    url:"addAppraise_Teacher",
+                    url:"editAppraise_Teacher",
                     type:"post",
                     datatype : "json",
                     data : {
-                        sId:${sId},
+                        sId:${list[0].sId},
                         postData:postData
                     },
                     success:function (data) {
                         if(data){
-                            layer.msg("评价成功");
+                            layer.msg("编辑成功");
                             setTimeout('closeAdd()',1000);
                         }else {
-                            layer.msg("评价失败");
+                            layer.msg("编辑失败");
                             setTimeout('closeAdd()',1000);
                         }
                     },

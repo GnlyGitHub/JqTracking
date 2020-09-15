@@ -4,33 +4,73 @@
 <mapper namespace="com.jxd.dao.IStudentDao">
 
     <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
-    <select id="getAllStudent_Teacher" resultType="Student">
-        select sId,sName,sSex,sSchool,sMajor,sClass from student
+    <select id="getAllStudent_Teacher" resultMap="getAllStudent_TeacherMap">
+        select
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
+        from student s, class c
         <where>
+            <if test="true">
+                s.sClass=c.classId
+            </if>
             <if test="sClass != null and sClass != ''">
-                sClass = #{sClass}
+                and s.sClass=#{sClass}
             </if>
             <if test="sName != null and sName != ''">
-                and sName like '%' #{sName} '%'
+                and s.sName like '%' #{sName} '%'
             </if>
         </where>
-        order by sid desc
+        order by s.sId desc
     </select>
+    <resultMap id="getAllStudent_TeacherMap" type="Student">
+        <id column="sId" property="sId"></id>
+        <result column="sName" property="sName"></result>
+        <result column="sSex" property="sSex"></result>
+        <result column="sBirthday" property="sBirthday"></result>
+        <result column="sPhone" property="sPhone"></result>
+        <result column="sSchool" property="sSchool"></result>
+        <result column="sMajor" property="sMajor"></result>
+        <result column="sPlace" property="sPlace"></result>
+        <result column="sClass" property="sClass"></result>
+        <association property="aClass" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+        </association>
+    </resultMap>
 
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
-    <select id="getAllStudentByPage_Teacher" resultType="Student">
-        select sId,sName,sSex,sSchool,sMajor,sClass from student
+    <select id="getAllStudentByPage_Teacher" resultMap="getAllStudentByPage_TeacherMap">
+        select
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
+        from student s, class c
         <where>
+            <if test="true">
+                s.sClass=c.classId
+            </if>
             <if test="sClass != null and sClass != ''">
-                sClass = #{sClass}
+                and s.sClass=#{sClass}
             </if>
             <if test="sName != null and sName != ''">
-                and sName like '%' #{sName} '%'
+                and s.sName like '%' #{sName} '%'
             </if>
         </where>
-        order by sid desc
+        order by s.sId desc
         limit ${pageSize * (pageIndex - 1)}, ${pageSize}
     </select>
+    <resultMap id="getAllStudentByPage_TeacherMap" type="Student">
+        <id column="sId" property="sId"></id>
+        <result column="sName" property="sName"></result>
+        <result column="sSex" property="sSex"></result>
+        <result column="sBirthday" property="sBirthday"></result>
+        <result column="sPhone" property="sPhone"></result>
+        <result column="sSchool" property="sSchool"></result>
+        <result column="sMajor" property="sMajor"></result>
+        <result column="sPlace" property="sPlace"></result>
+        <result column="sClass" property="sClass"></result>
+        <association property="aClass" javaType="Class">
+            <id column="classId" property="classId"></id>
+            <result column="className" property="className"></result>
+        </association>
+    </resultMap>
 
     <!--List<Student> getAllStudent_admin(@Param("sClass") Integer sClass, @Param("sName") String sName);-->
     <select id="getAllStudent_admin" resultMap="getAllStudentAdminMap">
