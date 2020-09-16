@@ -10,4 +10,46 @@
         s.subjectid = d.subjectid
         where d.classid = #{classId}
     </select>
+
+    <!--List<Subject> getAllSubject_admin(String subject);-->
+    <select id="getAllSubject_admin" resultType="Subject">
+        select subjectId, subject from subject
+        <if test="subject != null and subject != ''">
+            where subject like '%' #{subject} '%'
+        </if>
+        order by subjectId desc
+    </select>
+
+    <!--List<Subject> getSubject_admin(Integer pageSize, Integer pageIndex, String subject);-->
+    <select id="getSubject_admin" resultType="Subject">
+        select subjectId, subject from subject
+        <if test="subject != null and subject != ''">
+            where subject like '%' #{subject} '%'
+        </if>
+        order by subjectId desc
+        limit ${pageSize * (pageIndex - 1)}, ${pageSize}
+    </select>
+
+    <!--boolean addSubject_admin(Subject subject);-->
+    <insert id="addSubject_admin">
+        insert into subject (subjectId, subject) values (#{subjectId}, #{subject})
+    </insert>
+
+    <!--boolean delSubject_admin(Integer subjectId);-->
+    <delete id="delSubject_admin">
+        delete from subject where subjectId=#{subjectId}
+    </delete>
+
+    <!--Subject getSubjectById_admin(Integer subjectId);-->
+    <select id="getSubjectById_admin" resultType="Subject">
+        select subjectId, subject
+        from subject
+        where subjectId=#{subjectId}
+    </select>
+
+    <!--boolean editSubjectById_admin(Subject subject);-->
+    <update id="editSubjectById_admin">
+        update subject set subject=#{subject}
+        where subjectId=#{subjectId}
+    </update>
 </mapper>

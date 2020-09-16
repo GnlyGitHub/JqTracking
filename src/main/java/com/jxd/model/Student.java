@@ -25,6 +25,8 @@ public class Student {
     private String sHireDate;//入职日期
     private Integer projectId;//项目编号
     private Class aClass;//班期
+    private Integer scoreState;//老师评分状态
+    private Integer appraiseState;//经理评价状态
 
     public Class getaClass() {
         return aClass;
@@ -97,6 +99,30 @@ public class Student {
         this.jobId = jobId;
         this.sHireDate = sHireDate;
         this.projectId = projectId;
+    }
+
+    public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry, String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate, Integer projectId, Class aClass, Integer scoreState, Integer appraiseState) {
+        this.sId = sId;
+        this.sName = sName;
+        this.sSex = sSex;
+        this.sNation = sNation;
+        this.sBirthday = sBirthday;
+        this.sPlace = sPlace;
+        this.sMarry = sMarry;
+        this.sPhone = sPhone;
+        this.sIdCard = sIdCard;
+        this.sSchool = sSchool;
+        this.sMajor = sMajor;
+        this.sPhoto = sPhoto;
+        this.sRemarks = sRemarks;
+        this.sClass = sClass;
+        this.deptNo = deptNo;
+        this.jobId = jobId;
+        this.sHireDate = sHireDate;
+        this.projectId = projectId;
+        this.aClass = aClass;
+        this.scoreState = scoreState;
+        this.appraiseState = appraiseState;
     }
 
     public Integer getProjectId() {
@@ -244,5 +270,21 @@ public class Student {
 
     public void setsHireDate(String sHireDate) {
         this.sHireDate = sHireDate;
+    }
+
+    public Integer getScoreState() {
+        return scoreState;
+    }
+
+    public void setScoreState(Integer scoreState) {
+        this.scoreState = scoreState;
+    }
+
+    public Integer getAppraiseState() {
+        return appraiseState;
+    }
+
+    public void setAppraiseState(Integer appraiseState) {
+        this.appraiseState = appraiseState;
     }
 }

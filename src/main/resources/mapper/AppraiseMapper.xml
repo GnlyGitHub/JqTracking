@@ -6,4 +6,42 @@
     select appraiseId,appraise from appraise where appraiseid not in(9,10)
 </select>
 
+    <!--List<Appraise> getAllAppraise_admin(@Param("appraise") String appraise);-->
+    <select id="getAllAppraise_admin" resultType="Appraise">
+        select appraiseId, appraise from appraise
+        <if test="appraise != null and appraise != ''">
+            where appraise like '%' #{appraise} '%'
+        </if>
+        order by appraiseId desc
+    </select>
+
+    <!--List<Appraise> getAppraise_admin(@Param("pageSize") Integer pageSize, @Param("pageIndex") Integer pageIndex, @Param("appraise") String appraise);-->
+    <select id="getAppraise_admin" resultType="Appraise">
+        select appraiseId, appraise from appraise
+        <if test="appraise != null and appraise != ''">
+            where appraise like '%' #{appraise} '%'
+        </if>
+        order by appraiseId desc
+        limit ${pageSize * (pageIndex - 1)}, ${pageSize}
+    </select>
+
+    <!--boolean addAppraise_admin(Appraise appraise);-->
+    <insert id="addAppraise_admin">
+        insert into appraise(appraiseId,appraise) values (#{appraiseId},#{appraise})
+    </insert>
+
+    <!--boolean delAppraise_admin(Integer appraiseId);-->
+    <delete id="delAppraise_admin">
+        delete from appraise where appraiseId=#{appraiseId}
+    </delete>
+
+    <!--Appraise getAppraiseById_admin(Integer appraiseId);-->
+    <select id="getAppraiseById_admin" resultType="Appraise">
+        select appraiseId, appraise from appraise where appraiseId=#{appraiseId}
+    </select>
+
+    <!--boolean editAppraiseById_admin(Appraise appraise);-->
+    <update id="editAppraiseById_admin">
+        update appraise set appraise=#{appraise} where appraiseId=#{appraiseId}
+    </update>
 </mapper>

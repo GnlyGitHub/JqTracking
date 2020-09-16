@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: liangyurj
-  Date: 2020/9/14
-  Time: 23:29
+  Date: 2020/9/15
+  Time: 14:15
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>添加学生</title>
+    <title>修改学生信息</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
 </head>
@@ -71,26 +71,35 @@
                     </div>
                 </td>
             </tr>
+            <%
+                String sPlace = request.getParameter("sPlace");
+                //String sPlace = "山东省青岛市崂山区";
+                int proIndex = sPlace.indexOf("省");
+                int cityIndex = sPlace.indexOf("市");
+                String province = sPlace.substring(0, proIndex+1);
+                String city = sPlace.substring(proIndex+1, cityIndex+1);
+                String county = sPlace.substring(cityIndex+1);
+            %>
             <tr>
                 <td colspan="2">
-                        <div class="layui-form-item" id="area-picker">
-                            <div class="layui-form-label">籍贯</div>
-                            <div class="layui-input-inline" style="width: 160px;">
-                                <select name="province" id="province" class="province-selector" data-value="山东省" lay-filter="province-1">
-                                    <option value="">请选择省</option>
-                                </select>
-                            </div>
-                            <div class="layui-input-inline" style="width: 160px;">
-                                <select name="city" id="city" class="city-selector" data-value="济南市" lay-filter="city-1">
-                                    <option value="">请选择市</option>
-                                </select>
-                            </div>
-                            <div class="layui-input-inline" style="width: 160px;">
-                                <select name="county" id="county" class="county-selector" data-value="历下区" lay-filter="county-1">
-                                    <option value="">请选择区</option>
-                                </select>
-                            </div>
+                    <div class="layui-form-item" id="area-picker">
+                        <div class="layui-form-label">籍贯</div>
+                        <div class="layui-input-inline" style="width: 160px;">
+                            <select name="province" id="province" class="province-selector" data-value="<%=province%>" lay-filter="province-1">
+                                <option value="">请选择省</option>
+                            </select>
                         </div>
+                        <div class="layui-input-inline" style="width: 160px;">
+                            <select name="city" id="city" class="city-selector" data-value="<%=city%>" lay-filter="city-1">
+                                <option value="">请选择市</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" style="width: 160px;">
+                            <select name="county" id="county" class="county-selector" data-value="<%=county%>" lay-filter="county-1">
+                                <option value="">请选择区</option>
+                            </select>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -226,6 +235,7 @@
         var $ = layui.$;
         var upload = layui.upload;
         var layarea = layui.layarea;
+        var sId = ${param.sId};
 
         //向部门下拉框添加选项
         $.ajax({
@@ -277,7 +287,7 @@
             elem: '#area-picker',
             change: function (res) {
                 //选择结果
-                console.log(res);
+                //console.log(res);
             }
         });
 
@@ -298,7 +308,7 @@
                     return layer.msg('上传失败');
                 }
                 //上传成功
-                var demoText = $('#demoText');
+                //var demoText = $('#demoText');
                 //demoText.html('<span style="color: #4cae4c;">上传成功</span>');
                 var fileupload = $(".image");
                 fileupload.attr("value",res.data.src);
@@ -339,12 +349,80 @@
             }
         });
 
+        //获取学生信息
+        $.ajax({
+            url:"getStudentById_admin",
+            type:"get",
+            dataType:"json",
+            data:{
+                sId: sId
+            },
+            success:function(data){
+                var sPhoto = "../../static" + data.sPhoto;//获取照片路径
+
+                $("#sName").val(data.sName);
+                $("#sBirthday").val(data.sBirthday);
+                $("#sPhone").val(data.sPhone);
+                $("input[name=sSex][value='1']").attr("checked", data.sSex == 1 ? true : false);
+                $("input[name=sSex][value='2']").attr("checked", data.sSex == 2 ? true : false);
+                $("#sNation option[value=" + data.sNation + "]").attr("selected","selected");
+                $("#sPhoto").val(data.sPhoto);
+                $("#demo1").attr("src",sPhoto);
+                $("input[name=sMarry][value='1']").attr("checked", data.sMarry == 1 ? true : false);
+                $("input[name=sMarry][value='2']").attr("checked", data.sMarry == 2 ? true : false);
+                $("#sIdCard").val(data.sIdCard);
+                $("#sSchool").val(data.sSchool);
+                $("#sMajor").val(data.sMajor);
+                $("#sClass option[value=" + data.sClass + "]").attr("selected","selected");
+                $("#sHireDate").val(data.sHireDate);
+                $("#sRemarks").val(data.sRemarks);
+                $("#deptNo option[value=" + data.deptNo + "]").attr("selected","selected");
+
+                var jobId1 = data.jobId;
+                var projectId1 = data.projectId;
+                $.ajax({
+                    url: '/getProject_admin',
+                    dataType: 'json',
+                    data:{'state': 0, 'deptNo': data.deptNo},
+                    type: 'post',
+                    success: function (data) {
+                        projectId.options.length = 0;
+                        $.each(data.data, function (index, item) {
+                            $('#projectId').append(new Option(item.projectName, item.projectId));//下拉菜单里添加元素
+                        });
+                        $("#projectId option[value=" + projectId1 + "]").attr("selected","selected");
+                        layui.form.render("select");
+                    }
+                });
+                $.ajax({
+                    url: '/getAllJobByDeptNo_admin',
+                    dataType: 'json',
+                    data:{'state': 0, 'deptNo': data.deptNo},
+                    type: 'post',
+                    success: function (data) {
+                        jobId.options.length = 0;
+                        $.each(data.data, function (index, item) {
+                            $('#jobId').append(new Option(item.jobName, item.jobId));//下拉菜单里添加元素
+                        });
+                        $("#jobId option[value=" + jobId1 + "]").attr("selected","selected");
+                        layui.form.render("select");
+                    }
+                });
+                form.render();
+            },
+            error:function (data) {
+                layer.msg("执行失败");
+            }
+        });
+
+
         $("#sub").click(function () {
             var sPlace = $("#province").val() + $("#city").val() + $("#county").val();
             $.ajax({
-                url:'addStudent_admin',
+                url:'editStudentById_admin',
                 type:'post',
                 data:{
+                    "sId": sId,
                     "sName": $("#sName").val(),
                     "sSex": $('input[name="sSex"]:checked').val(),
                     "sBirthday": $("#sBirthday").val(),
@@ -366,11 +444,11 @@
                 dataType:'text',
                 success:function (data) {
                     if (data == "true"){
-                        layer.msg("添加成功");
-                        setTimeout('closeAdd()',1000)
+                        layer.msg("修改成功");
+                        setTimeout('close()',1000)
                     } else {
-                        layer.msg("添加失败");
-                        setTimeout('closeAdd()',1000)
+                        layer.msg("修改失败");
+                        setTimeout('close()',1000)
                     }
                 },
                 error:function () {
@@ -379,8 +457,10 @@
             })
         })
     });
-    var closeAdd = function () {
-        parent.location.reload();
+    //关闭当前弹框
+    var close = function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
     }
 </script>
 </body>

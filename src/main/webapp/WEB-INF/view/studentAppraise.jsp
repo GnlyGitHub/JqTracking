@@ -94,9 +94,14 @@
     </div>
 </script>
 <script type="text/html" id="barDemo">
-    <button class="layui-btn layui-btn-sm" lay-event="appraise">评价</button>
-    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
-    <button class="layui-btn layui-btn-sm" lay-event="see">查看</button>
+    {{# if (d.sHireDate !=="" && d.sHireDate !== null ){}}
+    <button name="app" class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">评价</button>
+    <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">编辑</button>
+    {{#  } else { }}
+    <button name="app" class="layui-btn layui-btn-xs" lay-event="appraise">评价</button>
+    <button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</button>
+    {{#}}}
+    <button class="layui-btn layui-btn-xs layui-btn-warm" lay-event="see">查看</button>
 </script>
 <script>
     layui.use(['element', 'table', 'layer', 'form'], function () {
@@ -123,6 +128,7 @@
                 , {field: 'sSchool', title: '学校', width: 200}
                 , {field: 'sMajor', title: '专业', width: 250}
                 , {field: 'sClass', title: '班期id', width: 250, hide:true}
+                , {field: 'sHireDate', title: '入职日期', width: 250, hide:true}
                 , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#barDemo'}
             ]]
         });
@@ -165,6 +171,8 @@
                 });
             } else if (obj.event === 'see') {
 
+            }else {
+                layer.msg("该员工已入职")
             }
         });
 
@@ -188,7 +196,6 @@
                 curr: 1
             }
         });
-
     });
 </script>
 </body>

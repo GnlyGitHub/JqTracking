@@ -14,7 +14,7 @@
     <script src="../../static/layui/layui.js"></script>
 </head>
 <body>
-<div style="display: flex;justify-content: center">
+<div style="display: flex;justify-content: center; margin-top: 50px">
 <div class="layui-form" action="">
     <c:forEach var="i" items="${list}">
         <c:choose>
@@ -36,10 +36,9 @@
             </c:otherwise>
         </c:choose>
     </c:forEach>
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="margin-top: 30px">
         <div class="layui-input-block">
             <button class="layui-btn" id="formDemo" lay-submit lay-filter="formDemo">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </div>

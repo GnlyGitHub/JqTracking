@@ -6,7 +6,7 @@
     <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
     <select id="getAllStudent_Teacher" resultMap="getAllStudent_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -31,6 +31,7 @@
         <result column="sMajor" property="sMajor"></result>
         <result column="sPlace" property="sPlace"></result>
         <result column="sClass" property="sClass"></result>
+        <result column="sHireDate" property="sHireDate"></result>
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
@@ -40,7 +41,7 @@
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
     <select id="getAllStudentByPage_Teacher" resultMap="getAllStudentByPage_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -66,6 +67,7 @@
         <result column="sMajor" property="sMajor"></result>
         <result column="sPlace" property="sPlace"></result>
         <result column="sClass" property="sClass"></result>
+        <result column="sHireDate" property="sHireDate"></result>
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
@@ -146,9 +148,16 @@
     <!--boolean addStudent_admin(Student student);-->
     <insert id="addStudent_admin">
         insert into student
-        (sName,sSex,sNation,sBirthday,sPlace,sMarry,sPhone,sIdCard,sSchool,sMajor,sPhoto,sRemarks,sClass,deptNo,jobId,sHireDate,projectId)
-        values
-        (#{sName},#{sSex},#{sNation},#{sBirthday},#{sPlace},#{sMarry},#{sPhone},#{sIdCard},#{sSchool},#{sMajor},#{sPhoto},#{sRemarks},#{sClass},#{deptNo},#{jobId},#{sHireDate},#{projectId})
+        <if test="sHireDate == ''">
+            (sName,sSex,sNation,sBirthday,sPlace,sMarry,sPhone,sIdCard,sSchool,sMajor,sPhoto,sRemarks,sClass,deptNo,jobId,projectId)
+            values
+            (#{sName},#{sSex},#{sNation},#{sBirthday},#{sPlace},#{sMarry},#{sPhone},#{sIdCard},#{sSchool},#{sMajor},#{sPhoto},#{sRemarks},#{sClass},#{deptNo},#{jobId},#{projectId})
+        </if>
+        <if test="sHireDate != ''">
+            (sName,sSex,sNation,sBirthday,sPlace,sMarry,sPhone,sIdCard,sSchool,sMajor,sPhoto,sRemarks,sClass,deptNo,jobId,sHireDate,projectId)
+            values
+            (#{sName},#{sSex},#{sNation},#{sBirthday},#{sPlace},#{sMarry},#{sPhone},#{sIdCard},#{sSchool},#{sMajor},#{sPhoto},#{sRemarks},#{sClass},#{deptNo},#{jobId},#{sHireDate},#{projectId})
+        </if>
     </insert>
 
     <!--boolean delStudent_admin(Integer sId);-->
@@ -166,9 +175,16 @@
     <!--boolean editStudentById_admin(Student student);-->
     <update id="editStudentById_admin">
         update student set
-        sName=#{sName},sSex=#{sSex},sNation=#{sNation},sBirthday=#{sBirthday},sPlace=#{sPlace},sMarry=#{sMarry},
-        sPhone=#{sPhone},sIdCard=#{sIdCard},sSchool=#{sSchool},sMajor=#{sMajor},sPhoto=#{sPhoto},sRemarks=#{sRemarks},
-        sClass=#{sClass},deptNo=#{deptNo},jobId=#{jobId},sHireDate=#{sHireDate},projectId=#{projectId}
+        <if test="sHireDate == ''">
+            sName=#{sName},sSex=#{sSex},sNation=#{sNation},sBirthday=#{sBirthday},sPlace=#{sPlace},sMarry=#{sMarry},
+            sPhone=#{sPhone},sIdCard=#{sIdCard},sSchool=#{sSchool},sMajor=#{sMajor},sPhoto=#{sPhoto},sRemarks=#{sRemarks},
+            sClass=#{sClass},deptNo=#{deptNo},jobId=#{jobId},projectId=#{projectId}
+        </if>
+        <if test="sHireDate != ''">
+            sName=#{sName},sSex=#{sSex},sNation=#{sNation},sBirthday=#{sBirthday},sPlace=#{sPlace},sMarry=#{sMarry},
+            sPhone=#{sPhone},sIdCard=#{sIdCard},sSchool=#{sSchool},sMajor=#{sMajor},sPhoto=#{sPhoto},sRemarks=#{sRemarks},
+            sClass=#{sClass},deptNo=#{deptNo},jobId=#{jobId},sHireDate=#{sHireDate},projectId=#{projectId}
+        </if>
         where sId=#{sId}
     </update>
 

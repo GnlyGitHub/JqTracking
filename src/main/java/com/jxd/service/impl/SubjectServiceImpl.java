@@ -22,4 +22,34 @@ public class SubjectServiceImpl implements ISubjectService {
     public List<Subject> getSubjectByClassId_Teacher(Integer classId) {
         return subjectDao.getSubjectByClassId_Teacher(classId);
     }
+
+    @Override
+    public List<Subject> getAllSubject_admin(String subject) {
+        return subjectDao.getAllSubject_admin(subject);
+    }
+
+    @Override
+    public List<Subject> getSubject_admin(Integer pageSize, Integer pageIndex, String subject) {
+        return subjectDao.getSubject_admin(pageSize, pageIndex, subject);
+    }
+
+    @Override
+    public boolean addSubject_admin(Subject subject) {
+        return subjectDao.addSubject_admin(subject);
+    }
+
+    @Override
+    public boolean delSubject_admin(Integer subjectId) {
+        return subjectDao.delSubject_admin(subjectId);
+    }
+
+    @Override
+    public Subject getSubjectById_admin(Integer subjectId) {
+        return subjectDao.getSubjectById_admin(subjectId);
+    }
+
+    @Override
+    public boolean editSubjectById_admin(Subject subject) {
+        return subjectDao.editSubjectById_admin(subject);
+    }
 }
