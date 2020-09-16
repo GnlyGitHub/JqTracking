@@ -27,15 +27,16 @@
     </style>
 </head>
 <body>
-<table border="1">
+<div align="center">
+<table border="1" style="text-align: center">
     <caption><h2>金桥学员成长跟踪表</h2></caption>
     <tr>
         <td class="t1">姓名</td>
-        <td colspan="2"></td>
+        <td colspan="2">${param.}</td>
         <td>性别</td>
         <td></td>
         <td>民族</td>
-        <td></td>
+        <td>han</td>
         <td rowspan="4">照片</td>
     </tr>
     <tr>
@@ -44,7 +45,7 @@
         <td>籍贯</td>
         <td></td>
         <td>婚否</td>
-        <td></td>
+        <td>han</td>
 
     </tr>
     <tr>
@@ -135,7 +136,7 @@
             <td></td>
             <td></td>
         </tr>
-        <tr>
+        <tr class="t3">
             <td class="t1 ">评价（包括主要优点及其缺陷）</td>
             <td colspan="7"></td>
         </tr>
@@ -195,5 +196,6 @@
         </tr>
     </div>
 </table>
+</div>
 </body>
 </html>

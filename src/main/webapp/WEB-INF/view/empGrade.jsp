@@ -126,9 +126,12 @@
                 layer.open({
                     type: 2, //弹出完整div，type：1弹出隐藏div
                     title: '员工资料查看',
-                    content: 'detailEmpMsg_Manage?data=' + data+'&mId=' +${sessionScope.manage.mId},
+                    content: 'detailEmpMsg_Manage?mId='+${sessionScope.manage.mId},
+                    data:{
+                        data:data
+                    },
                     shadeClose: true,    //点击遮罩关闭弹框
-                    area: ['380px', '460px']
+                    area: ['530px', '500px']
                 })
             } else if (layEvent === 'grade') {
                 layer.confirm('确定要删除吗？', '删除新闻', function () {

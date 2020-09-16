@@ -54,7 +54,7 @@
     </insert>
     <select id="checkDisAppraise_Manage" resultType="DisAppraise">
         select id,appraiseid,classid,mid,number from disappraise
-        where classid=#{classId} and mId=#{mId} and number=#{number}
+        where classid=#{classId} and mId=#{mId} and number=#{number} and appraiseid not in(9,10)
     </select>
     <insert id="insertBatchDisAppraise_Manage">
         insert into disappraise(appraiseid,classid,mid,number) values

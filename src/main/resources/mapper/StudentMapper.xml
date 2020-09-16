@@ -190,7 +190,7 @@
         s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
         s.splace sPlace,s.smarry sMarry,s.sPhone sPhone,s.sIdCard,s.sSchool sSchool,s.sMajor
         sMajor,s.sphoto sPhoto,s.sremarks sRemarks,s.sClass sClass,s.deptno deptNo,s.jobId jobId,s.shiredate sHireDate
-        ,s.projectId projectId,c.className className,c.classId classId
+        ,s.projectId projectId,s.appraiseState appraiseState,c.className className,c.classId classId
         from student s, class c where s.sClass=c.classId and s.projectId=#{projectId}
         <if test="classId != null and classId != ''">
             and s.sClass=#{classId}
@@ -222,6 +222,7 @@
         <result column="jobId" property="jobId"></result>
         <result column="sHireDate" property="sHireDate"></result>
         <result column="projectId" property="projectId"></result>
+        <result column="appraiseState" property="appraiseState"></result>
         <result column="sClass" property="sClass"></result>
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>

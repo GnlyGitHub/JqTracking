@@ -149,9 +149,5 @@ public class StudentController {
             jsonObject.put("data",jsonArray);
             return jsonObject;
      }
-     @RequestMapping("detailEmpMsg_Manage")
-     public String detailEmpMsg_Manage(){
 
-        return "empDetailMsg";
-     }
 }

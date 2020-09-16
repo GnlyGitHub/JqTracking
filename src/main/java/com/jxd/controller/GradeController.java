@@ -1,6 +1,8 @@
 package com.jxd.controller;
 
 import com.jxd.service.IGradeService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,5 +19,9 @@ public class GradeController {
     @RequestMapping("empAppraise_Manage")
     public String empAppraise_Manage(){
         return "empGrade";
+    }
+    @RequestMapping("detailEmpMsg_Manage")
+    public String detailEmpMsg_Manage(JSONObject data){
+        return "empDetailMsg";
     }
 }

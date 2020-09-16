@@ -60,10 +60,14 @@ public class DisAppraiseController {
         Integer classD = classId;
         Integer m = number;
         Boolean isInser = false;
+        List<DisAppraise> list=new ArrayList<>();
         for (int i = 0; i < appraises.size(); i++) {
             DisAppraise disAppraise = new DisAppraise(appraises.getInt(i), classD, md, m);
-            isInser = disAppraiseService.insertDisAppraise_Manage(disAppraise);
+            list.add(disAppraise);
         }
+        list.add(new DisAppraise(9,classD,md,m));
+        list.add(new DisAppraise(10,classD,md,m));
+        isInser=disAppraiseService.insertBatchDisAppraise_Manage(list);
         return isInser;
     }
 

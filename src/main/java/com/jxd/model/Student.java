@@ -35,7 +35,8 @@ public class Student {
     }
 
     public Student(Integer sId, String sName, Integer sSex, String sNation, String sBirthday, String sPlace, Integer sMarry,
-                   String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass, Integer deptNo, Integer jobId, String sHireDate, Integer projectId, Class aClass) {
+                   String sPhone, String sIdCard, String sSchool, String sMajor, String sPhoto, String sRemarks, Integer sClass,
+                   Integer deptNo, Integer jobId, String sHireDate, Integer projectId, Class aClass) {
         this.sId = sId;
         this.sName = sName;
         this.sSex = sSex;

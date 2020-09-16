@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IAppraiseDao">
 <select id="getAllAppraise_Manage" resultType="Appraise">
-    select appraiseId,appraise from appraise
+    select appraiseId,appraise from appraise where appraiseid not in(9,10)
 </select>
 
 </mapper>
