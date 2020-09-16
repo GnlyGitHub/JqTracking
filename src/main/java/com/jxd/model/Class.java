@@ -11,8 +11,18 @@ public class Class {
     private String startDate;//开课日期
     private String endDate;//结束日期
     private Integer tId;//老师id
+    private String tName;//老师姓名
 
     public Class() {
+    }
+
+    public Class(Integer classId, String className, String startDate, String endDate, Integer tId, String tName) {
+        this.classId = classId;
+        this.className = className;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.tId = tId;
+        this.tName = tName;
     }
 
     public Class(Integer classId, String className, String startDate, String endDate, Integer tId) {
@@ -21,6 +31,14 @@ public class Class {
         this.startDate = startDate;
         this.endDate = endDate;
         this.tId = tId;
+    }
+
+    public String gettName() {
+        return tName;
+    }
+
+    public void settName(String tName) {
+        this.tName = tName;
     }
 
     public Class(String className, String startDate, String endDate, Integer tId) {

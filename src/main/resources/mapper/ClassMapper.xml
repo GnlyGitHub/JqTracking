@@ -15,9 +15,60 @@
         select classId,className,startDate,endDate,tId
         from class
     </select>
-<select id="getAllClass_Manage" resultType="Class">
-     select classId,className,startDate,endDate,tid
-        from class
-        order by classId desc
-</select>
+
+    <select id="getAllClass_Manage" resultType="Class">
+         select classId,className,startDate,endDate,tid
+            from class
+            order by classId desc
+    </select>
+
+    <!--List<Class> getAllClasses_admin(String className);-->
+    <select id="getAllClasses_admin" resultType="Class">
+        select c.classId classId,c.className className,c.startDate startDate,c.endDate endDate,c.tId tId,
+        t.tName tName
+        from class c,teacher t
+        where t.tId=c.tId
+        <if test="className != '' and className != null">
+            and className like '%' #{className} '%'
+        </if>
+        order by c.classId desc
+    </select>
+
+    <!--List<Class> getClasses_admin(Integer pageSize, Integer pageIndex, String className);-->
+    <select id="getClasses_admin" resultType="Class">
+        select c.classId classId,c.className className,c.startDate startDate,c.endDate endDate,c.tId tId,
+        t.tName tName
+        from class c,teacher t
+        where t.tId=c.tId
+        <if test="className != '' and className != null">
+            and className like '%' #{className} '%'
+        </if>
+        order by c.classId desc
+        limit ${pageSize * (pageIndex - 1)}, ${pageSize}
+    </select>
+
+    <!--boolean addClass_admin(Class aClass);-->
+    <insert id="addClass_admin">
+        insert into class (className,startDate,endDate,tId)
+        values (#{className},#{startDate},#{endDate},#{tId})
+    </insert>
+
+    <!--boolean delClass_admin(Integer classId);-->
+    <delete id="delClass_admin">
+        delete from class where classId=#{classId}
+    </delete>
+
+    <!--Class getClassById_admin(Integer classId);-->
+    <select id="getClassById_admin" resultType="Class">
+        select c.classId classId,c.className className,c.startDate startDate,c.endDate endDate,c.tId tId,
+        t.tName tName
+        from class c,teacher t
+        where t.tId=c.tId and c.classId=#{classId}
+    </select>
+
+    <!--boolean editClassById_admin(Class aClass);-->
+    <update id="editClassById_admin">
+        update class set className=#{className},startDate=#{startDate},endDate=#{endDate},tId=#{tId}
+        where classId=#{classId}
+    </update>
 </mapper>

@@ -22,6 +22,11 @@ public class ClassController {
     @Autowired
     IClassService classService;
 
+    @RequestMapping("/adminClassList")
+    public String adminClassList(){
+        return "adminClassList";
+    }
+
     //老师获取班级列表并转发到老师评价主页面
     @RequestMapping("/studentAppraise")
     public String studentAppraise_Teacher(Model model){
@@ -46,5 +51,26 @@ return classService.getAllClass_Manage();
         jsonObject.put("count",list.size());
         jsonObject.put("data",jsonArray);
         return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "/getAllClasses_admin", produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String getAllClasses_admin(Integer limit, Integer page, String className){
+        List<Class> list = classService.getAllClasses_admin(className);
+        List<Class> list1 = classService.getClasses_admin(limit, page, className);
+        JSONArray jsonArray = JSONArray.fromObject(list1);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count", list.size());
+        jsonObject.put("data", jsonArray);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping("/delClassById_admin")
+    @ResponseBody
+    public String delClassById_admin(Integer classId){
+        boolean isDel = classService.delClass_admin(classId);
+        return String.valueOf(isDel);
     }
 }

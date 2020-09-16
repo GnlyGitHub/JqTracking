@@ -125,7 +125,7 @@ public class StudentController {
                 map.put("code", 0);
                 map.put("msg", "");
                 map.put("data", map2);
-                map2.put("src", "/img/" + dateStr + "/" + uuid + "." + prefix);
+                map2.put("src", "/static/img/" + dateStr + "/" + uuid + "." + prefix);
                 return map;
             }
         } catch (Exception e) {

@@ -358,7 +358,7 @@
                 sId: sId
             },
             success:function(data){
-                var sPhoto = "../../static" + data.sPhoto;//获取照片路径
+                var sPhoto = "../.." + data.sPhoto;//获取照片路径
 
                 $("#sName").val(data.sName);
                 $("#sBirthday").val(data.sBirthday);

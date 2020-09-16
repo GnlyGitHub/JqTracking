@@ -14,8 +14,9 @@
     <!--List<Subject> getAllSubject_admin(String subject);-->
     <select id="getAllSubject_admin" resultType="Subject">
         select subjectId, subject from subject
+        where subjectId not in (11,12)
         <if test="subject != null and subject != ''">
-            where subject like '%' #{subject} '%'
+            and subject like '%' #{subject} '%'
         </if>
         order by subjectId desc
     </select>
@@ -23,8 +24,9 @@
     <!--List<Subject> getSubject_admin(Integer pageSize, Integer pageIndex, String subject);-->
     <select id="getSubject_admin" resultType="Subject">
         select subjectId, subject from subject
+        where subjectId not in (11,12)
         <if test="subject != null and subject != ''">
-            where subject like '%' #{subject} '%'
+            and subject like '%' #{subject} '%'
         </if>
         order by subjectId desc
         limit ${pageSize * (pageIndex - 1)}, ${pageSize}
