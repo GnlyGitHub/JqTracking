@@ -32,8 +32,7 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="#">
-                    1001
-                    <%--${sessionScope.userame}--%>
+                    ${sessionScope.teacher.tName}
                 </a>
             </li>
             <li class="layui-nav-item"><a href="ALogoutServlet">退出</a></li>
@@ -45,7 +44,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-this"><a href="studentAppraise">学生评价</a></li>
-                <li class="layui-nav-item"><a href="">修改密码</a></li>
+                <li class="layui-nav-item"><a href="teacherRePwdTeacher">修改密码</a></li>
             </ul>
         </div>
     </div>
@@ -54,7 +53,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <div align="center">
-                <h1 style="margin: 30px 0px 20px 0px">学生列表</h1>
+
                 <form class="layui-form">
                 <div class="layui-form-item">
                     <label class="layui-form-label">班期:</label>
@@ -95,11 +94,17 @@
 </script>
 <script type="text/html" id="barDemo">
     {{# if (d.sHireDate !=="" && d.sHireDate !== null ){}}
-    <button name="app" class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">评价</button>
-    <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">编辑</button>
+    <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">评价</button>
+    <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">修改</button>
+    {{#  } else if(d.scoreState === 0) { }}
+    <button class="layui-btn layui-btn-xs " lay-event="appraise">评价</button>
+    <button class="layui-btn layui-btn-xs layui-btn-normal layui-btn-disabled" lay-event="disApp">修改</button>
+    {{#  } else if(d.scoreState !== 0) { }}
+    <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="app">评价</button>
+    <button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">修改</button>
     {{#  } else { }}
-    <button name="app" class="layui-btn layui-btn-xs" lay-event="appraise">评价</button>
-    <button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</button>
+    <button class="layui-btn layui-btn-xs" lay-event="appraise">评价</button>
+    <button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">修改</button>
     {{#}}}
     <button class="layui-btn layui-btn-xs layui-btn-warm" lay-event="see">查看</button>
 </script>
@@ -129,7 +134,8 @@
                 , {field: 'sMajor', title: '专业', width: 250}
                 , {field: 'sClass', title: '班期id', width: 250, hide:true}
                 , {field: 'sHireDate', title: '入职日期', width: 250, hide:true}
-                , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#barDemo'}
+                , {field: 'scoreState', title: '评价状态', width: 250, hide:true}
+                , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
             ]]
         });
         //头工具栏事件
@@ -171,8 +177,12 @@
                 });
             } else if (obj.event === 'see') {
 
-            }else {
+            }else if(obj.event ===  'dis'){
                 layer.msg("该员工已入职")
+            }else if(obj.event ===  'disApp') {
+                layer.msg("请先评价")
+            }else {
+                layer.msg("已评价")
             }
         });
 

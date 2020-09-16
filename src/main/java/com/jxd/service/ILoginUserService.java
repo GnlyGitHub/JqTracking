@@ -2,6 +2,8 @@ package com.jxd.service;
 
 import com.jxd.model.LoginUser;
 
+import java.util.List;
+
 public interface ILoginUserService {
     /**
      * 添加登录账户
@@ -23,4 +25,18 @@ public interface ILoginUserService {
      * @return 是否修改成功
      */
     boolean editLoginUser_admin(LoginUser loginUser);
+
+    /**
+     * @Description 登录验证
+     * @params [loginUser]
+     * @return java.util.List<com.jxd.model.LoginUser>
+     **/
+    List<LoginUser> loginCheck(LoginUser loginUser);
+
+    /**
+     * @Description 根据用户名查找密码
+     * @params [userId]
+     * @return java.lang.String
+     **/
+    String getPasswordById_Teacher(Integer userId);
 }

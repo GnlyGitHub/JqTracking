@@ -3,11 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IStudentDao">
 
+    <!--boolean updateScoreState(Integer sId);-->
+    <update id="updateScoreState_Teacher">
+        update student set scoreState='1'
+        where sId = #{sId}
+    </update>
+
     <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
     <select id="getAllStudent_Teacher" resultMap="getAllStudent_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
-        sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -33,6 +38,7 @@
         <result column="sPlace" property="sPlace"></result>
         <result column="sClass" property="sClass"></result>
         <result column="sHireDate" property="sHireDate"></result>
+        <result column="scoreState" property="scoreState"></result>
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
@@ -42,8 +48,7 @@
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
     <select id="getAllStudentByPage_Teacher" resultMap="getAllStudentByPage_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
-        sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -191,7 +196,7 @@
     </update>
 
     <select id="GetAllSizeStudent_Manage" resultType="Student">
-        select sid from student where projectId=#{projectId}
+        select sid from student where  projectId=#{projectId}
         <if test="classId != null and classId != ''">
             and sClass=#{classId}
         </if>
@@ -203,12 +208,12 @@
         </if>
     </select>
 
-    <select id="GetAllPageStudent_Manage" resultMap="stu_Manage">
+    <select id="GetAllPageStudent_Manage"  resultMap="stu_Manage">
         select
         s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
         s.splace sPlace,s.smarry sMarry,s.sPhone sPhone,s.sIdCard,s.sSchool sSchool,s.sMajor
         sMajor,s.sphoto sPhoto,s.sremarks sRemarks,s.sClass sClass,s.deptno deptNo,s.jobId jobId,s.shiredate sHireDate
-        ,s.projectId projectId,s.appraiseState appraiseState,c.className className,c.classId classId
+        ,s.projectId projectId,c.className className,c.classId classId
         from student s, class c where s.sClass=c.classId and s.projectId=#{projectId}
         <if test="classId != null and classId != ''">
             and s.sClass=#{classId}
@@ -219,7 +224,7 @@
         <if test="empId != null and empId != ''">
             and s.sId=#{empId}
         </if>
-        order by s.shiredate desc ,s.sclass desc,s.sId desc
+        order by s.shiredate desc ,s.sclass desc
         limit ${limit * (page - 1)}, ${limit}
     </select>
     <resultMap id="stu_Manage" type="Student">
@@ -240,18 +245,10 @@
         <result column="jobId" property="jobId"></result>
         <result column="sHireDate" property="sHireDate"></result>
         <result column="projectId" property="projectId"></result>
-        <result column="appraiseState" property="appraiseState"></result>
         <result column="sClass" property="sClass"></result>
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
         </association>
     </resultMap>
-    <select id="getStudentById_Manage" resultType="map">
-select  s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
-        s.splace sPlace,s.smarry sMarry,s.sPhone sPhone,s.sIdCard,s.sSchool sSchool,s.sMajor
-        sMajor,s.sphoto sPhoto,s.sremarks sRemarks,s.sClass sClass,s.deptno deptNo,s.jobId jobId,s.shiredate sHireDate
-        ,s.projectId projectId,d.deptname deptName,j.jobName jobName from student s,dept d,job j
-        where s.deptno=d.deptno and s.jobid=j.jobid and sid=#{sId}
-    </select>
 </mapper>

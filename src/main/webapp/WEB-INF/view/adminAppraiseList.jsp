@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: liangyurj
-  Date: 2020/9/12
-  Time: 9:28
+  Date: 2020/9/16
+  Time: 11:15
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>教师管理</title>
+    <title>评分项管理</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
@@ -44,12 +44,12 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域 -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-this"><a href="adminTeacherList">教师管理</a></li>
+                <li class="layui-nav-item"><a href="adminTeacherList">教师管理</a></li>
                 <li class="layui-nav-item"><a href="adminManagerList">项目经理管理</a></li>
-                <li class="layui-nav-item"><a href="">学生管理</a></li>
-                <li class="layui-nav-item"><a href="">课程管理</a></li>
-                <li class="layui-nav-item"><a href="adminClassList">班期管理</a></li>
-                <li class="layui-nav-item"><a href="">评分项管理</a></li>
+                <li class="layui-nav-item"><a href="adminStudentList">学生管理</a></li>
+                <li class="layui-nav-item"><a href="adminSubjectList">课程管理</a></li>
+                <li class="layui-nav-item"><a href="">班期管理</a></li>
+                <li class="layui-nav-item layui-this"><a href="adminAppraiseList">评分项管理</a></li>
                 <li class="layui-nav-item"><a href="">修改密码</a></li>
             </ul>
         </div>
@@ -58,7 +58,6 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 0px;">
-
             <div align="center">
                 <table id="demo" lay-filter="test"></table>
             </div>
@@ -66,10 +65,10 @@
             <script type="text/html" id="toolbarDemo">
                 <div align="right">
                     <div class="layui-input-inline" style="padding-right: 600px">
-                        <h2>教师管理</h2>
+                        <h2>评价分项管理</h2>
                     </div>
                     <div class="layui-input-inline" style="margin-right: 10px">
-                        <input id="filter" type="text" placeholder="请输入姓名" class="layui-input">
+                        <input id="filter" type="text" placeholder="请输入评价分项" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
                         <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="query">搜索</button>
@@ -79,11 +78,9 @@
             </script>
 
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="rePwd">重置密码</a>
                 <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
             </script>
-
         </div>
     </div>
 
@@ -91,15 +88,6 @@
         <!-- 底部固定区域 -->
         © jxdinfo.com - 底部固定区域
     </div>
-
-    <script type="text/html" id="titleTpl">
-        {{#  if(d.tSex == 1){ }}
-        男
-        {{#  } else { }}
-        女
-        {{#  } }}
-    </script>
-
 </div>
 <script>
     layui.use(['element','table','layer'], function(){
@@ -113,17 +101,14 @@
             ,toolbar: '#toolbarDemo' //添加工具栏
             ,height: 450
             ,width: 1080
-            ,url: '/getAllTeacher_admin' //数据接口
+            ,url: '/getAllAppraise_admin' //数据接口
             ,page: true
             ,limit: 8
             ,limits:[8,15,20]
             ,cols: [[
-                /*{type: 'checkbox'}*/
-                {field: 'tId', title: '工号', width:100, sort: true}
-                ,{field: 'tName', title: '姓名', width:120}
-                ,{field: 'tSex', title: '性别', width:100, templet: '#titleTpl'}
-                ,{field: 'tBirthday', title: '出生年月', width:250}
-                ,{field: 'tPhone', title: '电话', width:250}
+                {type: 'numbers',title:'序号',width:80}
+                ,{field: 'appraiseId', title: '编号', width:100, hide:true}
+                ,{field: 'appraise', title: '评价分项', width:500}
                 ,{fixed: 'right', title:'操作', width:250, align:'center', toolbar: '#barDemo'}
             ]]
         });
@@ -133,7 +118,7 @@
                     var filter = $("#filter").val();//获取过滤条件
                     //重新加载表格
                     table.reload("demo",{
-                        where:{tName:filter},
+                        where:{appraise:filter},
                         page:{
                             curr:1
                         }
@@ -142,10 +127,10 @@
                 case 'add':
                     layer.open({
                         type:2,
-                        title:'添加教师',
-                        content:'adminAddTeacher',
+                        title:'添加评价分项',
+                        content:'adminAddAppraise',
                         shadeClose:true,
-                        area:['455px','380px']
+                        area:['455px','270px']
                     });
                     break;
             }
@@ -156,10 +141,10 @@
             if(obj.event === 'update'){
                 layer.open({
                     type:2,
-                    title:'修改教师信息',
-                    content:"adminEditTeacher?tId=" + data.tId,
+                    title:'修改评价分项',
+                    content:"adminEditAppraise?appraiseId=" + data.appraiseId + "&appraise=" + data.appraise,
                     shadeClose:true,
-                    area:['455px','400px'],
+                    area:['455px','300px'],
                     end:function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();
@@ -168,10 +153,10 @@
             } else if(obj.event === 'delete'){
                 layer.confirm('确定要删除吗？', function(index){
                     $.ajax({
-                        url:'delTeacherById_admin',
+                        url:'delAppraiseById_admin',
                         type:'post',
                         data:{
-                            tId:data.tId
+                            appraiseId:data.appraiseId
                         },
                         success:function (data) {
                             if (data == "true"){
@@ -180,25 +165,13 @@
                                 layer.msg("删除失败")
                             }
                             table.reload("demo",function () {
-                                url:'getAllTeacher_admin'
+                                url:'getAllAppraise_admin'
                             })
                         },
                         error:function () {
                             layer.msg("执行失败")
                         }
                     })
-                });
-            } else if (obj.event === 'rePwd') {
-                layer.open({
-                    type:2,
-                    title:'重置密码',
-                    content:'adminRePwdTeacher?tId=' + data.tId,
-                    shadeClose:true,
-                    area:['400px','330px'],
-                    end:function () {
-                        //刷新当前页
-                        $(".layui-laypage-btn").click();
-                    }
                 });
             }
         });

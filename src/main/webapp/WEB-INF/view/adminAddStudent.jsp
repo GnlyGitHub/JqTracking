@@ -277,7 +277,7 @@
             elem: '#area-picker',
             change: function (res) {
                 //选择结果
-                console.log(res);
+                //console.log(res);
             }
         });
 
@@ -339,6 +339,7 @@
             }
         });
 
+        //提交
         $("#sub").click(function () {
             var sPlace = $("#province").val() + $("#city").val() + $("#county").val();
             $.ajax({

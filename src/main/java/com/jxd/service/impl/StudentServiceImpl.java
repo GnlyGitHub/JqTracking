@@ -20,6 +20,11 @@ public class StudentServiceImpl implements IStudentService {
     IStudentDao studentDao;
 
     @Override
+    public boolean updateScoreState_Teacher(Integer sId) {
+        return studentDao.updateScoreState_Teacher(sId);
+    }
+
+    @Override
     public List<Student> getAllStudent_Teacher(Integer sClass, String sName) {
         return studentDao.getAllStudent_Teacher(sClass,sName);
     }

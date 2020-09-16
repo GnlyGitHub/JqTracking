@@ -13,6 +13,13 @@ import java.util.Map;
 public interface IStudentService {
 
     /**
+     * @Description 老师更新学生评价状态
+     * @params [sId]
+     * @return boolean
+     **/
+    boolean updateScoreState_Teacher(Integer sId);
+
+    /**
      * @Description 教师通过班级和学生姓名模糊查询
      * @params [sClass, sName]
      * @return java.util.List<com.jxd.model.Student>
@@ -20,7 +27,7 @@ public interface IStudentService {
     List<Student> getAllStudent_Teacher(Integer sClass,String sName);
 
     /**
-     * @Description 分页查询
+     * @Description 教师分页查询
      * @params [count, pageIndex, sClass, sName]
      * @return java.util.List<com.jxd.model.Student>
      **/

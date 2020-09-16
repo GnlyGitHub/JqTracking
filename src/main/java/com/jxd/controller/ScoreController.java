@@ -3,6 +3,7 @@ package com.jxd.controller;
 import com.jxd.model.Class;
 import com.jxd.model.Score;
 import com.jxd.service.IScoreService;
+import com.jxd.service.IStudentService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,12 @@ public class ScoreController {
     @Autowired
     IScoreService scoreService;
 
+    @Autowired
+    IStudentService studentService;
+
     @RequestMapping("/addAppraise_Teacher")
     @ResponseBody
-    public boolean addAppraise_Teacher(String postData, Integer sId) {
+    public boolean addAppraise_Teacher(String postData, Integer sId, String appraiser) {
         JSONArray jsonArray = JSONArray.fromObject(postData);
         JSONObject jsonOne;
 
@@ -40,11 +44,12 @@ public class ScoreController {
             Integer subjectId = Integer.parseInt(sub);
             String score1 = (String) jsonOne.get("Value");
 
-            Score score = new Score(sId,subjectId,score1,"张三");
+            Score score = new Score(sId,subjectId,score1,appraiser);
             list.add(score);
         }
         boolean isAdd =  scoreService.addScore_Teacher(list);
-        return isAdd;
+        boolean isUpdate = studentService.updateScoreState_Teacher(sId);
+        return isAdd && isUpdate;
     }
 
     @RequestMapping("/editAppraise_Teacher")
