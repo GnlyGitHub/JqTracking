@@ -3,10 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IStudentDao">
 
+    <!--boolean updateScoreState(Integer sId);-->
+    <update id="updateScoreState_Teacher">
+        update student set scoreState='1'
+        where sId = #{sId}
+    </update>
+
     <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
     <select id="getAllStudent_Teacher" resultMap="getAllStudent_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -32,6 +38,7 @@
         <result column="sPlace" property="sPlace"></result>
         <result column="sClass" property="sClass"></result>
         <result column="sHireDate" property="sHireDate"></result>
+        <result column="scoreState" property="scoreState"></result>
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
@@ -41,7 +48,7 @@
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
     <select id="getAllStudentByPage_Teacher" resultMap="getAllStudentByPage_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -68,6 +75,7 @@
         <result column="sPlace" property="sPlace"></result>
         <result column="sClass" property="sClass"></result>
         <result column="sHireDate" property="sHireDate"></result>
+        <result column="scoreState" property="scoreState"></result>
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>

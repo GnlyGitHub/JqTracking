@@ -6,6 +6,8 @@ import com.jxd.service.ILoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Liang Yue
  * @description TODO
@@ -29,5 +31,15 @@ public class LoginUserServiceImpl implements ILoginUserService {
     @Override
     public boolean editLoginUser_admin(LoginUser loginUser) {
         return loginUserDao.editLoginUser_admin(loginUser);
+    }
+
+    @Override
+    public List<LoginUser> loginCheck(LoginUser loginUser) {
+        return loginUserDao.loginCheck(loginUser);
+    }
+
+    @Override
+    public String getPasswordById_Teacher(Integer userId) {
+        return loginUserDao.getPasswordById_Teacher(userId);
     }
 }

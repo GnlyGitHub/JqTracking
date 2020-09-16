@@ -79,6 +79,7 @@
                     datatype : "json",
                     data : {
                         sId:${sId},
+                        appraiser:"${sessionScope.teacher.tName}",
                         postData:postData
                     },
                     success:function (data) {
