@@ -4,6 +4,7 @@ import com.jxd.model.Student;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IStudentDao {
 
@@ -79,4 +80,10 @@ public interface IStudentDao {
      */
     List<Student> GetAllPageStudent_Manage(@Param("classId") Integer classId, @Param("empName")String empName, @Param("empId")String empId,
                                            @Param("projectId")Integer projectId,@Param("limit") Integer limit,@Param("page") Integer page);
+    /**
+     * @Description 根据学生id查询学生信息
+     *Param [sId]
+     * @return com.jxd.model.Student
+     */
+    Map<String,String> getStudentById_Manage(Integer sId);
 }

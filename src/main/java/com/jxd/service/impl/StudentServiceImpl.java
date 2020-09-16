@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Liang Yue
@@ -66,6 +67,11 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public List<Student> GetAllPageStudent_Manage(Integer classId, String empName, String empId, Integer projectId, Integer limit, Integer page) {
         return studentDao.GetAllPageStudent_Manage(classId,empName,empId,projectId,limit,page);
+    }
+
+    @Override
+    public Map<String,String> getStudentById_Manage(Integer sId) {
+        return studentDao.getStudentById_Manage(sId);
     }
 
 }

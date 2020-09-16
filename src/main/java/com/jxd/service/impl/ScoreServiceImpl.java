@@ -32,4 +32,9 @@ public class ScoreServiceImpl implements IScoreService {
     public List<Score> getScoreBySId_Teacher(Integer sId) {
         return scoreDao.getScoreBySId_Teacher(sId);
     }
+
+    @Override
+    public List<Score> getScoreById_Manage(Integer sId) {
+        return scoreDao.getScoreById_Manage(sId);
+    }
 }

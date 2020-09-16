@@ -28,4 +28,10 @@
         on sc.subjectId = su.subjectId
         where sc.Sid = #{sId}
     </select>
+    <select id="getScoreById_Manage" resultType="Score">
+         select sc.sId, sc.subjectId, sc.score, sc.appraiser, su.subjectId, su.subject
+        from score sc left join subject su
+        on sc.subjectId = su.subjectId
+        where sc.Sid = #{sId}
+    </select>
 </mapper>

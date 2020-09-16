@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IGradeDao">
-
+<select id="getGradeById_Manage" resultMap="gra">
+    select a.appraiseId appraiseId,a.appraise appraise,
+     g.id id,g.sid sId,g.grade grade,g.number number,
+      g.appraiser appraiser from grade g inner join appraise a on g.appraiseid=a.appraiseId where
+    g.sId=#{sId} and g.number=#{number}
+</select>
+    <resultMap id="gra" type="Grade">
+        <id column="id" property="id"></id>
+        <result column="sId" property="sId"></result>
+        <result column="appraseId" property="appraiseId"></result>
+        <result column="grade" property="grade"></result>
+        <result column="number" property="number"></result>
+        <result column="appraiser" property="appraiser"></result>
+       <association property="appraise" javaType="Appraise">
+           <id column="appraiseId" property="appraiseId"></id>
+           <result column="appraise" property="appraise"></result>
+       </association>
+    </resultMap>
 
 </mapper>

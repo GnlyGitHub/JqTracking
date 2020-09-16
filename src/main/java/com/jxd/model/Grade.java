@@ -12,8 +12,27 @@ public class Grade {
     private String grade;//评价
     private Integer number;//评价序数 转正0 一年1 两年2 三年3
     private String appraiser;
+    private Appraise appraise;
 
     public Grade() {
+    }
+
+    public Appraise getAppraise() {
+        return appraise;
+    }
+
+    public void setAppraise(Appraise appraise) {
+        this.appraise = appraise;
+    }
+
+    public Grade(Integer id, Integer sId, Integer appraiseId, String grade, Integer number, String appraiser, Appraise appraise) {
+        this.id = id;
+        this.sId = sId;
+        this.appraiseId = appraiseId;
+        this.grade = grade;
+        this.number = number;
+        this.appraiser = appraiser;
+        this.appraise = appraise;
     }
 
     public Grade(Integer sId, Integer appraiseId, String grade, Integer number, String appraiser) {

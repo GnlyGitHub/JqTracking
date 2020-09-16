@@ -26,4 +26,10 @@ public interface IScoreDao {
      * @return java.util.List<com.jxd.model.Score>
      **/
     List<Score> getScoreBySId_Teacher(Integer sId);
+    /**
+     * @Description 根据学号获取各科成绩以及中文名称
+     *Param [sId]
+     * @return java.util.List<com.jxd.model.Score>
+     */
+    List<Score> getScoreById_Manage(Integer sId);
 }

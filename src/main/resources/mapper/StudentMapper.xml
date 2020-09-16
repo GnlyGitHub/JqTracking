@@ -6,7 +6,8 @@
     <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
     <select id="getAllStudent_Teacher" resultMap="getAllStudent_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
+        sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -41,7 +42,8 @@
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
     <select id="getAllStudentByPage_Teacher" resultMap="getAllStudentByPage_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
+        sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,c.classId,c.className
         from student s, class c
         <where>
             <if test="true">
@@ -189,7 +191,7 @@
     </update>
 
     <select id="GetAllSizeStudent_Manage" resultType="Student">
-        select sid from student where  projectId=#{projectId}
+        select sid from student where projectId=#{projectId}
         <if test="classId != null and classId != ''">
             and sClass=#{classId}
         </if>
@@ -201,7 +203,7 @@
         </if>
     </select>
 
-    <select id="GetAllPageStudent_Manage"  resultMap="stu_Manage">
+    <select id="GetAllPageStudent_Manage" resultMap="stu_Manage">
         select
         s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
         s.splace sPlace,s.smarry sMarry,s.sPhone sPhone,s.sIdCard,s.sSchool sSchool,s.sMajor
@@ -217,7 +219,7 @@
         <if test="empId != null and empId != ''">
             and s.sId=#{empId}
         </if>
-        order by s.shiredate desc ,s.sclass desc
+        order by s.shiredate desc ,s.sclass desc,s.sId desc
         limit ${limit * (page - 1)}, ${limit}
     </select>
     <resultMap id="stu_Manage" type="Student">
@@ -245,4 +247,11 @@
             <result column="className" property="className"></result>
         </association>
     </resultMap>
+    <select id="getStudentById_Manage" resultType="map">
+select  s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
+        s.splace sPlace,s.smarry sMarry,s.sPhone sPhone,s.sIdCard,s.sSchool sSchool,s.sMajor
+        sMajor,s.sphoto sPhoto,s.sremarks sRemarks,s.sClass sClass,s.deptno deptNo,s.jobId jobId,s.shiredate sHireDate
+        ,s.projectId projectId,d.deptname deptName,j.jobName jobName from student s,dept d,job j
+        where s.deptno=d.deptno and s.jobid=j.jobid and sid=#{sId}
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.jxd.service;
 import com.jxd.model.Student;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Liang Yue
@@ -82,4 +83,10 @@ public interface IStudentService {
      * @return java.util.List<com.jxd.model.Student>
      */
     List<Student> GetAllPageStudent_Manage(Integer classId, String empName, String empId, Integer projectId,Integer limit, Integer page);
+    /**
+     * @Description 根据学生id查询学生信息
+     *Param [sId]
+     * @return com.jxd.model.Student
+     */
+    Map<String,String> getStudentById_Manage(Integer sId);
 }

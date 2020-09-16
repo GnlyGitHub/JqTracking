@@ -122,46 +122,24 @@
         table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 , layEvent = obj.event; //获得 lay-event 对应的值
+            var sid=data.sId
+            var className=data.aClass.className
             if (layEvent === 'detail') {
                 layer.open({
                     type: 2, //弹出完整div，type：1弹出隐藏div
                     title: '员工资料查看',
-                    content: 'detailEmpMsg_Manage?mId='+${sessionScope.manage.mId},
-                    data:{
-                        data:data
-                    },
+                    content: "detailEmpMsg_Manage?sId="+sid+"&className="+className+"&mId="+${sessionScope.manage.mId},
                     shadeClose: true,    //点击遮罩关闭弹框
-                    area: ['530px', '500px']
+                    area: ['830px', '500px']
                 })
             } else if (layEvent === 'grade') {
-                layer.confirm('确定要删除吗？', '删除新闻', function () {
-                    var ids = [];
-                    var disapp = {}
-                    disapp.classId = data.classId;
-                    disapp.number = data.number;
-                    disapp.mId = ${sessionScope.manage.mId}
-                        ids[0] = disapp
-                    $.ajax({
-                        url: 'delDisAppraiseData_Manage',
-                        type: 'post',
-                        data: {
-                            delApp: JSON.stringify(ids)
-                        },
-                        success: function (data) {
-                            if (data) {
-                                layer.msg("删除成功")
-                            } else {
-                                layer.msg("删除失败")
-                            }
-                            table.reload("demo", function () {
-                                url:'/GetAllStudent_Manage/${sessionScope.manage.projectId}'
-                            })
-                        },
-                        error: function () {
-                            layer.msg("执行失败")
-                        }
-                    })
-                })
+               layer.open({
+                   type:2,
+                   title:'评分页面',
+                   content:"addGrade_Manage?sId="+sid,
+                   shadeClose:true,
+                   area:['500px','500px']
+               })
             } else if (layEvent === 'edit') {
                 if (data.length < 1) {
                     layer.msg("请选择一条要编辑的数据")
