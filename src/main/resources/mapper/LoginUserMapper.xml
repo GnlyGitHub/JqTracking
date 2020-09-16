@@ -18,4 +18,16 @@
         update loginuser set password=#{password} where userId=#{userId}
     </update>
 
+    <!--List<LoginUser> loginCheck(LoginUser loginUser);-->
+    <select id="loginCheck" resultType="LoginUser">
+        select uid,userId,password,role
+        from loginuser
+        where userId=#{userId} and password=#{password}
+    </select>
+
+    <!--String getPasswordById_Teacher(Integer userId);-->
+    <select id="getPasswordById_Teacher" resultType="String">
+        select password from loginuser where userId=#{userId}
+    </select>
+
 </mapper>
