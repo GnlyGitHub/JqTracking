@@ -64,6 +64,7 @@
             , height: 400
             , width: 550
             ,even:true
+            ,loading:true
             , url: '/GetAllAppraise_Manage/${sessionScope.manage.mId}' //数据接口
             , page: true //开启分页
             ,limit:5//每页显示几条数据

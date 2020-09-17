@@ -20,5 +20,16 @@
            <result column="appraise" property="appraise"></result>
        </association>
     </resultMap>
-
+<insert id="addGradeData_Manage">
+    insert into grade(sid,number,appraiseid,grade,appraiser) values
+    <foreach collection="list" item="grade" separator=",">
+        (#{grade.sId},#{grade.number},#{grade.appraiseId},#{grade.grade},#{grade.appraiser})
+    </foreach>
+</insert>
+    <update id="editGradeData_Manage">
+        <foreach collection="list" item="grade1" separator=";">
+            update grade set grade=#{grade1.grade},appraiser=#{grade1.appraiser} where sid=#{grade1.sId} and appraiseid=#{grade1.appraiseId}
+            and number =#{grade1.number}
+        </foreach>
+    </update>
 </mapper>

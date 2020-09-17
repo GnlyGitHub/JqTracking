@@ -46,7 +46,7 @@
 </script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="grade">评分</a>
+    <a class="layui-btn layui-btn-xs" lay-event="grade" id="gra">评分</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">修改</a>
 </script>
 <script>
@@ -63,22 +63,35 @@
             , even: true
             , url: '/GetAllStudent_Manage/${sessionScope.manage.projectId}' //数据接口
             , page: true //开启分页
+            , loading: true
             , limit: 5//每页显示几条数据
             , limits: [5, 10, 15, 20]
             , cols: [[ //表头
                 {type: 'numbers', title: '序号'}
                 , {field: 'sId', title: '员工编号'}
-                ,{field:'sName',title:'员工姓名'}
-                , {field: 'sClass', title: '班期编号',hide:true}
+                , {field: 'sName', title: '员工姓名'}
+                , {field: 'sClass', title: '班期编号', hide: true}
                 , {
                     field: 'className', title: '班期名', width: 150, templet: function (data) {
                         return data.aClass.className;
                     }
                 }
                 , {field: 'sSchool', title: '毕业学校', width: 120}
-                ,{field: 'sHireDate', title: '入职日期', width: 150}
+                , {field: 'sHireDate', title: '入职日期', width: 150}
                 , {fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo'}
             ]]
+            , done: function (data) {
+                for (var i = 0; i < data.data.length; i++) {
+                    var appraiseState = data.data[i].appraiseState
+                    if (appraiseState == 4) {
+                        $('#gra').addClass("layui-btn-disabled").attr("disabled", true);
+                        $("#gra").attr("lay-event", "1")
+                    } else {
+                        $('#gra').removeClass("layui-btn-disabled").attr("disabled", false);
+                        $("#gra").attr("lay-event", "grade")
+                    }
+                }
+            }
         });
         var reloadClass = function () {
             $.ajax({
@@ -103,12 +116,12 @@
                 case'query':
                     var empId = $("#filterId").val();
                     var empName = $("#filterName").val();
-                    var classId=$("#Class option:checked").val()
+                    var classId = $("#Class option:checked").val()
                     table.reload("demo", {//demo对应是tableid，where对应的是过滤条件
                         where: {
                             empId: empId,
-                            empName:empName,
-                            classId:classId
+                            empName: empName,
+                            classId: classId
                         },
                         page: {
                             curr: 1
@@ -122,40 +135,44 @@
         table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 , layEvent = obj.event; //获得 lay-event 对应的值
-            var sid=data.sId
-            var className=data.aClass.className
-            var classId=data.aClass.classId
+            var sid = data.sId
+            var className = data.aClass.className
+            var classId = data.aClass.classId
+            var appraiseState = data.appraiseState
+            if (layEvent === '1') {
+                layer.msg("全部已评", {icon: 6, time: 1500})
+            }
             if (layEvent === 'detail') {
                 layer.open({
                     type: 2, //弹出完整div，type：1弹出隐藏div
                     title: '员工资料查看',
-                    content: "detailEmpMsg_Manage?sId="+sid+"&className="+className+"&mId="+${sessionScope.manage.mId},
+                    content: "detailEmpMsg_Manage?sId=" + sid + "&className=" + className + "&mId=" +${sessionScope.manage.mId},
                     shadeClose: true,    //点击遮罩关闭弹框
                     area: ['830px', '500px']
                 })
             } else if (layEvent === 'grade') {
-               layer.open({
-                   type:2,
-                   title:'评分页面',
-                   content:"addGrade_Manage?sId="+sid+"&classId="+classId,
-                   shadeClose:true,
-                   area:['500px','500px']
-               })
+                layer.open({
+                    type: 2,
+                    title: '评分页面',
+                    content: "addGrade_Manage?sId=" + sid + "&classId=" + classId,
+                    shadeClose: true,
+                    area: ['500px', '500px']
+                })
             } else if (layEvent === 'edit') {
                 if (data.length < 1) {
                     layer.msg("请选择一条要编辑的数据")
                 } else if (data.length > 1) {
                     layer.msg("只能选择一条数据进行编辑")
                 } else {
-                    var classId = data.classId;
+                    var classId = data.aClass.classId;
                     var number = data.number;
                     var className = data.aClass.className;
                     layer.open({
                         type: 2, //弹出完整div，type：1弹出隐藏div
                         title: '评价表编辑',
-                        content: 'editDisAppraise_Manage?classId=' + classId + '&number=' + number + '&className=' + className + '&mId=' +${sessionScope.manage.mId},
+                        content: 'editGrade_Manage?sId='+sid+"&classId=" + classId,
                         shadeClose: true,    //点击遮罩关闭弹框
-                        area: ['380px', '460px'],
+                        area: ['500px', '500px'],
                         end: function () {
                             //最后来通过点击当前页按钮来刷新当前页
                             $(".layui-laypage-btn").click();

@@ -13,4 +13,16 @@ public interface IGradeDao {
      * @return java.util.List<com.jxd.model.Grade>
      */
     List<Grade> getGradeById_Manage(@Param("sId") Integer sId,@Param("number") Integer number);
+    /**
+     * @Description 批量插入评价
+     *Param [list]
+     * @return java.lang.Boolean
+     */
+    Boolean addGradeData_Manage(List<Grade> list);
+    /**
+     * @Description 批量更新
+     *Param [list]
+     * @return java.lang.Boolean
+     */
+    Boolean editGradeData_Manage(List<Grade> list);
 }
