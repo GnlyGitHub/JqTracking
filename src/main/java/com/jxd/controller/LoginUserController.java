@@ -93,4 +93,14 @@ public class LoginUserController {
         return "login";
     }
 
+    @RequestMapping("/rePwdAdmin_admin")
+    @ResponseBody
+    public String rePwdAdmin_admin(String oldPwd, String newPwd){
+        return "";
+    }
+
+    @RequestMapping("/AfterRePwdAdmin_admin")
+    public String AfterRePwdAdmin_admin(){
+        return "";
+    }
 }

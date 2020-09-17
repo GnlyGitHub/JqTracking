@@ -46,10 +46,10 @@
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-this"><a href="adminTeacherList">教师管理</a></li>
                 <li class="layui-nav-item"><a href="adminManagerList">项目经理管理</a></li>
-                <li class="layui-nav-item"><a href="">学生管理</a></li>
-                <li class="layui-nav-item"><a href="">课程管理</a></li>
+                <li class="layui-nav-item"><a href="adminStudentList">学生管理</a></li>
+                <li class="layui-nav-item"><a href="adminSubjectList">课程管理</a></li>
                 <li class="layui-nav-item"><a href="adminClassList">班期管理</a></li>
-                <li class="layui-nav-item"><a href="">评分项管理</a></li>
+                <li class="layui-nav-item"><a href="adminAppraiseList">评分项管理</a></li>
                 <li class="layui-nav-item"><a href="">修改密码</a></li>
             </ul>
         </div>
