@@ -79,4 +79,9 @@ public class StudentServiceImpl implements IStudentService {
         return studentDao.getStudentById_Manage(sId);
     }
 
+    @Override
+    public boolean changeAppraiseState_Manage(Integer appraiseState,Integer sId) {
+        return studentDao.changeAppraiseState_Manage(appraiseState,sId);
+    }
+
 }

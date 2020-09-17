@@ -12,14 +12,6 @@
     <link href="../../static/layui/css/layui.css" rel="stylesheet">
     <script src="../../static/layui/layui.js"></script>
     <style>
-        .layui-input-block {
-            width: 130px;
-        }
-
-        .layui-unselect {
-            padding-top: 5px;
-            width: 130px;
-        }
 
         .layui-form-label {
             padding-left: 1px;
@@ -30,11 +22,6 @@
             padding-left: 20px;
         }
 
-        .layui-form-checkbox {
-            padding-top: 0px;
-            width: 80px;
-        }
-
     </style>
 </head>
 <body>
@@ -42,13 +29,13 @@
     <div class="layui-form" style="width: 150px;margin-top: 25px">
         <div class="layui-form-item">
             <label class="layui-form-label">班期：</label>
-            <div class="layui-input-block" style="width:70px">
+            <div class="layui-input-block" style="width:130px">
                 <select name="Class" id="Class" lay-filter="Class">
                 </select>
             </div>
 
             <label class="layui-form-label">评价序数：</label>
-            <div class="layui-input-block" style="width:70px">
+            <div class="layui-input-block" style="width:130px">
                 <select name="appraise" id="appraise" lay-filter="appraise">
 
                 </select>

@@ -17,4 +17,16 @@ public interface IGradeService {
      * @return java.util.List<com.jxd.model.Grade>
      */
     List<Grade> getGradeById_Manage(Integer sId,Integer number);
+   /**
+    * @Description 批量插入评价
+    *Param [list]
+    * @return java.lang.Boolean
+    */
+    Boolean addGradeData_Manage(List<Grade> list);
+    /**
+     * @Description 批量更新
+     *Param [list]
+     * @return java.lang.Boolean
+     */
+    Boolean editGradeData_Manage(List<Grade> list);
 }

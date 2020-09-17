@@ -96,4 +96,10 @@ public interface IStudentService {
      * @return com.jxd.model.Student
      */
     Map<String,String> getStudentById_Manage(Integer sId);
+    /**
+     * @Description 根据学生id改变AppraiseState状态
+     *Param [sId]
+     * @return boolean
+     */
+    boolean changeAppraiseState_Manage(Integer appraiseState,Integer sId);
 }

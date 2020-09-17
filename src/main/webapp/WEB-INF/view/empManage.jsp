@@ -22,12 +22,8 @@
                     <img src="../../static/img/admin.jpg" class="layui-nav-img">
                     ${sessionScope.manage.mName}
                 </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
             </li>
-            <li class="layui-nav-item"><a href="/CleanSession_Manage">退了</a></li>
+            <li class="layui-nav-item"><a href="quit">退了</a></li>
         </ul>
     </div>
 

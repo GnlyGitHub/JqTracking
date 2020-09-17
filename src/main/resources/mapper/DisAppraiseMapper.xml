@@ -56,21 +56,10 @@
         select id,appraiseid,classid,mid,number from disappraise
         where classid=#{classId} and mId=#{mId} and number=#{number} and appraiseid not in(9,10)
     </select>
-    <select id="getDisAppraiseTable_Manage" resultMap="dis">
-        select d.id id,d.classid classId,d.mid mId,d.number number, a.appraiseid appraiseId,a.appraise appraise from disappraise d,appraise a
+    <select id="getDisAppraiseTable_Manage" resultType="DisAppraise">
+        select d.id id,d.classid classId,d.mid mId,d.number number, d.appraiseid appraiseId,a.appraise appraise from disappraise d,appraise a
         where d.appraiseid=a.appraiseid and classid=#{classId} and mId=#{mId} and number=#{number}
     </select>
-    <resultMap id="dis" type="DisAppraise">
-        <id column="id" property="id"></id>
-        <result column="appraiseId" property="appraiseId"></result>
-        <result column="classId" property="classId"></result>
-        <result column="mid" property="mId"></result>
-        <result column="number" property="number"></result>
-       <collection property="appraises" javaType="List" ofType="Appraise">
-           <id column="appraiseId" property="appraiseId"></id>
-           <result column="appraise" property="appraise"></result>
-       </collection>
-    </resultMap>
     <insert id="insertBatchDisAppraise_Manage">
         insert into disappraise(appraiseid,classid,mid,number) values
         <foreach collection="list" item="disappraise" separator=",">

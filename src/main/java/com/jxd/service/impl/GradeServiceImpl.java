@@ -22,4 +22,14 @@ public class GradeServiceImpl implements IGradeService {
     public List<Grade> getGradeById_Manage(Integer sId, Integer number) {
         return gradeDao.getGradeById_Manage(sId,number);
     }
+
+    @Override
+    public Boolean addGradeData_Manage(List<Grade> list) {
+        return gradeDao.addGradeData_Manage(list);
+    }
+
+    @Override
+    public Boolean editGradeData_Manage(List<Grade> list) {
+        return gradeDao.editGradeData_Manage(list);
+    }
 }

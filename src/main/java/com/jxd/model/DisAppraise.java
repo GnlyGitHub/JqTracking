@@ -14,6 +14,7 @@ public class DisAppraise {
     private Integer mId;//项目经理id
     private Integer number;
     private Class aClass;
+    private String appraise;
     private List<Appraise> appraises;
 
     public Class getaClass() {
@@ -22,6 +23,23 @@ public class DisAppraise {
 
     public void setaClass(Class aClass) {
         this.aClass = aClass;
+    }
+
+    public DisAppraise(Integer id, Integer appraiseId, Integer classId, Integer mId, Integer number, String appraise) {
+        this.id = id;
+        this.appraiseId = appraiseId;
+        this.classId = classId;
+        this.mId = mId;
+        this.number = number;
+        this.appraise = appraise;
+    }
+
+    public String getAppraise() {
+        return appraise;
+    }
+
+    public void setAppraise(String appraise) {
+        this.appraise = appraise;
     }
 
     public List<Appraise> getAppraises() {

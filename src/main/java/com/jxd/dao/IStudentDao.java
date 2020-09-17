@@ -93,4 +93,10 @@ public interface IStudentDao {
      * @return com.jxd.model.Student
      */
     Map<String,String> getStudentById_Manage(Integer sId);
+    /**
+     * @Description 根据学生id改变AppraiseState状态
+     *Param [sId]
+     * @return boolean
+     */
+    boolean changeAppraiseState_Manage(@Param("appraiseState") Integer appraiseState,@Param("sId") Integer sId);
 }
