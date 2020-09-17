@@ -26,13 +26,22 @@
                 /*绝对定位的方式*/
                 position: absolute;
                 /*定位登录div的位置*/
-                left: 50%;
+                left: 75%;
                 top: 40%;
                 transform: translate(-50%, -50%);
                 /*内边距*/
                 padding-top: 20px;
                 padding-left: 10px;
                 padding-right: 10px;
+            }
+            .rotation1{
+                width: 500px;
+                /*绝对定位的方式*/
+                position: absolute;
+                /*定位登录div的位置*/
+                left: 20%;
+                top: 50%;
+                transform: translate(-50%, -50%);
             }
             /*输入框设置*/
             .myInput{
@@ -46,19 +55,27 @@
                 position: absolute;
                 left: 14px;
             }
-
+            .forgetPwd :hover{
+                color: black;
+            }
             /*登录按钮*/
             .myButton{
                 width: 400px;
-            }
-            #loginMsg{
-                height: 10px;
-                color: red;
             }
         </style>
     </head>
 <body class="myBody">
 <div class="layui-row">
+    <div class="grid-demo grid-demo-bg1 rotation1" style="background-color:#fff;">
+        <div class="layui-carousel" id="test10">
+            <div carousel-item="">
+                <div><img src="../../static/img/body.png"></div>
+                <div><img src="../../static/img/admin.jpg"></div>
+                <div><img src="../../static/img/img0.PNG"></div>
+            </div>
+        </div>
+
+    </div>
     <div class="grid-demo grid-demo-bg1 myLogin" style="background-color:#fff;">
         <fieldset class="layui-elem-field layui-field-title">
             <legend style="color: #717171">欢迎登录 - 金桥学员跟踪系统</legend>
@@ -74,39 +91,36 @@
                 <i class="layui-icon layui-icon-password myIcon" style="top: 133px;"></i>
                 <input class="layui-input myInput" type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off">
             </div>
-            <div class="layui-form-item" id="loginMsg">
-                ${loginMsg}
-            </div>
+                <div class="layui-input-block" style="margin-left: 0;height: 10px;color: #ff7752">
+                    ${loginMsg}
+                </div>
             <div class="layui-form-item">
                 <button class="layui-btn myButton" lay-submit lay-filter="formDemo">立即登录</button>
             </div>
         </form>
-    </div>
-</div>
-</body>
 
-<%--<body>
-&lt;%&ndash;<div class="myLogin" &lt;%&ndash;style="display: flex;justify-content: center"&ndash;%&gt;>
-    <form class="layui-form" action="checkLogin" method="post">
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户名：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="userId" required  lay-verify="required" placeholder="请输入用户名" autocomplete="on" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="password"  required  lay-verify="required" placeholder="请输入密码" autocomplete="on" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
-            </div>
-        </div>
-    </form>
-    <div>${loginMsg}</div>
-</div>&ndash;%&gt;
-</body>--%>
+    </div>
+
+</div>
+
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+
+</script>
+<script>
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+        //图片轮播
+        carousel.render({
+            elem: '#test10'
+            ,width: '850px'
+            ,height: '600px'
+            ,interval: 3000
+        });
+    });
+</script>
+</body>
 </html>

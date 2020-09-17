@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2020/9/10 19:49
  */
 @Controller
-@SessionAttributes({"userId","teacher","manager"})
+@SessionAttributes({"loginUser","teacher","manager"})
 public class LoginUserController {
     @Autowired
     ILoginUserService loginUserService;
@@ -42,39 +42,42 @@ public class LoginUserController {
         return "empEditPassword";
     }
 
-    @RequestMapping("/teacherRePwdTeacher")
+    @RequestMapping("/teacherRePwd_Teacher")
     public String teacherRePwd_Teacher(){
         return "teacherRePwdTeacher";
     }
 
-    @RequestMapping("/getPasswordById_Teacher")
-    @ResponseBody
-    public String getPasswordById_Teacher(Integer userId){
-        String pwd = loginUserService.getPasswordById_Teacher(userId);
-        return pwd;
+    @RequestMapping("/editPassword_Teacher")
+    public String editPassword_Teacher(LoginUser loginUser,Model model){
+        boolean isEdit = loginUserService.editPassword_Teacher(loginUser);
+        if(isEdit){
+            model.addAttribute("editMsg","修改成功");
+        }else {
+            model.addAttribute("editMsg","修改失败");
+        }
+        return "teacherRePwdTeacher";
     }
 
     //登录
     @RequestMapping(value = "/checkLogin",produces = "text/html;charset=utf-8")
-    public String checkLogin(Integer userId, String password, Model model) {
-        LoginUser loginUser = new LoginUser(userId, password);
+    public String checkLogin(LoginUser loginUser, Model model) {
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
-            model.addAttribute("userId",userId);
+            model.addAttribute("loginUser",loginUser);
             if (list.get(0).getRole() == 1) {
                 //转发至管理员页面
-                return "1";
+                return "adminStudentList";
             } else if (list.get(0).getRole() == 2) {
                 //转发至老师页面
-                Teacher teacher = teacherService.getTeacherById_admin(userId);
+                Teacher teacher = teacherService.getTeacherById_admin(loginUser.getUserId());
                 model.addAttribute("teacher",teacher);
 
-                List<Class> list1 = classService.getAllSClassBytId_Teacher(userId);
+                List<Class> list1 = classService.getAllSClassBytId_Teacher(loginUser.getUserId());
                 model.addAttribute("sClasses",list1);
                 return "studentAppraise";
             }else if (list.get(0).getRole() == 3) {
                 //转发至项目经理页面
-                Manager manager = managerService.getManagerById_admin(userId);
+                Manager manager = managerService.getManagerById_admin(loginUser.getUserId());
                 model.addAttribute("manager",manager);
                 return "1";
             }else {
@@ -103,4 +106,9 @@ public class LoginUserController {
     public String AfterRePwdAdmin_admin(){
         return "";
     }
+    @RequestMapping("/quit")
+    public String quit(){
+        return "quit";
+    }
+
 }

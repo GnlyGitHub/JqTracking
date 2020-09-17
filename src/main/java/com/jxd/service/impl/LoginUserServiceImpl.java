@@ -39,7 +39,7 @@ public class LoginUserServiceImpl implements ILoginUserService {
     }
 
     @Override
-    public String getPasswordById_Teacher(Integer userId) {
-        return loginUserDao.getPasswordById_Teacher(userId);
+    public boolean editPassword_Teacher(LoginUser loginUser) {
+        return loginUserDao.editPassword_Teacher(loginUser);
     }
 }

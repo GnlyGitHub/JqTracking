@@ -3,6 +3,7 @@ package com.jxd.controller;
 import com.jxd.model.Class;
 import com.jxd.model.DisSubject;
 import com.jxd.model.Subject;
+import com.jxd.model.LoginUser;
 import com.jxd.service.IClassService;
 import com.jxd.service.IDisSubjectService;
 import net.sf.json.JSONArray;
@@ -48,7 +49,8 @@ public class ClassController {
     //老师获取班级列表并转发到老师评价主页面
     @RequestMapping("/studentAppraise")
     public String studentAppraise_Teacher(Model model,HttpSession session){
-        Integer tId = (Integer) session.getAttribute("userId");
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        Integer tId = loginUser.getUserId();
         List<Class> list = classService.getAllSClassBytId_Teacher(tId);
         model.addAttribute("sClasses",list);
         return "studentAppraise";
