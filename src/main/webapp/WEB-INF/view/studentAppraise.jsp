@@ -44,7 +44,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-this"><a href="studentAppraise">学生评价</a></li>
-                <li class="layui-nav-item"><a href="teacherRePwdTeacher">修改密码</a></li>
+                <li class="layui-nav-item"><a href="teacherRePwd_Teacher">修改密码</a></li>
             </ul>
         </div>
     </div>
@@ -53,18 +53,17 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <div align="center">
-
                 <form class="layui-form">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">班期:</label>
-                    <div class="layui-input-inline">
-                        <select name="sClass" id="sClass">
-                            <c:forEach var="c" items="${sClasses}">
-                                <option value="${c.classId}"><c:out value="${c.className}"/></option>
-                            </c:forEach>
-                        </select>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">班期:</label>
+                        <div class="layui-input-inline">
+                            <select name="sClass" id="sClass">
+                                <c:forEach var="c" items="${sClasses}">
+                                    <option value="${c.classId}"><c:out value="${c.className}"/></option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
-                </div>
                 </form>
                 <table id="demo" lay-filter="test"></table>
             </div>
@@ -120,7 +119,7 @@
             elem: '#demo'
             , toolbar: '#toolbarDemo' //添加工具栏
             , height: 500
-            , width: 1400
+            , width: 1450
             , url: '/getAllStudent_Teacher' //数据接口
             , page: false
             , limit: 5
@@ -133,6 +132,9 @@
                 , {field: 'sSchool', title: '学校', width: 200}
                 , {field: 'sMajor', title: '专业', width: 250}
                 , {field: 'sClass', title: '班期id', width: 250, hide:true}
+                ,{field: 'className', title: '班期', width:189, templet: function (data) {
+                        return data.aClass.className
+                    }}
                 , {field: 'sHireDate', title: '入职日期', width: 250, hide:true}
                 , {field: 'scoreState', title: '评价状态', width: 250, hide:true}
                 , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
@@ -157,6 +159,7 @@
             var data = obj.data;//获取当前行数据
             var classId = data.sClass;
             var sId = data.sId;
+            var className = data.className;
             //评论
             if (obj.event === 'appraise') {
                 layer.open({

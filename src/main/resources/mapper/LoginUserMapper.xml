@@ -30,4 +30,10 @@
         select password from loginuser where userId=#{userId}
     </select>
 
+    <!--boolean editPassword_Teacher(LoginUser loginUser);-->
+    <update id="editPassword_Teacher">
+        update loginuser set
+        password=#{password}
+        where userId=#{userId}
+    </update>
 </mapper>

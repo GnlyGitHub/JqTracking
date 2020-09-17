@@ -42,4 +42,9 @@ public class LoginUserServiceImpl implements ILoginUserService {
     public String getPasswordById_Teacher(Integer userId) {
         return loginUserDao.getPasswordById_Teacher(userId);
     }
+
+    @Override
+    public boolean editPassword_Teacher(LoginUser loginUser) {
+        return loginUserDao.editPassword_Teacher(loginUser);
+    }
 }

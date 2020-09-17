@@ -39,4 +39,11 @@ public interface ILoginUserDao {
      * @return java.lang.String
      **/
     String getPasswordById_Teacher(Integer userId);
+
+    /**
+     * @Description 老师重置密码
+     * @params [loginUser]
+     * @return boolean
+     **/
+    boolean editPassword_Teacher(LoginUser loginUser);
 }
