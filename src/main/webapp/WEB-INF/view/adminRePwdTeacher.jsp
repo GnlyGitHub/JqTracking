@@ -32,7 +32,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">新密码</label>
             <div class="layui-input-inline">
-                <input id="password" type="text" name="password" required  lay-verify="phone" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input id="password" type="password" name="password" required  lay-verify="phone" placeholder="请输入密码" autocomplete="off" class="layui-input">
             </div>
         </div>
 

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -66,7 +68,7 @@ public class LoginUserController {
             model.addAttribute("loginUser",loginUser);
             if (list.get(0).getRole() == 1) {
                 //转发至管理员页面
-                return "adminStudentList";
+                return "adminTeacherList";
             } else if (list.get(0).getRole() == 2) {
                 //转发至老师页面
                 Teacher teacher = teacherService.getTeacherById_admin(loginUser.getUserId());
@@ -96,16 +98,31 @@ public class LoginUserController {
         return "login";
     }
 
-    @RequestMapping("/rePwdAdmin_admin")
-    @ResponseBody
-    public String rePwdAdmin_admin(String oldPwd, String newPwd){
-        return "";
+    @RequestMapping("/adminRePwdAdmin")
+    public String adminRePwdAdmin(){
+        return "adminRePwdAdmin";
     }
 
-    @RequestMapping("/AfterRePwdAdmin_admin")
-    public String AfterRePwdAdmin_admin(){
-        return "";
+    @RequestMapping("/rePwdAdmin_admin")
+    @ResponseBody
+    public String rePwdAdmin_admin(String oldPwd, String newPwd, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        Integer userId = loginUser.getUserId();
+        LoginUser loginUser1 = new LoginUser(userId,oldPwd);
+        List<LoginUser> list = loginUserService.loginCheck(loginUser1);
+        if (list.size() == 1){
+            LoginUser loginUser2 = new LoginUser(userId,newPwd);
+            if (loginUserService.editLoginUser_admin(loginUser2)){
+                return "1";
+            } else {
+                return "3";
+            }
+        } else {
+            return "2";
+        }
     }
+
     @RequestMapping("/quit")
     public String quit(){
         return "quit";
