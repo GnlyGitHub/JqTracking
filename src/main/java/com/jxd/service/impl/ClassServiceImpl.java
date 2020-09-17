@@ -62,4 +62,9 @@ public class ClassServiceImpl implements IClassService {
     public boolean editClassById_admin(Class aClass) {
         return classDao.editClassById_admin(aClass);
     }
+
+    @Override
+    public Integer getCurClassId() {
+        return classDao.getCurClassId();
+    }
 }

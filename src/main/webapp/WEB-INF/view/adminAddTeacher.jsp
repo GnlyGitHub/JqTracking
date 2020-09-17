@@ -52,14 +52,12 @@
         </div>
     </div>
 </div>
-
 <script>
     layui.use(['form','layer','upload'], function(){
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.$;
         var upload = layui.upload;
-
 
         $("#sub").click(function () {
             $.ajax({

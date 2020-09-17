@@ -71,4 +71,9 @@
         update class set className=#{className},startDate=#{startDate},endDate=#{endDate},tId=#{tId}
         where classId=#{classId}
     </update>
+
+    <!--Integer getCurClassId();-->
+    <select id="getCurClassId" resultType="Integer">
+        select max(classId) from class
+    </select>
 </mapper>

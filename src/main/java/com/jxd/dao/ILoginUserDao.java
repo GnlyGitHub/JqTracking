@@ -34,9 +34,9 @@ public interface ILoginUserDao {
     List<LoginUser> loginCheck(LoginUser loginUser);
 
     /**
-     * @Description 根据用户名查找密码
-     * @params [userId]
-     * @return java.lang.String
+     * @Description 老师重置密码
+     * @params [loginUser]
+     * @return boolean
      **/
-    String getPasswordById_Teacher(Integer userId);
+    boolean editPassword_Teacher(LoginUser loginUser);
 }

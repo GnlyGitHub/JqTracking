@@ -60,6 +60,13 @@ public class SubjectController {
         return jsonObject.toString();
     }
 
+    @RequestMapping(value = "/getAllSubjectForChoose_admin")
+    @ResponseBody
+    public List<Subject> getAllSubjectForChoose_admin(){
+        List<Subject> list = subjectService.getAllSubject_admin("");
+        return list;
+    }
+
     @RequestMapping("/delSubjectById_admin")
     @ResponseBody
     public String delSubjectById_admin(Integer subjectId){

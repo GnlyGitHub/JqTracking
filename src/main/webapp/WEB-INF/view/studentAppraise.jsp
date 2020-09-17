@@ -35,7 +35,7 @@
                     ${sessionScope.teacher.tName}
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="ALogoutServlet">退出</a></li>
+            <li class="layui-nav-item"><a href="quit">退出</a></li>
         </ul>
     </div>
 
@@ -44,7 +44,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-this"><a href="studentAppraise">学生评价</a></li>
-                <li class="layui-nav-item"><a href="teacherRePwdTeacher">修改密码</a></li>
+                <li class="layui-nav-item"><a href="teacherRePwd_Teacher">修改密码</a></li>
             </ul>
         </div>
     </div>
@@ -53,19 +53,18 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <div align="center">
-
-                <form class="layui-form">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">班期:</label>
-                    <div class="layui-input-inline">
-                        <select name="sClass" id="sClass">
-                            <c:forEach var="c" items="${sClasses}">
-                                <option value="${c.classId}"><c:out value="${c.className}"/></option>
-                            </c:forEach>
-                        </select>
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">班期:</label>
+                        <div class="layui-input-inline">
+                            <select name="sClass" id="sClass">
+                                <c:forEach var="c" items="${sClasses}">
+                                    <option value="${c.classId}"><c:out value="${c.className}"/></option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                </form>
+                </d>
                 <table id="demo" lay-filter="test"></table>
             </div>
         </div>
@@ -96,10 +95,10 @@
     {{# if (d.sHireDate !=="" && d.sHireDate !== null ){}}
     <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">评价</button>
     <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">修改</button>
-    {{#  } else if(d.scoreState === 0) { }}
+    {{#  } else if(d.scoreState == 0) { }}
     <button class="layui-btn layui-btn-xs " lay-event="appraise">评价</button>
     <button class="layui-btn layui-btn-xs layui-btn-normal layui-btn-disabled" lay-event="disApp">修改</button>
-    {{#  } else if(d.scoreState !== 0) { }}
+    {{#  } else if(d.scoreState == 1) { }}
     <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="app">评价</button>
     <button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">修改</button>
     {{#  } else { }}
@@ -120,24 +119,40 @@
             elem: '#demo'
             , toolbar: '#toolbarDemo' //添加工具栏
             , height: 500
-            , width: 1400
+            , width: 1450
             , url: '/getAllStudent_Teacher' //数据接口
-            , page: false
+            , page: true
             , limit: 5
             , limits: [5, 15, 20]
+            ,where: {
+                    sClass: $("#sClass").val()
+                }
             , cols: [[
                  {type: 'numbers', title: '序号', width: 150}
                 , {field: 'sId', title: '学号', width: 200, sort: true}
                 , {field: 'sName', title: '姓名', width: 150}
-                , {field: 'sSex', title: '性别', width: 100, templet: function(d){if(d.sSex == 1){return '男'}else{return '女'}}}
+                , {field: 'sSex', title: '性别', width: 100, templet: function(data){if(data.sSex == 1){return '男'}else{return '女'}}}
                 , {field: 'sSchool', title: '学校', width: 200}
                 , {field: 'sMajor', title: '专业', width: 250}
                 , {field: 'sClass', title: '班期id', width: 250, hide:true}
+                ,{field: 'className', title: '班期', width:150, templet: function (data) {
+                        return data.aClass.className
+                    }}
                 , {field: 'sHireDate', title: '入职日期', width: 250, hide:true}
                 , {field: 'scoreState', title: '评价状态', width: 250, hide:true}
                 , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
             ]]
         });
+
+        /*table.reload("demo", {//demo对应的是table的id
+            where: {
+                sClass: $("#sClass").val()
+            },//where对应的是过滤条件
+            page: {
+                curr: 1
+            }
+        });*/
+
         //头工具栏事件
         table.on('toolbar(test)', function (obj) {
             if (obj.event === 'query') {
@@ -157,6 +172,7 @@
             var data = obj.data;//获取当前行数据
             var classId = data.sClass;
             var sId = data.sId;
+            var className = data.aClass.className;
             //评论
             if (obj.event === 'appraise') {
                 layer.open({
@@ -176,10 +192,16 @@
                     area: ['500px', '700px']
                 });
             } else if (obj.event === 'see') {
-
-            }else if(obj.event ===  'dis'){
+                layer.open({
+                    type: 2, //弹出完整div，type：1弹出隐藏div
+                    title: '员工资料查看',
+                    content: "detailEmpMsg_Manage?sId="+sId+"&className=" + className,
+                    shadeClose: true,    //点击遮罩关闭弹框
+                    area: ['1000px', '700px']
+                })
+            }else if(obj.event === 'dis'){
                 layer.msg("该员工已入职")
-            }else if(obj.event ===  'disApp') {
+            }else if(obj.event === 'disApp') {
                 layer.msg("请先评价")
             }else {
                 layer.msg("已评价")
@@ -198,14 +220,7 @@
             });
         });
 
-        table.reload("demo", {//demo对应的是table的id
-            where: {
-                sClass: $("#sClass").val()
-            },//where对应的是过滤条件
-            page: {
-                curr: 1
-            }
-        });
+
     });
 </script>
 </body>

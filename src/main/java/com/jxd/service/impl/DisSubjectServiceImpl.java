@@ -1,9 +1,13 @@
 package com.jxd.service.impl;
 
 import com.jxd.dao.IDisSubjectDao;
+import com.jxd.model.DisSubject;
+import com.jxd.model.Subject;
 import com.jxd.service.IDisSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Liang Yue
@@ -14,4 +18,19 @@ import org.springframework.stereotype.Service;
 public class DisSubjectServiceImpl implements IDisSubjectService {
     @Autowired
     IDisSubjectDao disSubjectDao;
+
+    @Override
+    public boolean addBatchDisSubject(List<DisSubject> list) {
+        return disSubjectDao.addBatchDisSubject(list);
+    }
+
+    @Override
+    public List<DisSubject> checkDisSubject_admin(Integer classId) {
+        return disSubjectDao.checkDisSubject_admin(classId);
+    }
+
+    @Override
+    public boolean delBatchDisSubject(List<DisSubject> list) {
+        return disSubjectDao.delBatchDisSubject(list);
+    }
 }
