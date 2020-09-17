@@ -52,4 +52,9 @@ public class DisAppraiseServiceImpl implements IDisAppraiseService {
     public boolean deleteDisAppraise_Manage(List<DisAppraise> list) {
         return disAppraiseDao.deleteDisAppraise_Manage(list);
     }
+
+    @Override
+    public List<DisAppraise> getDisAppraiseTable_Manage(Integer mId, Integer classId, Integer number) {
+        return disAppraiseDao.getDisAppraiseTable_Manage(mId,classId,number);
+    }
 }

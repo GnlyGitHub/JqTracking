@@ -124,6 +124,7 @@
                 , layEvent = obj.event; //获得 lay-event 对应的值
             var sid=data.sId
             var className=data.aClass.className
+            var classId=data.aClass.classId
             if (layEvent === 'detail') {
                 layer.open({
                     type: 2, //弹出完整div，type：1弹出隐藏div
@@ -136,7 +137,7 @@
                layer.open({
                    type:2,
                    title:'评分页面',
-                   content:"addGrade_Manage?sId="+sid,
+                   content:"addGrade_Manage?sId="+sid+"&classId="+classId,
                    shadeClose:true,
                    area:['500px','500px']
                })

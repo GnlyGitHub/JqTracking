@@ -6,6 +6,7 @@ import com.jxd.model.Student;
 import com.jxd.service.IGradeService;
 import com.jxd.service.IScoreService;
 import com.jxd.service.IStudentService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,10 @@ public class GradeController {
         return "empDetailMsg";
     }
     @RequestMapping("addGrade_Manage")
-    public String addGrade_Manage(){
+    public String addGrade_Manage(Integer sId, Integer classId, Model model){
+        Map<String,String> map =studentService.getStudentById_Manage(sId);
+        model.addAttribute("stu",map);
+        model.addAttribute("classId",classId);
         return "empAddGrade";
     }
 }
