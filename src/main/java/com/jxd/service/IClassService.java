@@ -69,4 +69,10 @@ public interface IClassService {
      * @return 是否修改成功
      */
     boolean editClassById_admin(Class aClass);
+
+    /**
+     * 获取当前插入的班期编号
+     * @return 当前插入的班期编号
+     */
+    Integer getCurClassId();
 }
