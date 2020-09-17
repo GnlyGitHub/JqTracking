@@ -48,4 +48,10 @@ public interface IDisAppraiseService {
      * @return boolean
      */
     boolean deleteDisAppraise_Manage(List<DisAppraise> list);
+    /**
+     * @Description 获得该期的第几次评价所需表
+     *Param [mId, classId, number]
+     * @return java.util.List<com.jxd.model.DisAppraise>
+     */
+    List<DisAppraise> getDisAppraiseTable_Manage(Integer mId,Integer classId,Integer number);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -154,5 +155,11 @@ public class DisAppraiseController {
         }
         boolean isDel=disAppraiseService.deleteDisAppraise_Manage(list);
         return isDel;
+    }
+    @RequestMapping("getDisAppraiseTable_Manage")
+    @ResponseBody
+    public List<DisAppraise> getDisAppraiseTable_Manage(Integer mId,Integer classId,Integer number){
+        List<DisAppraise> list = disAppraiseService.getDisAppraiseTable_Manage(mId, classId, number);
+        return list;
     }
 }
