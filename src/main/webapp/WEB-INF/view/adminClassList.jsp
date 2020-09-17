@@ -135,7 +135,7 @@
                         title:'添加班期',
                         content:'adminAddClass',
                         shadeClose:true,
-                        area:['455px','380px']
+                        area:['500px','460px']
                     });
                     break;
             }
@@ -147,9 +147,9 @@
                 layer.open({
                     type:2,
                     title:'修改班期信息',
-                    content:"adminEditClass?classId=" + data.classId,
+                    content:"adminBeforeEditClass?classId=" + data.classId,
                     shadeClose:true,
-                    area:['455px','400px'],
+                    area:['500px','460px'],
                     end:function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();

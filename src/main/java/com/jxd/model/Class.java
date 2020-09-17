@@ -6,7 +6,7 @@ package com.jxd.model;
  * @date 2020/9/10 19:40
  */
 public class Class {
-    private Integer classId;//期数
+    private Integer classId;//编号
     private String className;//班期名
     private String startDate;//开课日期
     private String endDate;//结束日期

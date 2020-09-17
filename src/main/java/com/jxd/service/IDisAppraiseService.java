@@ -24,11 +24,11 @@ public interface IDisAppraiseService {
      * @return java.lang.Boolean
      */
     Boolean insertDisAppraise_Manage(DisAppraise disAppraise);
-/**
- * @Description 返回该经历的某期分配表的集合
- *Param [classId, number]
- * @return java.lang.Boolean
- */
+    /**
+     * @Description 返回该经历的某期分配表的集合
+     *Param [classId, number]
+     * @return java.lang.Boolean
+     */
     List<DisAppraise> checkDisAppraise_Manage(Integer mId,Integer classId,Integer number);
     /**
      * @Description 批量插入

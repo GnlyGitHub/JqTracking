@@ -20,6 +20,10 @@ public class DisSubject {
         this.classId = classId;
     }
 
+    public DisSubject(Integer id) {
+        this.id = id;
+    }
+
     public DisSubject(Integer subjectId, Integer classId) {
         this.subjectId = subjectId;
         this.classId = classId;

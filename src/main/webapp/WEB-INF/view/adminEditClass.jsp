@@ -2,13 +2,13 @@
   Created by IntelliJ IDEA.
   User: liangyurj
   Date: 2020/9/17
-  Time: 8:25
+  Time: 13:51
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>添加班期</title>
+    <title>编辑班期信息</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
 </head>
@@ -25,21 +25,21 @@
         <div class="layui-form-item">
             <label class="layui-form-label">开课日期</label>
             <div class="layui-input-inline">
-                <input id="startDate" type="date" name="startDate" required  lay-verify="date" placeholder="开课日期" autocomplete="off" class="layui-input">
+                <input id="startDate" type="date" name="startDate" value="${aClass.startDate}" required  lay-verify="date" placeholder="开课日期" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">结课日期</label>
             <div class="layui-input-inline">
-                <input id="endDate" type="date" name="endDate" required  lay-verify="date" placeholder="结课日期" autocomplete="off" class="layui-input">
+                <input id="endDate" type="date" name="endDate" value="${aClass.endDate}" required  lay-verify="date" placeholder="结课日期" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">分配老师</label>
             <div class="layui-input-inline">
-                <select id="tId" name="tId" lay-filter="test" lay-verify="required">
+                <select id="tId" name="tId" lay-verify="required">
                 </select>
             </div>
         </div>
@@ -58,11 +58,20 @@
     </div>
 </div>
 <script>
+
     layui.use(['form','layer','upload'], function(){
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.$;
         var upload = layui.upload;
+        var SubjectList = ${SubjectList};
+        var tId = ${aClass.tId};
+        var classId = ${aClass.classId};
+        var className = "${aClass.className}";
+        var start = className.indexOf("第");
+        var end = className.indexOf("期");
+        var className1 = className.substring(start + 1, end);
+        $("#className").val(className1);
 
         //向教师下拉框添加选项
         $.ajax({
@@ -74,6 +83,7 @@
                 $.each(data.data, function (index, item) {
                     $('#tId').append(new Option(item.tName, item.tId));//下拉菜单里添加元素
                 });
+                $("#tId option[value=" + tId + "]").attr("selected","selected");
                 layui.form.render("select");
             }
         });
@@ -84,9 +94,14 @@
             dataType: 'json',
             type: 'post',
             success: function (data) {
-                $.each(data, function (index, item) {
-                    $("#AllSubject").append("<input type='checkbox' name='subject' value='" + item.subjectId + "' title='" + item.subject + "'>" );
-                });
+                for (var i = 0; i < data.length; i++) {
+                    $("#AllSubject").append("<input type='checkbox' name='subject' value='" + data[i].subjectId + "' title='" + data[i].subject + "'>" );
+                    for (var j = 0; j < SubjectList.length; j++){
+                        if (SubjectList[j].subjectId == data[i].subjectId){
+                            $("input[value='" + data[i].subjectId + "']").prop("checked", true)
+                        }
+                    }
+                }
                 layui.form.render();
             },
             error: function () {
@@ -101,23 +116,25 @@
                 arr_box.push($(this).val());
             });
             $.ajax({
-                url:'addClass_admin',
+                url:'editClass_admin',
                 type:'post',
                 data:{
+                    classId: classId,
                     className: className,
                     startDate: $("#startDate").val(),
                     endDate: $("#endDate").val(),
                     tId: $("#tId").val(),
                     subjectIds: JSON.stringify(arr_box)
                 },
+                traditional:true,
                 dataType:'text',
                 success:function (data) {
                     if (data == "true"){
-                        layer.msg("添加成功");
-                        setTimeout('closeAdd()',1000)
+                        layer.msg("修改成功");
+                        setTimeout('close()',1000)
                     } else {
-                        layer.msg("添加失败");
-                        setTimeout('closeAdd()',1000)
+                        layer.msg("修改失败");
+                        setTimeout('close()',1000)
                     }
                 },
                 error:function () {
@@ -127,8 +144,10 @@
         });
 
     });
-    var closeAdd = function () {
-        parent.location.reload();
+    //关闭当前弹框
+    var close = function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
     }
 </script>
 </body>

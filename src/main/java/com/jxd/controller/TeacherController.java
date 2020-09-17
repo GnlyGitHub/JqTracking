@@ -110,10 +110,4 @@ public class TeacherController {
         jsonObject.put("data",jsonArray);
         return jsonObject.toString();
     }
-
-    @RequestMapping("/addClass_admin")
-    @ResponseBody
-    public String addClass_admin(){
-        return "";
-    }
 }

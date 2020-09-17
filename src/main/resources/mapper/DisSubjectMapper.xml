@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxd.dao.IDisSubjectDao">
+    <!--boolean addBatchDisSubject(List<DisSubject> list);-->
+    <insert id="addBatchDisSubject">
+        insert into dissubject(subjectId, classId) values
+        <foreach collection="list" item="dissubject" separator=",">
+            (#{dissubject.subjectId},#{dissubject.classId})
+        </foreach>
+    </insert>
 
+    <!--List<DisSubject> checkDisSubject_admin(Integer classId);-->
+    <select id="checkDisSubject_admin" resultType="DisSubject">
+        select id,subjectId,classId from dissubject
+        where classId=#{classId}
+        and subjectId not in (11,12)
+    </select>
 
+    <!--boolean delBatchDisSubject(List<DisSubject> list);-->
+    <delete id="delBatchDisSubject">
+        <foreach collection="list" item="dissubject" separator=";" >
+            delete from dissubject where (id=#{dissubject.id})
+        </foreach>
+    </delete>
 </mapper>
