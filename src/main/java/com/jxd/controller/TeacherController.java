@@ -97,4 +97,23 @@ public class TeacherController {
         boolean isRe = loginUserService.editLoginUser_admin(loginUser);
         return String.valueOf(isRe);
     }
+
+    @RequestMapping(value = "/getAllTeacherForChoose_admin", produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String getAllTeacherForChoose_admin(){
+        List<Teacher> list = teacherService.getAllTeacher_admin("");
+        JSONArray jsonArray = JSONArray.fromObject(list);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("msg","");
+        jsonObject.put("count",list.size());
+        jsonObject.put("data",jsonArray);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping("/addClass_admin")
+    @ResponseBody
+    public String addClass_admin(){
+        return "";
+    }
 }

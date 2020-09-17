@@ -29,6 +29,11 @@ public class ClassController {
         return "adminClassList";
     }
 
+    @RequestMapping("/adminAddClass")
+    public String adminAddClass(){
+        return "adminAddClass";
+    }
+
     //老师获取班级列表并转发到老师评价主页面
     @RequestMapping("/studentAppraise")
     public String studentAppraise_Teacher(Model model,HttpSession session){

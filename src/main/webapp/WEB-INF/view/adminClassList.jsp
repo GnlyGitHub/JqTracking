@@ -147,7 +147,7 @@
                 layer.open({
                     type:2,
                     title:'修改班期信息',
-                    content:"adminEditClass?tId=" + data.tId,
+                    content:"adminEditClass?classId=" + data.classId,
                     shadeClose:true,
                     area:['455px','400px'],
                     end:function () {
