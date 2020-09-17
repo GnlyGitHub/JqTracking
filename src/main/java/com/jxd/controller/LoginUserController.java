@@ -47,13 +47,6 @@ public class LoginUserController {
         return "teacherRePwdTeacher";
     }
 
-    @RequestMapping("/getPasswordById_Teacher")
-    @ResponseBody
-    public String getPasswordById_Teacher(Integer userId){
-        String pwd = loginUserService.getPasswordById_Teacher(userId);
-        return pwd;
-    }
-
     @RequestMapping("/editPassword_Teacher")
     public String editPassword_Teacher(LoginUser loginUser,Model model){
         boolean isEdit = loginUserService.editPassword_Teacher(loginUser);
@@ -68,13 +61,12 @@ public class LoginUserController {
     //登录
     @RequestMapping(value = "/checkLogin",produces = "text/html;charset=utf-8")
     public String checkLogin(LoginUser loginUser, Model model) {
-        //LoginUser loginUser = new LoginUser(userId, password);
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
             model.addAttribute("loginUser",loginUser);
             if (list.get(0).getRole() == 1) {
                 //转发至管理员页面
-                return "1";
+                return "adminStudentList";
             } else if (list.get(0).getRole() == 2) {
                 //转发至老师页面
                 Teacher teacher = teacherService.getTeacherById_admin(loginUser.getUserId());
@@ -102,6 +94,11 @@ public class LoginUserController {
     @RequestMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @RequestMapping("/quit")
+    public String quit(){
+        return "quit";
     }
 
 }

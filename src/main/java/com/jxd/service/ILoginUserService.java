@@ -33,12 +33,6 @@ public interface ILoginUserService {
      **/
     List<LoginUser> loginCheck(LoginUser loginUser);
 
-    /**
-     * @Description 根据用户名查找密码
-     * @params [userId]
-     * @return java.lang.String
-     **/
-    String getPasswordById_Teacher(Integer userId);
 
     /**
      * @Description 老师重置密码
