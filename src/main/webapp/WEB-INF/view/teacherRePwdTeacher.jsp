@@ -73,7 +73,7 @@
                         <button class="layui-btn" lay-submit="" lay-filter="changePwd">立即修改</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
-                    <div align="center">
+                    <div id="editMsg" align="center">
                         ${editMsg}
                     </div>
 
@@ -113,6 +113,13 @@
                     }
                 }
             });
+
+            $(function () {
+                var editMsg = ${editMsg};
+                if(editMsg != null){
+                    location.href="quit";
+                }
+            })
 
 
         });
