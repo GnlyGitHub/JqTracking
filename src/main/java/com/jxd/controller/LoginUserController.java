@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -63,25 +64,28 @@ public class LoginUserController {
     //登录
     @RequestMapping(value = "/checkLogin",produces = "text/html;charset=utf-8")
     @ResponseBody
-    public String checkLogin(LoginUser loginUser, Model model) {
+    public String checkLogin(LoginUser loginUser, Model model,HttpSession session) {
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
-            model.addAttribute("loginUser",loginUser);
+            //model.addAttribute("loginUser",loginUser);
+            session.setAttribute("loginUser",loginUser);
             if (list.get(0).getRole() == 1) {
                 //转发至管理员页面
                 return "adminTeacherList";
             } else if (list.get(0).getRole() == 2) {
                 //转发至老师页面
                 Teacher teacher = teacherService.getTeacherById_admin(loginUser.getUserId());
-                model.addAttribute("teacher",teacher);
+                //model.addAttribute("teacher",teacher);
+                session.setAttribute("teacher",teacher);
 
-                List<Class> list1 = classService.getAllSClassBytId_Teacher(loginUser.getUserId());
-                model.addAttribute("sClasses",list1);
+                /*List<Class> list1 = classService.getAllSClassBytId_Teacher(loginUser.getUserId());
+                model.addAttribute("sClasses",list1);*/
                 return "studentAppraise";
             }else if (list.get(0).getRole() == 3) {
                 //转发至项目经理页面
                 Manager manage = managerService.getManagerById_admin(loginUser.getUserId());
-                model.addAttribute("manage",manage);
+                //model.addAttribute("manage",manage);
+                session.setAttribute("manage",manage);
                 return "empManage";
             }else {
                 return "用户名或密码错误";
@@ -97,10 +101,11 @@ public class LoginUserController {
 
         return loginUserService.editPassword_Manage(loginUser);
     }
-    @RequestMapping("/login")
+
+    /*@RequestMapping("/login")
     public String login() {
         return "login";
-    }
+    }*/
 
     @RequestMapping("/adminRePwdAdmin")
     public String adminRePwdAdmin(){
@@ -132,6 +137,10 @@ public class LoginUserController {
         session.removeAttribute("loginUser");
         if(session.getAttribute("teacher") != null){
             session.removeAttribute("teacher");
+
+        }
+        if(session.getAttribute("manage") != null){
+            session.removeAttribute("manage");
         }
 
 //如果要清除session中的内容多采用下面的失效方法
