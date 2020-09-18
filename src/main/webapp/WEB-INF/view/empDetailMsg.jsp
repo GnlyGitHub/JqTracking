@@ -319,7 +319,7 @@
         $("#scro42").text(${sco.grade})
         </c:if>
         <c:if test="${sco.appraise.appraiseId==10}">
-        $("#scro43").html("${sco.grade}")
+        $("#scro43").html(${sco.grade})
         </c:if>
         </c:forEach>
         <c:forEach var="sco" items="${grade3}" >

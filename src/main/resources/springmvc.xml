@@ -52,4 +52,13 @@
         <property name="defaultEncoding" value="utf-8"/>
         <property name="maxUploadSize" value="52400000"/>
     </bean>
+
+    <!-- 登录拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/controller/*"/> <!-- 拦截路径 -->
+            <mvc:exclude-mapping path="/controller/LoginUser"/>  <!-- 排除的拦截路径 -->
+            <bean class="com.jxd.interceptor.Loginterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
