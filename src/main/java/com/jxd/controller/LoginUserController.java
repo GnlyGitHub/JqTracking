@@ -26,7 +26,6 @@ import java.util.List;
  * @date 2020/9/10 19:49
  */
 @Controller
-@SessionAttributes({"loginUser","teacher","manage"})
 public class LoginUserController {
     @Autowired
     ILoginUserService loginUserService;
@@ -51,10 +50,14 @@ public class LoginUserController {
     }
 
     @RequestMapping("/editPassword_Teacher")
-    public String editPassword_Teacher(LoginUser loginUser,Model model){
+    public String editPassword_Teacher(String password,Model model,HttpSession session){
+        LoginUser oldLoginUser = (LoginUser) session.getAttribute("loginUser");
+        Integer userId = oldLoginUser.getUserId();
+        LoginUser loginUser = new LoginUser(userId,password);
         boolean isEdit = loginUserService.editPassword_Teacher(loginUser);
         if(isEdit){
             model.addAttribute("editMsg","修改成功");
+            session.setAttribute("loginUser",loginUser);
         }else {
             model.addAttribute("editMsg","修改失败");
         }
@@ -67,7 +70,6 @@ public class LoginUserController {
     public String checkLogin(LoginUser loginUser, Model model,HttpSession session) {
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
-            //model.addAttribute("loginUser",loginUser);
             session.setAttribute("loginUser",loginUser);
             if (list.get(0).getRole() == 1) {
                 //转发至管理员页面
@@ -75,16 +77,12 @@ public class LoginUserController {
             } else if (list.get(0).getRole() == 2) {
                 //转发至老师页面
                 Teacher teacher = teacherService.getTeacherById_admin(loginUser.getUserId());
-                //model.addAttribute("teacher",teacher);
                 session.setAttribute("teacher",teacher);
 
-                /*List<Class> list1 = classService.getAllSClassBytId_Teacher(loginUser.getUserId());
-                model.addAttribute("sClasses",list1);*/
                 return "studentAppraise";
             }else if (list.get(0).getRole() == 3) {
                 //转发至项目经理页面
                 Manager manage = managerService.getManagerById_admin(loginUser.getUserId());
-                //model.addAttribute("manage",manage);
                 session.setAttribute("manage",manage);
                 return "empManage";
             }else {
@@ -93,7 +91,6 @@ public class LoginUserController {
         } else {
             return "用户名或密码错误";
         }
-        //return "admin";
     }
     @ResponseBody
     @RequestMapping("editPasswordData_Manage")
@@ -102,10 +99,7 @@ public class LoginUserController {
         return loginUserService.editPassword_Manage(loginUser);
     }
 
-    /*@RequestMapping("/login")
-    public String login() {
-        return "login";
-    }*/
+
 
     @RequestMapping("/adminRePwdAdmin")
     public String adminRePwdAdmin(){

@@ -23,7 +23,7 @@
                 and s.sName like '%' #{sName} '%'
             </if>
         </where>
-        order by s.sId desc
+        order by s.scoreState,s.sId desc
     </select>
     <resultMap id="getAllStudent_TeacherMap" type="Student">
         <id column="sId" property="sId"></id>
@@ -57,7 +57,7 @@
                 and s.sName like '%' #{sName} '%'
             </if>
         </where>
-        order by s.sId desc
+        order by s.scoreState,s.sId desc
         limit ${pageSize * (pageIndex - 1)}, ${pageSize}
     </select>
     <resultMap id="getAllStudentByPage_TeacherMap" type="Student">

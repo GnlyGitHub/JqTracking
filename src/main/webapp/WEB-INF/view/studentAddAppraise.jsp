@@ -22,7 +22,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">${i.subject}</label>
                     <div class="layui-input-block">
-                        <input type="text" name="${i.subjectId}" placeholder="请输入评价内容" class="layui-textarea"></input>
+                        <input type="text" name="${i.subjectId}" placeholder="请输入评价内容" lay-verify="required" class="layui-textarea"></input>
                     </div>
                 </div>
             </c:when>
@@ -30,7 +30,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">${i.subject}</label>
                     <div class="layui-input-block">
-                        <input type="text" name="${i.subjectId}" required lay-verify="required" placeholder="请输入成绩" autocomplete="off" class="layui-input">
+                        <input type="text" name="${i.subjectId}" lay-verify="required|number|score" placeholder="请输入成绩" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </c:otherwise>
@@ -54,12 +54,27 @@
         var form = layui.form;
         var $ = layui.jquery;
 
+        form.verify({
+            score:function (value, item) {
+                if(value < 0 || value > 100){
+                    return '成绩在0-100之间';
+                }
+            }
+        });
+
         //监听提交
         $("#formDemo").click(function(){
             //layer.msg(JSON.stringify(data.field));
             var list = $("input");
             var array = [];
+            var count = 0;
 
+            for (var i=0; i<list.length -1 && list[i]; i++){
+                var v = parseInt(list[i].value);
+                if(v < 0 || v > 100){
+                    count++;
+                }
+            }
             for(var i=0; i<list.length && list[i]; i++){
                 //判断不是空的 input,进行表单提交
                 if(list[i].value != "" && list[i].value != null)
@@ -70,7 +85,9 @@
                     array.push(s); //把对象放入对象数组中
                 }
             }
-            if(list.length == array.length){
+
+
+            if(list.length == array.length && count==0){
                 var postData = JSON.stringify(array);
 
                 $.ajax({
@@ -96,11 +113,7 @@
                         setTimeout('closeAdd()',1000);
                     }
                 });
-            }else {
-                layer.msg("必填项不能为空")
-            }
-
-
+            }4
         });
     });
 
