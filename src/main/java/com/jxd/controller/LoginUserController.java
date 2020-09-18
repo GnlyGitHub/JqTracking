@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2020/9/10 19:49
  */
 @Controller
-@SessionAttributes({"loginUser","teacher","manager"})
+@SessionAttributes({"loginUser","teacher","manage"})
 public class LoginUserController {
     @Autowired
     ILoginUserService loginUserService;
@@ -77,9 +77,9 @@ public class LoginUserController {
                 return "studentAppraise";
             }else if (list.get(0).getRole() == 3) {
                 //转发至项目经理页面
-                Manager manager = managerService.getManagerById_admin(loginUser.getUserId());
-                model.addAttribute("manager",manager);
-                return "1";
+                Manager manage = managerService.getManagerById_admin(loginUser.getUserId());
+                model.addAttribute("manage",manage);
+                return "empManage";
             }else {
                 model.addAttribute("loginMsg", "用户名或密码错误");
                 return "login";
@@ -90,7 +90,12 @@ public class LoginUserController {
         }
         //return "admin";
     }
+    @ResponseBody
+    @RequestMapping("editPasswordData_Manage")
+    public boolean editPasswordData_Manage(LoginUser loginUser){
 
+        return loginUserService.editPassword_Manage(loginUser);
+    }
     @RequestMapping("/login")
     public String login() {
         return "login";

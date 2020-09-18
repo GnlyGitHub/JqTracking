@@ -42,4 +42,9 @@ public class LoginUserServiceImpl implements ILoginUserService {
     public boolean editPassword_Teacher(LoginUser loginUser) {
         return loginUserDao.editPassword_Teacher(loginUser);
     }
+
+    @Override
+    public boolean editPassword_Manage(LoginUser loginUser) {
+        return loginUserDao.editPassword_Manage(loginUser);
+    }
 }
