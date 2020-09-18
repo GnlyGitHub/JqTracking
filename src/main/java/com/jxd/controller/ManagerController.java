@@ -100,4 +100,9 @@ public class ManagerController {
         boolean isRe = loginUserService.editLoginUser_admin(loginUser);
         return String.valueOf(isRe);
     }
+
+    @RequestMapping("empManage")
+    public String empManage(){
+        return "empManage";
+    }
 }

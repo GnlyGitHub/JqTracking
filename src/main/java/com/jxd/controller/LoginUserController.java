@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -60,13 +62,14 @@ public class LoginUserController {
 
     //登录
     @RequestMapping(value = "/checkLogin",produces = "text/html;charset=utf-8")
+    @ResponseBody
     public String checkLogin(LoginUser loginUser, Model model) {
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
             model.addAttribute("loginUser",loginUser);
             if (list.get(0).getRole() == 1) {
                 //转发至管理员页面
-                return "adminStudentList";
+                return "adminTeacherList";
             } else if (list.get(0).getRole() == 2) {
                 //转发至老师页面
                 Teacher teacher = teacherService.getTeacherById_admin(loginUser.getUserId());
@@ -81,12 +84,10 @@ public class LoginUserController {
                 model.addAttribute("manage",manage);
                 return "empManage";
             }else {
-                model.addAttribute("loginMsg", "用户名或密码错误");
-                return "login";
+                return "用户名或密码错误";
             }
         } else {
-            model.addAttribute("loginMsg", "用户名或密码错误");
-            return "login";
+            return "用户名或密码错误";
         }
         //return "admin";
     }
@@ -101,9 +102,41 @@ public class LoginUserController {
         return "login";
     }
 
+    @RequestMapping("/adminRePwdAdmin")
+    public String adminRePwdAdmin(){
+        return "adminRePwdAdmin";
+    }
+
+    @RequestMapping("/rePwdAdmin_admin")
+    @ResponseBody
+    public String rePwdAdmin_admin(String oldPwd, String newPwd, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        Integer userId = loginUser.getUserId();
+        LoginUser loginUser1 = new LoginUser(userId,oldPwd);
+        List<LoginUser> list = loginUserService.loginCheck(loginUser1);
+        if (list.size() == 1){
+            LoginUser loginUser2 = new LoginUser(userId,newPwd);
+            if (loginUserService.editLoginUser_admin(loginUser2)){
+                return "1";
+            } else {
+                return "3";
+            }
+        } else {
+            return "2";
+        }
+    }
+
     @RequestMapping("/quit")
-    public String quit(){
-        return "quit";
+    public String quit(HttpSession session){
+        session.removeAttribute("loginUser");
+        if(session.getAttribute("teacher") != null){
+            session.removeAttribute("teacher");
+        }
+
+//如果要清除session中的内容多采用下面的失效方法
+        session.invalidate();
+        return "login";
     }
 
 }

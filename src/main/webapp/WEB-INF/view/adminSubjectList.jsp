@@ -33,10 +33,10 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="#">
-                    ${sessionScope.aName}
+                    ${sessionScope.loginUser.userId}
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="quit">退出</a></li>
         </ul>
     </div>
 
@@ -48,9 +48,9 @@
                 <li class="layui-nav-item"><a href="adminManagerList">项目经理管理</a></li>
                 <li class="layui-nav-item"><a href="adminStudentList">学生管理</a></li>
                 <li class="layui-nav-item layui-this"><a href="adminSubjectList">课程管理</a></li>
-                <li class="layui-nav-item"><a href="">班期管理</a></li>
+                <li class="layui-nav-item"><a href="adminClassList">班期管理</a></li>
                 <li class="layui-nav-item"><a href="adminAppraiseList">评分项管理</a></li>
-                <li class="layui-nav-item"><a href="">修改密码</a></li>
+                <li class="layui-nav-item"><a href="adminRePwdAdmin">修改密码</a></li>
             </ul>
         </div>
     </div>

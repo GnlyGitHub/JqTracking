@@ -119,7 +119,7 @@
             elem: '#demo'
             , toolbar: '#toolbarDemo' //添加工具栏
             , height: 500
-            , width: 1450
+            , width: 1300
             , url: '/getAllStudent_Teacher' //数据接口
             , page: true
             , limit: 5
@@ -129,12 +129,12 @@
                 }
             , cols: [[
                  {type: 'numbers', title: '序号', width: 150}
-                , {field: 'sId', title: '学号', width: 200, sort: true}
+                , {field: 'sId', title: '学号', width: 150, sort: true}
                 , {field: 'sName', title: '姓名', width: 150}
                 , {field: 'sSex', title: '性别', width: 100, templet: function(data){if(data.sSex == 1){return '男'}else{return '女'}}}
                 , {field: 'sSchool', title: '学校', width: 200}
-                , {field: 'sMajor', title: '专业', width: 250}
-                , {field: 'sClass', title: '班期id', width: 250, hide:true}
+                , {field: 'sMajor', title: '专业', width: 150}
+                , {field: 'sClass', title: '班期id', width: 200, hide:true}
                 ,{field: 'className', title: '班期', width:150, templet: function (data) {
                         return data.aClass.className
                     }}
