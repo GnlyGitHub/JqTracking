@@ -40,4 +40,10 @@ public interface ILoginUserService {
      * @return boolean
      **/
     boolean editPassword_Teacher(LoginUser loginUser);
+    /**
+     * @Description 修改经理密码
+     *Param [loginUser]
+     * @return boolean
+     */
+    boolean editPassword_Manage(LoginUser loginUser);
 }

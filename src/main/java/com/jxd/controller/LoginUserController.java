@@ -26,7 +26,7 @@ import java.util.List;
  * @date 2020/9/10 19:49
  */
 @Controller
-/*@SessionAttributes({"loginUser","teacher","manage"})*/
+@SessionAttributes({"loginUser","teacher","manage"})
 public class LoginUserController {
     @Autowired
     ILoginUserService loginUserService;
@@ -95,6 +95,12 @@ public class LoginUserController {
         }
         //return "admin";
     }
+    @ResponseBody
+    @RequestMapping("editPasswordData_Manage")
+    public boolean editPasswordData_Manage(LoginUser loginUser){
+
+        return loginUserService.editPassword_Manage(loginUser);
+    }
 
     /*@RequestMapping("/login")
     public String login() {
@@ -137,6 +143,7 @@ public class LoginUserController {
             session.removeAttribute("manage");
         }
 
+//如果要清除session中的内容多采用下面的失效方法
         session.invalidate();
         return "login";
     }
