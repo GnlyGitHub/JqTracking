@@ -80,24 +80,24 @@
         <fieldset class="layui-elem-field layui-field-title">
             <legend style="color: #717171">欢迎登录 - 金桥学员跟踪系统</legend>
         </fieldset>
-        <form class="layui-form" action="checkLogin" method="post">
+        <div class="layui-form" id="formId" action="checkLogin" method="post">
             <!--            账号-->
             <div class="layui-form-item">
                 <i class="layui-icon layui-icon-username myIcon" style="top: 80px;"></i>
-                <input class="layui-input myInput"  type="text" name="userId" required  lay-verify="required" placeholder="账号" autocomplete="off">
+                <input class="layui-input myInput"  type="text" id="userId" name="userId" required  lay-verify="required" placeholder="账号" autocomplete="off">
             </div>
             <!--            密码-->
             <div class="layui-form-item">
                 <i class="layui-icon layui-icon-password myIcon" style="top: 133px;"></i>
-                <input class="layui-input myInput" type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off">
+                <input class="layui-input myInput" type="password" id="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off">
             </div>
                 <div class="layui-input-block" style="margin-left: 0;height: 10px;color: #ff7752">
                     ${loginMsg}
                 </div>
             <div class="layui-form-item">
-                <button class="layui-btn myButton" lay-submit lay-filter="formDemo">立即登录</button>
+                <button class="layui-btn myButton"  id="sub" lay-filter="formDemo">立即登录</button>
             </div>
-        </form>
+        </div>
 
     </div>
 
@@ -106,6 +106,32 @@
 <script>
     layui.use('form', function () {
         var form = layui.form;
+        var $ = layui.jquery;
+
+        $("#sub").click(function () {
+            $.ajax({
+                url:"checkLogin",
+                type:"post",
+                data : {
+                    userId:$("#userId").val(),
+                    password:$("#password").val()
+                },
+                success:function (data) {
+                    if(data == "studentAppraise"){
+                        location.href = "studentAppraise"
+                    }else if(data == "adminTeacherList"){
+                        location.href = "adminTeacherList"
+                    }else if(data == "empManage"){
+                        location.href = "empManage";
+                    }else {
+                        layer.msg(data)
+                    }
+                },
+                error:function (data) {
+                    layer.msg("执行失败");
+                }
+            });
+        })
     });
 
 </script>

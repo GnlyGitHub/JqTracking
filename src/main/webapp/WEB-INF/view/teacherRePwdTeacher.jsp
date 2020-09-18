@@ -46,7 +46,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-block">
-                        <input type="text" value="${sessionScope.teacher.tId}" name="userId" id="userId" disabled class="layui-input layui-disabled">
+                        <input type="text" value="${sessionScope.loginUser.userId}" name="userId" id="userId" disabled class="layui-input layui-disabled">
                     </div>
                 </div>
                 <div class="layui-form-item">

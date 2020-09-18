@@ -25,7 +25,7 @@ import java.util.List;
  * @date 2020/9/10 19:49
  */
 @Controller
-@SessionAttributes({"loginUser","teacher","manager"})
+@SessionAttributes({"loginUser","teacher","manage"})
 public class LoginUserController {
     @Autowired
     ILoginUserService loginUserService;
@@ -62,6 +62,7 @@ public class LoginUserController {
 
     //登录
     @RequestMapping(value = "/checkLogin",produces = "text/html;charset=utf-8")
+    @ResponseBody
     public String checkLogin(LoginUser loginUser, Model model) {
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
@@ -79,16 +80,14 @@ public class LoginUserController {
                 return "studentAppraise";
             }else if (list.get(0).getRole() == 3) {
                 //转发至项目经理页面
-                Manager manager = managerService.getManagerById_admin(loginUser.getUserId());
-                model.addAttribute("manager",manager);
-                return "1";
+                Manager manage = managerService.getManagerById_admin(loginUser.getUserId());
+                model.addAttribute("manage",manage);
+                return "empManage";
             }else {
-                model.addAttribute("loginMsg", "用户名或密码错误");
-                return "login";
+                return "用户名或密码错误";
             }
         } else {
-            model.addAttribute("loginMsg", "用户名或密码错误");
-            return "login";
+            return "用户名或密码错误";
         }
         //return "admin";
     }
@@ -124,8 +123,15 @@ public class LoginUserController {
     }
 
     @RequestMapping("/quit")
-    public String quit(){
-        return "quit";
+    public String quit(HttpSession session){
+        session.removeAttribute("loginUser");
+        if(session.getAttribute("teacher") != null){
+            session.removeAttribute("teacher");
+        }
+
+//如果要清除session中的内容多采用下面的失效方法
+        session.invalidate();
+        return "login";
     }
 
 }
