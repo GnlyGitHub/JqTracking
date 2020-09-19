@@ -1,7 +1,9 @@
 package com.jxd.controller;
 
 import com.jxd.model.Appraise;
+import com.jxd.model.DisAppraise;
 import com.jxd.service.IAppraiseService;
+import com.jxd.service.IDisAppraiseService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import java.util.List;
 public class AppraiseController {
     @Autowired
     IAppraiseService appraiseService;
+    @Autowired
+    IDisAppraiseService disAppraiseService;
 
     @RequestMapping("getAllAppraise_Manage")
     @ResponseBody
@@ -60,8 +64,13 @@ public class AppraiseController {
     @RequestMapping("/delAppraiseById_admin")
     @ResponseBody
     public String delAppraiseById_admin(Integer appraiseId){
-        boolean isDel = appraiseService.delAppraise_admin(appraiseId);
-        return String.valueOf(isDel);
+        List<DisAppraise> list = disAppraiseService.getDisAppraiseByAppraiseId(appraiseId);
+        if (list.size() > 0){
+            return "1";//该评价分项已被使用
+        } else {
+            boolean isDel = appraiseService.delAppraise_admin(appraiseId);
+            return String.valueOf(isDel);
+        }
     }
 
     @RequestMapping("/addAppraise_admin")
@@ -76,5 +85,16 @@ public class AppraiseController {
     public String editAppraise_admin(Appraise appraise){
         boolean isEdit = appraiseService.editAppraiseById_admin(appraise);
         return String.valueOf(isEdit);
+    }
+
+    @RequestMapping("/checkRepAppraise_admin")
+    @ResponseBody
+    public String checkRepAppraise_admin(String appraise){
+        List<Appraise> list = appraiseService.checkRepAppraise_admin(appraise);
+        boolean isExit = false;
+        if (list.size() > 0){
+            isExit = true;
+        }
+        return String.valueOf(isExit);
     }
 }

@@ -11,6 +11,11 @@
     <title>添加课程</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
+    <style>
+        .red{
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
 <div style="padding: 60px 0 0 20px;display: flex; justify-content: center">
@@ -20,6 +25,8 @@
             <div class="layui-input-inline">
                 <input id="subject" type="text" name="subject" required  lay-verify="required" placeholder="请输入课程名" autocomplete="off" class="layui-input">
             </div>
+            <p id="subjectP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入课程</p>
+            <p id="subjectP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">该课程已存在</p>
         </div>
         <div class="layui-form-item" style="display: flex; justify-content: center; margin-top: 30px; padding-left: 60px">
             <div class="layui-input-inline">
@@ -34,28 +41,67 @@
         var layer = layui.layer;
         var $ = layui.$;
         var upload = layui.upload;
+        var isExit = false;
 
-        $("#sub").click(function () {
+        $("#subject").blur(function () {
             $.ajax({
-                url:'addSubject_admin',
-                type:'post',
+                url: 'checkRepSubject_admin',
                 data:{
-                    "subject": $("#subject").val()
+                    subject: $("#subject").val()
                 },
                 dataType:'text',
                 success:function (data) {
                     if (data == "true"){
-                        layer.msg("添加成功");
-                        setTimeout('closeAdd()',1000)
+                        $("#subject").addClass("red");
+                        $("#subjectP2").css("display","inline");
+                        isExit = true;
                     } else {
-                        layer.msg("添加失败");
-                        setTimeout('closeAdd()',1000)
+                        isExit = false;
                     }
                 },
                 error:function () {
                     layer.msg("执行失败");
                 }
-            })
+            });
+            if ($("#subject").val() == ""){
+                $("#subject").addClass("red");
+                $("#subjectP1").css("display","inline");
+            }
+        }).focus(function () {
+            $("#subject").removeClass("red");
+            $("#subjectP1").css("display","none");
+            $("#subjectP2").css("display","none");
+        });
+
+        $("#sub").click(function () {
+            if ($("#subject").val() == ""){
+                $("#subject").addClass("red");
+                $("#subjectP1").css("display","inline");
+            } else if (isExit) {
+                $("#subject").addClass("red");
+                $("#subjectP2").css("display","inline");
+            } else {
+                $.ajax({
+                    url:'addSubject_admin',
+                    type:'post',
+                    data:{
+                        "subject": $("#subject").val()
+                    },
+                    dataType:'text',
+                    success:function (data) {
+                        if (data == "true"){
+                            layer.msg("添加成功");
+                            setTimeout('closeAdd()',1000)
+                        } else {
+                            layer.msg("添加失败");
+                            setTimeout('closeAdd()',1000)
+                        }
+                    },
+                    error:function () {
+                        layer.msg("执行失败");
+                    }
+                })
+            }
         })
     });
     var closeAdd = function () {

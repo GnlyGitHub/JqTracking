@@ -183,8 +183,14 @@ public class StudentController {
     @RequestMapping("/delStudentById_admin")
     @ResponseBody
     public String delStudentById_admin(Integer sId){
-        boolean isDel = studentService.delStudent_admin(sId);
-        return String.valueOf(isDel);
+        Student student = studentService.getStudentById_admin(sId);
+        String sHireDate = student.getsHireDate();
+        if (sHireDate == null) {
+            boolean isDel = studentService.delStudent_admin(sId);
+            return String.valueOf(isDel);
+        } else {
+            return "1";//该学生已入职
+        }
     }
     @RequestMapping("GetAllStudent_Manage/{projectId}")
     @ResponseBody

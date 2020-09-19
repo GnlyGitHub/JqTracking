@@ -1,6 +1,7 @@
 package com.jxd.dao;
 
 import com.jxd.model.Student;
+import com.jxd.model.Subject;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -99,4 +100,11 @@ public interface IStudentDao {
      * @return boolean
      */
     boolean changeAppraiseState_Manage(@Param("appraiseState") Integer appraiseState,@Param("sId") Integer sId);
+
+    /**
+     * 根据班期获取学生列表
+     * @param classId 班期号
+     * @return 学生列表
+     */
+    List<Student> getStudentByClassId_admin(Integer classId);
 }

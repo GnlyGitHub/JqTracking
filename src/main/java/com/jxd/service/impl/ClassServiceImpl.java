@@ -67,4 +67,14 @@ public class ClassServiceImpl implements IClassService {
     public Integer getCurClassId() {
         return classDao.getCurClassId();
     }
+
+    @Override
+    public List<Class> checkRepClass_admin(String className) {
+        return classDao.checkRepClass_admin(className);
+    }
+
+    @Override
+    public List<Class> getClassBytId_admin(Integer tId) {
+        return classDao.getClassBytId_admin(tId);
+    }
 }

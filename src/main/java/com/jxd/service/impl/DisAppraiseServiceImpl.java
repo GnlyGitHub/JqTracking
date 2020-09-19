@@ -57,4 +57,9 @@ public class DisAppraiseServiceImpl implements IDisAppraiseService {
     public List<DisAppraise> getDisAppraiseTable_Manage(Integer mId, Integer classId, Integer number) {
         return disAppraiseDao.getDisAppraiseTable_Manage(mId,classId,number);
     }
+
+    @Override
+    public List<DisAppraise> getDisAppraiseByAppraiseId(Integer appraiseId) {
+        return disAppraiseDao.getDisAppraiseByAppraiseId(appraiseId);
+    }
 }

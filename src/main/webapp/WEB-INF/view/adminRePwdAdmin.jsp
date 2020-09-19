@@ -153,29 +153,50 @@
         });
 
         $("#sub").click(function () {
-            $.ajax({
-                url:'rePwdAdmin_admin',
-                type:'post',
-                data:{
-                    oldPwd: $("#oldPwd").val(),
-                    newPwd: $("#newPwd").val(),
-                    repPwd: $("#repPwd").val(),
-                },
-                dataType:'text',
-                success:function (data) {
-                    if (data == "1"){
-                        layer.msg("修改成功，请重新登录", {icon:1});
-                        setTimeout('toLogin()',1000);
-                    } else if (data == "2"){
-                        layer.msg("原密码输入错误，请重试", {icon:5});
-                    } else {
-                        layer.msg("修改失败，请重试", {icon:5});
+            if ($("#oldPwd").val() == ""){
+                $("#oldPwd").addClass("red");
+                $("#oldPwdP").css("display","inline");
+            } else if ($("#newPwd").val() == ""){
+                $("#newPwd").addClass("red");
+                $("#newPwdP1").css("display","inline");
+            } else if (!reg.test($("#newPwd").val())){
+                $("#newPwd").addClass("red");
+                $("#newPwdP2").css("display","inline");
+            } else if ($("#repPwd").val() == ""){
+                $("#repPwd").addClass("red");
+                $("#repPwdP1").css("display","inline");
+            } else if (!reg.test($("#repPwd").val())){
+                $("#repPwd").addClass("red");
+                $("#repPwdP2").css("display","inline");
+            } else if (($("#newPwd").val() != $("#repPwd").val())) {
+                $("#repPwd").addClass("red");
+                $("#repPwdP3").css("display","inline");
+            } else {
+                $.ajax({
+                    url:'rePwdAdmin_admin',
+                    type:'post',
+                    data:{
+                        oldPwd: $("#oldPwd").val(),
+                        newPwd: $("#newPwd").val(),
+                        repPwd: $("#repPwd").val(),
+                    },
+                    dataType:'text',
+                    success:function (data) {
+                        if (data == "1"){
+                            layer.msg("修改成功，请重新登录", {icon:1});
+                            setTimeout('toLogin()',1000);
+                        } else if (data == "2"){
+                            layer.msg("原密码输入错误，请重试", {icon:5});
+                            $("#oldPwd").addClass("red");
+                        } else {
+                            layer.msg("修改失败，请重试", {icon:5});
+                        }
+                    },
+                    error:function () {
+                        layer.msg("执行失败");
                     }
-                },
-                error:function () {
-                    layer.msg("执行失败");
-                }
-            })
+                })
+            }
         })
     });
     var toLogin = function () {

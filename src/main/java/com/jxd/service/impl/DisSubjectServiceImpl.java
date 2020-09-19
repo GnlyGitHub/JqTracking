@@ -33,4 +33,14 @@ public class DisSubjectServiceImpl implements IDisSubjectService {
     public boolean delBatchDisSubject(List<DisSubject> list) {
         return disSubjectDao.delBatchDisSubject(list);
     }
+
+    @Override
+    public boolean delDisSubjectByClassId(Integer classId) {
+        return disSubjectDao.delDisSubjectByClassId(classId);
+    }
+
+    @Override
+    public List<DisSubject> getDisSubjectBySubjectId(Integer subjectId) {
+        return disSubjectDao.getDisSubjectBySubjectId(subjectId);
+    }
 }

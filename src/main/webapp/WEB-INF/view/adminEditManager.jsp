@@ -11,6 +11,11 @@
     <title>修改项目经理信息</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
+    <style>
+        .red{
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
 <div style="padding: 30px 0 0 20px;display: flex; justify-content: center">
@@ -27,6 +32,7 @@
             <div class="layui-input-inline">
                 <input id="mName" type="text" name="mName" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
             </div>
+            <p id="mNameP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入姓名</p>
         </div>
 
         <div class="layui-form-item">
@@ -42,6 +48,7 @@
             <div class="layui-input-inline">
                 <input id="mBirthday" type="date" name="mBirthday" required  lay-verify="date" placeholder="请输入出生年月" autocomplete="off" class="layui-input">
             </div>
+            <p id="mBirthdayP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入出生年月</p>
         </div>
 
         <div class="layui-form-item">
@@ -49,6 +56,8 @@
             <div class="layui-input-inline">
                 <input id="mPhone" type="text" name="mPhone" required  lay-verify="phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
             </div>
+            <p id="mPhoneP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入电话</p>
+            <p id="mPhoneP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确电话</p>
         </div>
 
         <div class="layui-form-item">
@@ -70,7 +79,7 @@
         <div class="layui-form-item" style="display: flex; justify-content: center">
             <div class="layui-input-inline">
                 <button id="sub" class="layui-btn" lay-filter="formDemo">提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </div>
@@ -83,7 +92,41 @@
         var $ = layui.$;
         var upload = layui.upload;
         var mId = ${param.mId};
-        //var mId = 5014;
+        var reg = /^(([0-9]{7,8})|(1[0-9]{10}))$/;
+
+        $("#mName").blur(function () {
+            if ($("#mName").val() == ""){
+                $("#mName").addClass("red");
+                $("#mNameP").css("display","inline");
+            }
+        }).focus(function () {
+            $("#mName").removeClass("red");
+            $("#mNameP").css("display","none");
+        });
+        $("#mBirthday").blur(function () {
+            if ($("#mBirthday").val() == "") {
+                $("#mBirthday").addClass("red");
+                $("#mBirthdayP").css("display","inline");
+            }
+        }).focus(function () {
+            $("#mBirthday").removeClass("red");
+            $("#mBirthdayP").css("display","none");
+        });
+        $("#mPhone").blur(function () {
+            if ($("#mPhone").val() == "") {
+                $("#mPhone").addClass("red");
+                $("#mPhoneP1").css("display","inline");
+                $("#mPhoneP2").css("display","none");
+            } else if (!reg.test($("#mPhone").val())){
+                $("#mPhone").addClass("red");
+                $("#mPhoneP1").css("display","none");
+                $("#mPhoneP2").css("display","inline");
+            }
+        }).focus(function () {
+            $("#mPhone").removeClass("red");
+            $("#mPhoneP1").css("display","none");
+            $("#mPhoneP2").css("display","none");
+        });
 
         $.ajax({
             url: '/getAllDept_admin',
@@ -152,33 +195,53 @@
             }
         });
 
+        $("#reset").click(function () {
+            $("#mName").val("");
+            $("#mBirthday").val("");
+            $("#mPhone").val("");
+        });
+
         $("#sub").click(function () {
-            $.ajax({
-                url:'editManager_admin',
-                type:'post',
-                data:{
-                    "mId": mId,
-                    "mName": $("#mName").val(),
-                    "mSex": $('input[name="mSex"]:checked').val(),
-                    "mBirthday": $("#mBirthday").val(),
-                    "mPhone": $("#mPhone").val(),
-                    "deptNo": $("#deptNo").val(),
-                    "projectId": $("#projectId").val(),
-                },
-                dataType:'text',
-                success:function (data) {
-                    if (data == "true"){
-                        layer.msg("修改成功");
-                        setTimeout('close()',1000)
-                    } else {
-                        layer.msg("修改失败");
-                        setTimeout('close()',1000)
+            if ($("#mName").val() == ""){
+                $("#mName").addClass("red");
+                $("#mNameP").css("display","inline");
+            } else if ($("#mBirthday").val() == "") {
+                $("#mBirthday").addClass("red");
+                $("#mBirthdayP").css("display","inline");
+            } else if ($("#mPhone").val() == "") {
+                $("#mPhone").addClass("red");
+                $("#mPhoneP1").css("display","inline");
+            } else if (!reg.test($("#mPhone").val())){
+                $("#mPhone").addClass("red");
+                $("#mPhoneP2").css("display","inline");
+            } else {
+                $.ajax({
+                    url:'editManager_admin',
+                    type:'post',
+                    data:{
+                        "mId": mId,
+                        "mName": $("#mName").val(),
+                        "mSex": $('input[name="mSex"]:checked').val(),
+                        "mBirthday": $("#mBirthday").val(),
+                        "mPhone": $("#mPhone").val(),
+                        "deptNo": $("#deptNo").val(),
+                        "projectId": $("#projectId").val(),
+                    },
+                    dataType:'text',
+                    success:function (data) {
+                        if (data == "true"){
+                            layer.msg("修改成功");
+                            setTimeout('close()',1000)
+                        } else {
+                            layer.msg("修改失败");
+                            setTimeout('close()',1000)
+                        }
+                    },
+                    error:function () {
+                        layer.msg("执行失败");
                     }
-                },
-                error:function () {
-                    layer.msg("执行失败");
-                }
-            })
+                })
+            }
         });
     });
     //关闭当前弹框

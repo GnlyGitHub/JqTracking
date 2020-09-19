@@ -56,4 +56,10 @@ public interface IAppraiseDao {
      * @return 是否修改成功
      */
     boolean editAppraiseById_admin(Appraise appraise);
+
+    /**
+     * 查重评价分项
+     * @return 评价分项列表
+     */
+    List<Appraise> checkRepAppraise_admin(String appraise);
 }

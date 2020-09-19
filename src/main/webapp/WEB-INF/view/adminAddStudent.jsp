@@ -11,6 +11,11 @@
     <title>添加学生</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
+    <style>
+        .red{
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
 <div style="padding: 30px 0 0 20px;display: flex; justify-content: center">
@@ -22,6 +27,7 @@
                         <label class="layui-form-label">姓名</label>
                         <div class="layui-input-inline">
                             <input id="sName" type="text" name="sName" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                            <p id="sNameP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入姓名</p>
                         </div>
                     </div>
                 </td>
@@ -29,7 +35,7 @@
                     <input type="hidden" name="sPhoto" id="sPhoto" class="image">
                     <div class="layui-form-item">
                         <div style="border: 1px solid rgba(0,0,0,0.4);width: 110px;  height: 140px; margin-left: 80px; text-align: center">
-                            <img class="layui-upload-img" id="demo1" width="100">
+                            <img class="layui-upload-img" id="demo1" width="108" height="138" src="../../static/img/admin.jpg">
                         </div>
                         <%--<label class="layui-form-label ">照片:</label>--%>
                         <div class="layui-upload" style="margin: 10px 0 0 90px">
@@ -67,6 +73,7 @@
                         <label class="layui-form-label">出生年月</label>
                         <div class="layui-input-inline">
                             <input id="sBirthday" type="date" name="sBirthday" required  lay-verify="date" placeholder="请输入出生年月" autocomplete="off" class="layui-input">
+                            <p id="sBirthdayP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入出生年月</p>
                         </div>
                     </div>
                 </td>
@@ -99,6 +106,8 @@
                         <label class="layui-form-label">电话</label>
                         <div class="layui-input-inline">
                             <input id="sPhone" type="text" name="sPhone" required  lay-verify="phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+                            <p id="sPhoneP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入电话</p>
+                            <p id="sPhoneP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确电话</p>
                         </div>
                     </div>
                 </td>
@@ -118,6 +127,8 @@
                         <label class="layui-form-label">身份证</label>
                         <div class="layui-input-block" style="width: 500px;">
                             <input id="sIdCard" type="text" name="sIdCard" required  lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+                            <p id="sIdCardP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入身份证号码</p>
+                            <p id="sIdCardP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确身份证号码</p>
                         </div>
                     </div>
                 </td>
@@ -128,6 +139,7 @@
                         <label class="layui-form-label">学校</label>
                         <div class="layui-input-inline">
                             <input id="sSchool" type="text" name="sSchool" required  lay-verify="required" placeholder="请输入学校" autocomplete="off" class="layui-input">
+                            <p id="sSchoolP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入学校</p>
                         </div>
                     </div>
                 </td>
@@ -136,6 +148,7 @@
                         <label class="layui-form-label">专业</label>
                         <div class="layui-input-inline">
                             <input id="sMajor" type="text" name="sMajor" required  lay-verify="required" placeholder="请输入专业" autocomplete="off" class="layui-input">
+                            <p id="sMajorP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入专业</p>
                         </div>
                     </div>
                 </td>
@@ -207,7 +220,7 @@
         <div class="layui-form-item" style="display: flex; justify-content: center">
             <div class="layui-input-inline">
                 <button id="sub" class="layui-btn" lay-filter="formDemo">提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </div>
@@ -226,6 +239,76 @@
         var $ = layui.$;
         var upload = layui.upload;
         var layarea = layui.layarea;
+        var regPhone = /^(([0-9]{7,8})|(1[0-9]{10}))$/;
+        var regIdCard = /^\d{14}(\d|X|x)$|^\d{17}(\d|X|x)$/;
+
+        //表单验证
+        $("#sName").blur(function () {
+            if ($("#sName").val() == ""){
+                $("#sName").addClass("red");
+                $("#sNameP").css("display","inline");
+            }
+        }).focus(function () {
+            $("#sName").removeClass("red");
+            $("#sNameP").css("display","none");
+        });
+        $("#sBirthday").blur(function () {
+            if ($("#sBirthday").val() == "") {
+                $("#sBirthday").addClass("red");
+                $("#sBirthdayP").css("display","inline");
+            }
+        }).focus(function () {
+            $("#sBirthday").removeClass("red");
+            $("#sBirthdayP").css("display","none");
+        });
+        $("#sPhone").blur(function () {
+            if ($("#sPhone").val() == "") {
+                $("#sPhone").addClass("red");
+                $("#sPhoneP1").css("display","inline");
+                $("#sPhoneP2").css("display","none");
+            } else if (!regPhone.test($("#sPhone").val())){
+                $("#sPhone").addClass("red");
+                $("#sPhoneP1").css("display","none");
+                $("#sPhoneP2").css("display","inline");
+            }
+        }).focus(function () {
+            $("#sPhone").removeClass("red");
+            $("#sPhoneP1").css("display","none");
+            $("#sPhoneP2").css("display","none");
+        });
+        $("#sIdCard").blur(function () {
+            if ($("#sIdCard").val() == "") {
+                $("#sIdCard").addClass("red");
+                $("#sIdCardP1").css("display","inline");
+                $("#sIdCardP2").css("display","none");
+            } else if (!regIdCard.test($("#sIdCard").val())){
+                $("#sIdCard").addClass("red");
+                $("#sIdCardP1").css("display","none");
+                $("#sIdCardP2").css("display","inline");
+            }
+        }).focus(function () {
+            $("#sIdCard").removeClass("red");
+            $("#sIdCardP1").css("display","none");
+            $("#sIdCardP2").css("display","none");
+        });
+        $("#sSchool").blur(function () {
+            if ($("#sSchool").val() == "") {
+                $("#sSchool").addClass("red");
+                $("#sSchoolP").css("display","inline");
+            }
+        }).focus(function () {
+            $("#sSchool").removeClass("red");
+            $("#sSchoolP").css("display","none");
+        });
+        $("#sMajor").blur(function () {
+            if ($("#sMajor").val() == "") {
+                $("#sMajor").addClass("red");
+                $("#sMajorP").css("display","inline");
+            }
+        }).focus(function () {
+            $("#sMajor").removeClass("red");
+            $("#sMajorP").css("display","none");
+        });
 
         //向部门下拉框添加选项
         $.ajax({
@@ -339,45 +422,85 @@
             }
         });
 
+        //重置
+        $("#reset").click(function () {
+            $("#sName").val("");
+            $("#sBirthday").val("");
+            $("#sPhone").val("");
+            $("#sPhoto").val("");
+            $("#demo1").attr("src", "../../static/img/admin.jpg");
+            $("#sIdCard").val("");
+            $("#sSchool").val("");
+            $("#sMajor").val("");
+            $("#sHireDate").val("");
+            $("#sRemarks").val("");
+        });
+
         //提交
         $("#sub").click(function () {
-            var sPlace = $("#province").val() + $("#city").val() + $("#county").val();
-            $.ajax({
-                url:'addStudent_admin',
-                type:'post',
-                data:{
-                    "sName": $("#sName").val(),
-                    "sSex": $('input[name="sSex"]:checked').val(),
-                    "sBirthday": $("#sBirthday").val(),
-                    "sPhone": $("#sPhone").val(),
-                    "sNation": $("#sNation").val(),
-                    "sPlace": sPlace,
-                    "sPhoto": $("#sPhoto").val(),
-                    "sMarry": $('input[name="sMarry"]:checked').val(),
-                    "sIdCard": $("#sIdCard").val(),
-                    "sSchool": $("#sSchool").val(),
-                    "sMajor": $("#sMajor").val(),
-                    "sClass": $("#sClass").val(),
-                    "sHireDate": $("#sHireDate").val(),
-                    "deptNo": $("#deptNo").val(),
-                    "jobId": $("#jobId").val(),
-                    "sRemarks": $("#sRemarks").val(),
-                    "projectId": $("#projectId").val()
-                },
-                dataType:'text',
-                success:function (data) {
-                    if (data == "true"){
-                        layer.msg("添加成功");
-                        setTimeout('closeAdd()',1000)
-                    } else {
-                        layer.msg("添加失败");
-                        setTimeout('closeAdd()',1000)
+            if ($("#sName").val() == ""){
+                $("#sName").addClass("red");
+                $("#sNameP").css("display","inline");
+            } else if ($("#sBirthday").val() == "") {
+                $("#sBirthday").addClass("red");
+                $("#sBirthdayP").css("display","inline");
+            } else if ($("#sPhone").val() == "") {
+                $("#sPhone").addClass("red");
+                $("#sPhoneP1").css("display","inline");
+            } else if (!regPhone.test($("#sPhone").val())){
+                $("#sPhone").addClass("red");
+                $("#sPhoneP2").css("display","inline");
+            } else if ($("#sIdCard").val() == "") {
+                $("#sIdCard").addClass("red");
+                $("#sIdCardP1").css("display","inline");
+            } else if (!regIdCard.test($("#sIdCard").val())){
+                $("#sIdCard").addClass("red");
+                $("#sIdCardP2").css("display","inline");
+            } else if ($("#sSchool").val() == "") {
+                $("#sSchool").addClass("red");
+                $("#sSchoolP").css("display","inline");
+            } else if ($("#sMajor").val() == "") {
+                $("#sMajor").addClass("red");
+                $("#sMajorP").css("display","inline");
+            } else {
+                var sPlace = $("#province").val() + $("#city").val() + $("#county").val();
+                $.ajax({
+                    url:'addStudent_admin',
+                    type:'post',
+                    data:{
+                        "sName": $("#sName").val(),
+                        "sSex": $('input[name="sSex"]:checked').val(),
+                        "sBirthday": $("#sBirthday").val(),
+                        "sPhone": $("#sPhone").val(),
+                        "sNation": $("#sNation").val(),
+                        "sPlace": sPlace,
+                        "sPhoto": $("#sPhoto").val(),
+                        "sMarry": $('input[name="sMarry"]:checked').val(),
+                        "sIdCard": $("#sIdCard").val(),
+                        "sSchool": $("#sSchool").val(),
+                        "sMajor": $("#sMajor").val(),
+                        "sClass": $("#sClass").val(),
+                        "sHireDate": $("#sHireDate").val(),
+                        "deptNo": $("#deptNo").val(),
+                        "jobId": $("#jobId").val(),
+                        "sRemarks": $("#sRemarks").val(),
+                        "projectId": $("#projectId").val()
+                    },
+                    dataType:'text',
+                    success:function (data) {
+                        if (data == "true"){
+                            layer.msg("添加成功");
+                            setTimeout('closeAdd()',1000)
+                        } else {
+                            layer.msg("添加失败");
+                            setTimeout('closeAdd()',1000)
+                        }
+                    },
+                    error:function () {
+                        layer.msg("执行失败");
                     }
-                },
-                error:function () {
-                    layer.msg("执行失败");
-                }
-            })
+                })
+            }
         })
     });
     var closeAdd = function () {

@@ -25,4 +25,18 @@ public interface IDisSubjectService {
      * @return 是否删除成功
      */
     boolean delBatchDisSubject(List<DisSubject> list);
+
+    /**
+     * 根据班期号删除班期分配
+     * @param classId 班期号
+     * @return 是否删除成功
+     */
+    boolean delDisSubjectByClassId(Integer classId);
+
+    /**
+     * 根据班期号获取班期分配列表
+     * @param subjectId 班期号
+     * @return 班期分配列表
+     */
+    List<DisSubject> getDisSubjectBySubjectId(Integer subjectId);
 }

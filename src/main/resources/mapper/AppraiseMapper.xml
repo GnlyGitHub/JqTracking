@@ -46,4 +46,9 @@
     <update id="editAppraiseById_admin">
         update appraise set appraise=#{appraise} where appraiseId=#{appraiseId}
     </update>
+
+    <!--List<Appraise> checkRepAppraise_admin(String appraise);-->
+    <select id="checkRepAppraise_admin" resultType="Appraise">
+        select appraiseId, appraise from appraise where appraise=#{appraise}
+    </select>
 </mapper>

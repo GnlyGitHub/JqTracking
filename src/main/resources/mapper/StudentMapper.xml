@@ -258,4 +258,11 @@
     <update id="changeAppraiseState_Manage">
         update student set appraisestate=#{appraiseState} where sid=#{sId}
     </update>
+
+    <!--List<Student> getStudentByClassId_admin(Integer classId)-->
+    <select id="getStudentByClassId_admin" resultType="Student">
+        select
+        sId,sName,sSex,sNation,sBirthday,sPlace,sMarry
+        from student where sClass=#{classId}
+    </select>
 </mapper>

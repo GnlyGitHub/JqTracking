@@ -152,7 +152,7 @@
                         title:'添加项目经理',
                         content:'adminAddManager',
                         shadeClose:true,
-                        area:['455px','510px']
+                        area:['455px','470px']
                     });
                     break;
             }
@@ -201,7 +201,7 @@
                     title:'重置密码',
                     content:'adminRePwdManager?mId=' + data.mId,
                     shadeClose:true,
-                    area:['400px','330px'],
+                    area:['420px','370px'],
                     end:function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();

@@ -11,9 +11,14 @@
     <title>重置教师登录密码</title>
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
+    <style>
+        .red{
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
-<div style="padding: 30px 0 0 20px;display: flex; justify-content: center">
+<div style="padding: 30px 0 0 0;display: flex; justify-content: center">
     <div class="layui-form" style="width: 300px;">
         <div class="layui-form-item">
             <label class="layui-form-label">工号</label>
@@ -33,6 +38,8 @@
             <label class="layui-form-label">新密码</label>
             <div class="layui-input-inline">
                 <input id="password" type="password" name="password" required  lay-verify="phone" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <p id="passwordP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入新密码</p>
+                <p id="passwordP2" style="color: red; display: none; font-size: 14px">密码由字母、数字组成，长度为6~18位</p>
             </div>
         </div>
 
@@ -51,6 +58,23 @@
         var $ = layui.$;
         var upload = layui.upload;
         var tId = ${param.tId};
+        var reg = /^[a-zA-Z0-9]{6,18}$/;
+
+        $("#password").blur(function () {
+            if ($("#password").val() == ""){
+                $("#password").addClass("red");
+                $("#passwordP1").css("display","inline");
+                $("#passwordP2").css("display","none");
+            } else if (!reg.test($("#password").val())){
+                $("#password").addClass("red");
+                $("#passwordP2").css("display","inline");
+                $("#passwordP1").css("display","none");
+            }
+        }).focus(function () {
+            $("#password").removeClass("red");
+            $("#passwordP1").css("display","none");
+            $("#passwordP2").css("display","none");
+        });
 
         $.ajax({
             url:"getTeacherById_admin",
@@ -69,27 +93,35 @@
         });
 
         $("#sub").click(function () {
-            $.ajax({
-                url:'rePwdTeacher_admin',
-                type:'post',
-                data:{
-                    "userId": tId,
-                    "password": $("#password").val()
-                },
-                dataType:'text',
-                success:function (data) {
-                    if (data == "true"){
-                        layer.msg("重置成功");
-                        setTimeout('close()',1000)
-                    } else {
-                        layer.msg("重置失败");
-                        setTimeout('close()',1000)
+            if ($("#password").val() == ""){
+                $("#password").addClass("red");
+                $("#passwordP1").css("display","inline");
+            } else if (!reg.test($("#password").val())){
+                $("#password").addClass("red");
+                $("#passwordP2").css("display","inline");
+            } else {
+                $.ajax({
+                    url:'rePwdTeacher_admin',
+                    type:'post',
+                    data:{
+                        "userId": tId,
+                        "password": $("#password").val()
+                    },
+                    dataType:'text',
+                    success:function (data) {
+                        if (data == "true"){
+                            layer.msg("重置成功");
+                            setTimeout('close()',1000)
+                        } else {
+                            layer.msg("重置失败");
+                            setTimeout('close()',1000)
+                        }
+                    },
+                    error:function () {
+                        layer.msg("执行失败");
                     }
-                },
-                error:function () {
-                    layer.msg("执行失败");
-                }
-            })
+                })
+            }
         });
     });
     //关闭当前弹框

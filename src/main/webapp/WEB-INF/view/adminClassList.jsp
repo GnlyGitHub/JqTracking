@@ -147,7 +147,7 @@
                 layer.open({
                     type:2,
                     title:'修改班期信息',
-                    content:"adminBeforeEditClass?classId=" + data.classId,
+                    content:"adminBeforeEditClass?classId=" + data.classId + "&tName=" + data.tName,
                     shadeClose:true,
                     area:['500px','460px'],
                     end:function () {
@@ -166,8 +166,12 @@
                         success:function (data) {
                             if (data == "true"){
                                 layer.msg("删除成功")
+                            } else if (data == "1") {
+                                layer.msg("改班期已分配学生，不能删除")
+                            }else if (data == "2") {
+                                layer.msg("改班期已开课，不能删除")
                             } else {
-                                layer.msg("删除失败")
+                                layer.msg("删除失败，请重试")
                             }
                             table.reload("demo",function () {
                                 url:'getAllClasses_admin'

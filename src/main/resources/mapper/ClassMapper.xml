@@ -76,4 +76,17 @@
     <select id="getCurClassId" resultType="Integer">
         select max(classId) from class
     </select>
+
+    <!--List<Class> checkRepClass_admin(String className);-->
+    <select id="checkRepClass_admin" resultType="Class">
+        select classId,className,startDate,endDate from class
+        where className=#{className}
+    </select>
+
+    <!--List<Class> getClassBytId_admin(Integer tId);-->
+    <select id="getClassBytId_admin" resultType="Class">
+        select classId,className,startDate,endDate,tid
+        from class
+        where tId=#{tId}
+    </select>
 </mapper>

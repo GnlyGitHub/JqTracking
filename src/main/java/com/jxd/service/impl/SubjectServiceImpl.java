@@ -52,4 +52,9 @@ public class SubjectServiceImpl implements ISubjectService {
     public boolean editSubjectById_admin(Subject subject) {
         return subjectDao.editSubjectById_admin(subject);
     }
+
+    @Override
+    public List<Subject> checkRepSubject_admin(String subject) {
+        return subjectDao.checkRepSubject_admin(subject);
+    }
 }

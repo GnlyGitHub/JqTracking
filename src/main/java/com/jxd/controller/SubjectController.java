@@ -1,6 +1,8 @@
 package com.jxd.controller;
 
+import com.jxd.model.DisSubject;
 import com.jxd.model.Subject;
+import com.jxd.service.IDisSubjectService;
 import com.jxd.service.ISubjectService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -21,6 +23,8 @@ import java.util.List;
 public class SubjectController {
     @Autowired
     ISubjectService subjectService;
+    @Autowired
+    IDisSubjectService disSubjectService;
 
     //老师获取评分项转发至评分页面
     @RequestMapping("/studentAddAppraise")
@@ -70,8 +74,13 @@ public class SubjectController {
     @RequestMapping("/delSubjectById_admin")
     @ResponseBody
     public String delSubjectById_admin(Integer subjectId){
-        boolean isDel = subjectService.delSubject_admin(subjectId);
-        return String.valueOf(isDel);
+        List<DisSubject> list = disSubjectService.getDisSubjectBySubjectId(subjectId);
+        if (list.size() > 0){
+            return "1";//该课程已被选，不能删
+        } else {
+            boolean isDel = subjectService.delSubject_admin(subjectId);
+            return String.valueOf(isDel);
+        }
     }
 
     @RequestMapping("/addSubject_admin")
@@ -86,5 +95,16 @@ public class SubjectController {
     public String editSubject_admin(Subject subject){
         boolean isEdit = subjectService.editSubjectById_admin(subject);
         return String.valueOf(isEdit);
+    }
+
+    @RequestMapping("/checkRepSubject_admin")
+    @ResponseBody
+    public String checkRepSubject_admin(String subject){
+        List<Subject> list = subjectService.checkRepSubject_admin(subject);
+        boolean isExit = false;
+        if (list.size() > 0){
+            isExit = true;
+        }
+        return String.valueOf(isExit);
     }
 }
