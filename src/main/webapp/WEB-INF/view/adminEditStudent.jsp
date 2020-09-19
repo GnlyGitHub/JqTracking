@@ -389,6 +389,20 @@
                 if(res.code > 0){
                     return layer.msg('上传失败');
                 }
+                //删除原图片
+                $.ajax({
+                    url:"delFile",
+                    type:"post",
+                    data:{
+                        path:$("#sPhoto").val()
+                    },
+                    success:function (data) {
+                        //alert(data);
+                    },
+                    error:function (data) {
+                        alert("执行失败");
+                    }
+                });
                 //上传成功
                 //var demoText = $('#demoText');
                 //demoText.html('<span style="color: #4cae4c;">上传成功</span>');
@@ -502,6 +516,19 @@
 
         //重置
         $("#reset").click(function () {
+            $.ajax({
+                url:"delFile",
+                type:"post",
+                data:{
+                    path:$("#sPhoto").val()
+                },
+                success:function (data) {
+                    //alert(data);
+                },
+                error:function (data) {
+                    alert("执行失败");
+                }
+            });
             $("#sName").val("");
             $("#sBirthday").val("");
             $("#sPhone").val("");
