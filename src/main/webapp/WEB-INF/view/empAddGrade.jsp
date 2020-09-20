@@ -44,6 +44,11 @@
         .displ {
             display: none;
         }
+        .red {
+            border: 1px solid #FF8765;
+            background-color: #FFF2E5;
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +75,11 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <div class="layui-input-block" id="checkNumber">
+                <p>(请输入0-100)的整数</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">请评分：</label>
             <div class="layui-input-block" id="div1">
                 <table id="tab1" lay-filter="test"></table>
@@ -93,7 +103,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" id="addGrade" lay-filter="formDemo">提交</button>
+                <button class="layui-btn" id="add" lay-filter="formDemo">提交</button>
             </div>
         </div>
     </div>
@@ -152,13 +162,33 @@
                 , {field: 'appraise', title: '评分项', width: 130}
                 , {field: 'grade', title: '评价分数', edit: 'text', width: 90}
             ]],
-           /* done: function (res, curr, count) {
-                var i=$("#addGrade").css("diaplay")
-                    let tableView = this.elem.next();
-                    layui.each(res.data, function (i, item) {
-                        tableView.find('tr[data-index=' + i + ']').find('td').data('edit', false);
-                    })
-            }*/
+            /* done: function (res, curr, count) {
+                 var i=$("#addGrade").css("diaplay")
+                     let tableView = this.elem.next();
+                     layui.each(res.data, function (i, item) {
+                         tableView.find('tr[data-index=' + i + ']').find('td').data('edit', false);
+                     })
+             }*/
+        });
+        //监听单元格编辑
+        table.on('edit(test)', function (obj) {
+            $("#checkNumber p").text("(请输入0-100)的整数");
+            $("#checkNumber p").removeClass("red");
+            var value = obj.value //得到修改后的值
+            var data1 = obj.data //得到所在行所有键值
+            var field1 = obj.field; //得到字段
+            if (isNaN(Number(data1.grade))) {
+                $("#checkNumber p").text("数字格式有误");
+                $("#checkNumber p").addClass("red");
+            } else {
+                if (parseInt(value) < 0 || parseInt(value) > 100) {
+                    $("#checkNumber p").text("数字格式有误");
+                    $("#checkNumber p").addClass("red");
+                } else {
+                    $("#checkNumber p").text("(请输入0-100)的整数");
+                    $("#checkNumber p").removeClass("red");
+                }
+            }
         });
         var getAppra = function (number) {
             $.ajax({
@@ -197,7 +227,7 @@
                         table.reload("tab1", {
                             data: dataBak   // 将新数据重新载入表格
                         })
-                      /*  $("#tab1 tr:eq(' + index + ') td").css('edit', 'text');*/
+                        /*  $("#tab1 tr:eq(' + index + ') td").css('edit', 'text');*/
                     });
                     $(".displ").css("display", "block")
                     layui.form.render();
@@ -207,173 +237,223 @@
                 }
             })
         }
-//点击提交按钮
-        $("#addGrade").click(function () {
-            var number = $("#appraise option:checked").val();
-            if (number != "") {
-                /*获取数据判定是否存在成绩*/
-                $.ajax({
-                    url: 'getGradeData_Manage',
-                    type: 'get',
-                    data: {
-                        sId:${stu.get("sId")},
-                        number:number
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.length==0){
-                            var dataBak = [];   //定义一个空数组,用来存储之前编辑过的数据已经存放新数据
-                            var tableBak = table.cache.tab1;
-                            for (var i = 0; i < tableBak.length; i++) {
-                                dataBak.push(tableBak[i]);      //将之前的数组备份
-                            }
-                            $.ajax({
-                                url: 'addGradeData_Manage',
-                                type: 'get',
-                                data: {
-                                    dataBak: JSON.stringify(dataBak),
-                                    appraiser: $("#appraiser").val(),
-                                    /*文本框内容*/
-                                    appr: $("#text1").val(),
-                                    sId:${stu.get("sId")},
-                                    number: number
-                                },
-                                traditional: true,
-                                success: function (data) {
-                                    if (true == data) {
-                                        layer.msg("新增成功", {icon: 6, time: 1500});
-                                        setTimeout('closeAdd()', 1000)
-                                    } else {
-                                        layer.msg("新增失败", {icon: 5, time: 1500});
-                                    }
-                                },
-                                error: function () {
-                                    layer.msg("执行失败")
-                                }
-                            })
-                        }else {
-                            layer.msg("成绩已经存在")
+        /*获取数据*/
+        var getGradeData = function (number) {
+            $.ajax({
+                url: 'getGradeData_Manage',
+                type: 'get',
+                data: {
+                    sId:${sId},
+                    number: number
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var tab = table.cache.tab1;
+                    $.each(tab, function (index, item) {
+                        tab.pop();
+                    });
+                    table.reload("tab1", {
+                        data: tab   // 将新数据重新载入表格
+                    })
+                    layui.form.render();
+                    $.each(data, function (index, item) {
+                        var dataBak = [];   //定义一个空数组,用来存储之前编辑过的数据已经存放新数据
+                        var tableBak = table.cache.tab1;
+                        //获取之前编辑过的全部数据，前提是编辑数据是要更新缓存，stock_add_table 为表格的id
+                        for (var i = 0; i < tableBak.length; i++) {
+                            dataBak.push(tableBak[i]);      //将之前的数组备份
                         }
-                        $(".displ").css("display", "block")
-                        layui.form.render();
-                    },
-                    error: function () {
-                        layer.msg("表格获取失败")
-                    }
+                        //在尾部新增一行空数据，实现增行效果
+                        if (item.appraise.appraiseId != 10) {
+                            dataBak.push({
+                                "appraiseId": item.appraise.appraiseId,
+                                "appraise": item.appraise.appraise,
+                                "grade": item.grade
+                            });
+                        }
+                        $("#text1").text(item.grade)
+                        $("#appraiser").val(item.appraiser)
+                        table.reload("tab1", {
+                            data: dataBak   // 将新数据重新载入表格
+                        })
+
+                    });
+                    $(".displ").css("display", "block")
+                    layui.form.render();
+                },
+                error: function () {
+                    layer.msg("表格获取失败")
+                }
+            })
+        }
+        /*清空并隐藏*/
+        var clearData = function () {
+            var tab = table.cache.tab1;
+            $.each(tab, function (index, item) {
+                tab.pop();
+            });
+            table.reload("tab1", {
+                data: tab   // 将新数据重新载入表格
+            })
+            layui.form.render();
+            $("#text1").text("")
+            $(".displ").css("display", "none")
+        }
+        var judgeAppState = function (time, number, appraiseState) {
+            if (appraiseState >= parseInt(number) + 1) {
+                getGradeData(parseInt(number))
+                layer.msg("已评分", {icon: 5, time: 1500}, function () {
+                    $('#add').addClass("layui-btn-disabled").attr("disabled", true);
                 })
             } else {
-                layer.msg("请选择下拉框内容", {icon: 5, time: 1500})
+                if (time >= 0 && time < 30) {
+                    layer.msg("不能评价", {icon: 5, time: 1500})
+                    $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                    $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                } else if (time >= 30 && time < 90) {
+                    if (parseInt(number) >= 1) {
+                        layer.msg("时间未到", {icon: 5, time: 1500})
+                        clearData()
+                        getAppra(parseInt(number))
+                        $(".displ").css("display", "none")
+                        $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                    } else if (parseInt(number) == 0) {
+                        $("#text1").text("")
+                        getAppra(parseInt(number))
+                            $('#add').removeClass("layui-btn-disabled").attr("disabled", false);
+                    }
+                } else if (time >= 366 && time < 730) {
+                    if (parseInt(number) >= 2) {
+                        layer.msg("时间未到", {icon: 5, time: 1500})
+                        clearData()
+                        getAppra(parseInt(number))
+                        $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                        $(".displ").css("display", "none")
+                    } else if (parseInt(number) == 0) {
+                        layer.msg("已评或过时", {icon: 5, time: 1500})
+                        getGradeData(parseInt(number))
+                        $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                    } else if (parseInt(number) == 1) {
+                        $("#text1").text("")
+                        getAppra(parseInt(number))
+                        $('#add').removeClass("layui-btn-disabled").attr("disabled", false);
+                    }
+                } else if (time >= 730 && time < 1095) {
+                    if (parseInt(number) >= 3) {
+                        layer.msg("时间未到", {icon: 5, time: 1500})
+                        clearData()
+                        getAppra(parseInt(number))
+                        $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                        $(".displ").css("display", "none")
+                    } else if (parseInt(number) == 0 || parseInt(number) == 1) {
+                        layer.msg("已评或过时", {icon: 5, time: 1500})
+                        getGradeData(parseInt(number))
+                        $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                    } else if (parseInt(number) == 2) {
+                        $("#text1").text("")
+                        getAppra(parseInt(number))
+                            $('#add').removeClass("layui-btn-disabled").attr("disabled", false);
+                    }
+                } else if (time >= 1095 && time < 1460) {
+                    if (parseInt(number) == 3) {
+                        $("#text1").text("")
+                        getAppra(parseInt(number))
+                        layer.msg("未评", {icon: 6, time: 1500}, function () {
+                            $('#add').removeClass("layui-btn-disabled").attr("disabled", false);
+                        })
+                    } else {
+                        layer.msg("已评或过时", {icon: 5, time: 1500})
+                        getGradeData(parseInt(number))
+                        $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                    }
+                } else {
+                    layer.msg("全部已评", {icon: 6, time: 1500})
+                    getAllApp()
+                    $('#add').addClass("layui-btn-disabled").attr("disabled", true);
+                }
             }
-        })
+        }
         form.on('select(appraise)', function (data) {
             var number = data.value
             var time =
             <%=timediff%>
             var appraiseState =
             ${stu.get("appraiseState")}
-            if (time >= 0 && time < 30) {
-                layer.msg("工作未转正", {icon: 5, time: 1500})
-                $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-            } else if (time >= 90 && time < 366) {
-                if (number != "") {
-                    if (number == 1 || number == 2 || number == 3) {
-                        getAllApp()
-                        layer.msg("工作未满一年", {icon: 5, time: 1500})
-                        $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                    } else if (number == 0) {
-                        $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", false);
-                        getAppra(0);
-                        if (appraiseState == 1) {
-                            layer.msg("已评分", {icon: 6, time: 1500}, function () {
-                                $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                            })
-                        } else {
-                            $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", true);
-                        }
-                    } else {
-                        getAllApp()
-                    }
-                } else {
-                    layer.msg("请选择下拉框", {time: 1500})
+            if (number != "") {
+                if (number == 0) {
+                    judgeAppState(time, number, appraiseState)
+                } else if (number == 1) {
+                    judgeAppState(time, number, appraiseState)
+                } else if (number == 2) {
+                    judgeAppState(time, number, appraiseState)
+                } else if (number == 3) {
+                    judgeAppState(time, number, appraiseState)
                 }
-
-            } else if (time >= 366 && time < 730) {
-                if (number != "") {
-                    if (number == 2 || number == 3) {
-                        getAllApp()
-                        layer.msg("工作未满两年", {icon: 5, time: 1500})
-                        $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                    } else if (number == 0) {
-                        getAllApp()
-                        layer.msg("评价已超时", {icon: 5, time: 1500})
-                        $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                    } else if (number == 1) {
-                        $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", false);
-                        getAppra(1)
-                        if (appraiseState == 2) {
-                            layer.msg("已评分", {icon: 6, time: 1500}, function () {
-                                $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                            })
-                        } else {
-                            $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", false);
+            } else {
+                layer.msg("请选择下拉框", {time: 1500})
+            }
+        })
+        //点击提交按钮
+        $("#add").click(function () {
+            var number = $("#appraise option:checked").val();
+            if (number != "") {
+                var n = $("#checkNumber p").text()
+                if (n == "(请输入0-100)的整数") {
+                    /*获取数据判定是否存在成绩*/
+                    $.ajax({
+                        url: 'getGradeData_Manage',
+                        type: 'get',
+                        data: {
+                            sId:${stu.get("sId")},
+                            number: number
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.length == 0) {
+                                var dataBak = [];   //定义一个空数组,用来存储之前编辑过的数据已经存放新数据
+                                var tableBak = table.cache.tab1;
+                                for (var i = 0; i < tableBak.length; i++) {
+                                    dataBak.push(tableBak[i]);      //将之前的数组备份
+                                }
+                                $.ajax({
+                                    url: 'addGradeData_Manage',
+                                    type: 'get',
+                                    data: {
+                                        dataBak: JSON.stringify(dataBak),
+                                        appraiser: $("#appraiser").val(),
+                                        /*文本框内容*/
+                                        appr: $("#text1").val(),
+                                        sId:${stu.get("sId")},
+                                        number: number
+                                    },
+                                    traditional: true,
+                                    success: function (data) {
+                                        if (true == data) {
+                                            layer.msg("新增成功", {icon: 6, time: 1500});
+                                            setTimeout('closeAdd()', 1000)
+                                        } else {
+                                            layer.msg("新增失败", {icon: 5, time: 1500});
+                                        }
+                                    },
+                                    error: function () {
+                                        layer.msg("执行失败")
+                                    }
+                                })
+                            } else {
+                                layer.msg("成绩已经存在")
+                            }
+                            $(".displ").css("display", "block")
+                            layui.form.render();
+                        },
+                        error: function () {
+                            layer.msg("表格获取失败")
                         }
-                    } else {
-                        getAllApp()
-
-                    }
+                    })
                 } else {
-                    layer.msg("请选择下拉框", {time: 1500})
+                    layer.msg("数据格式有误", {icon: 5, time: 1500});
                 }
-
-            } else if (time >= 730 && time < 1095) {
-                if (number != "") {
-                    if (number == 3) {
-                        getAllApp()
-                        layer.msg("工作未满三年", {icon: 5, time: 1500})
-                        $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                    } else if (number == 0 || number == 1) {
-                        getAllApp()
-                        layer.msg("评价已超时", {icon: 5, time: 1500})
-                        $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                    } else if (number==2) {
-                        $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", false);
-                        getAppra(2)
-                        if (appraiseState == 3) {
-                            layer.msg("已评分", {icon: 6, time: 1500}, function () {
-                                $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                            })
-                        } else {
-                            $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", false);
-                        }
-                    } else {
-                        getAllApp()
-
-                    }
-                } else {
-                    layer.msg("请选择下拉框", {time: 1500})
-                }
-            } else if (time >= 1095 && time < 1460) {
-                if (number != "") {
-                    if (number == 0 || number == 1 || number == 2) {
-                        getAllApp()
-                        layer.msg("评价已超时", {icon: 5, time: 1500})
-                        $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                    } else if (number == 3) {
-                        $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", false);
-                        getAppra(3)
-                        if (appraiseState == 4) {
-                            layer.msg("已评分", {icon: 6, time: 1500}, function () {
-                                $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-                            })
-                        } else {
-                            $('#addGrade').removeClass("layui-btn-disabled").attr("disabled", false);
-                        }
-                    } else {
-                        getAllApp()
-                    }
-                } else {
-                    layer.msg("请选择下拉框", {time: 1500})
-                }
+            } else {
+                layer.msg("请选择下拉框内容", {icon: 5, time: 1500})
             }
         })
     });

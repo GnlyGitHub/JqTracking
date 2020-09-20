@@ -77,6 +77,7 @@ public class GradeController {
         Map<String,String> map =studentService.getStudentById_Manage(sId);
         model.addAttribute("stu",map);
         request.setAttribute("sDate",map.get("sHireDate"));
+        model.addAttribute("sId",sId);
         model.addAttribute("classId",classId);
         return "empAddGrade";
     }
