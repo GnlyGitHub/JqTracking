@@ -18,6 +18,7 @@ import java.util.List;
 public class DisAppraiseServiceImpl implements IDisAppraiseService {
     @Autowired
     IDisAppraiseDao disAppraiseDao;
+
     @Override
     public List<DisAppraise> getAllSizeAppaise_Manage(String mname, Integer manageId) {
         return disAppraiseDao.getAllSizeAppaise_Manage(mname,manageId);

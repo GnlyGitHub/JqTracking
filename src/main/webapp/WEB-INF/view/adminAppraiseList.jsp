@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
-        .layui-table-tool-self{
+        .layui-table-tool-self {
             display: none;
         }
-        .layui-icon-ok{
+
+        .layui-icon-ok {
             margin-top: 7px;
         }
-        .layui-table-tool-temp{
+
+        .layui-table-tool-temp {
             padding-right: 0;
         }
     </style>
@@ -43,7 +45,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域 -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item"><a href="adminTeacherList">教师管理</a></li>
                 <li class="layui-nav-item"><a href="adminManagerList">项目经理管理</a></li>
                 <li class="layui-nav-item"><a href="adminStudentList">学生管理</a></li>
@@ -90,87 +92,91 @@
     </div>
 </div>
 <script>
-    layui.use(['element','table','layer'], function(){
+    layui.use(['element', 'table', 'layer'], function () {
         var element = layui.element;
         var table = layui.table;
         var layer = layui.layer;
         var $ = layui.$;
 
+        //向表格加载数据
         table.render({
             elem: '#demo'
-            ,toolbar: '#toolbarDemo' //添加工具栏
-            ,height: 450
-            ,width: 1080
-            ,url: '/getAllAppraise_admin' //数据接口
-            ,page: true
-            ,limit: 8
-            ,limits:[8,15,20]
-            ,cols: [[
-                {type: 'numbers',title:'序号',width:80}
-                ,{field: 'appraiseId', title: '编号', width:100, hide:true}
-                ,{field: 'appraise', title: '评价分项', width:500}
-                ,{fixed: 'right', title:'操作', width:250, align:'center', toolbar: '#barDemo'}
+            , toolbar: '#toolbarDemo' //添加工具栏
+            , height: 450
+            , width: 1080
+            , url: '/getAllAppraise_admin' //数据接口
+            , page: true
+            , limit: 8
+            , limits: [8, 15, 20]
+            , cols: [[
+                {type: 'numbers', title: '序号', width: 80}
+                , {field: 'appraiseId', title: '编号', width: 100, hide: true}
+                , {field: 'appraise', title: '评价分项', width: 500}
+                , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#barDemo'}
             ]]
         });
-        table.on('toolbar(test)', function(obj){
-            switch(obj.event){
-                case 'query':
+
+        //表格头部工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            switch (obj.event) {
+                case 'query'://查询
                     var filter = $("#filter").val();//获取过滤条件
                     //重新加载表格
-                    table.reload("demo",{
-                        where:{appraise:filter},
-                        page:{
-                            curr:1
+                    table.reload("demo", {
+                        where: {appraise: filter},
+                        page: {
+                            curr: 1
                         }
                     });
                     break;
-                case 'add':
+                case 'add'://添加
                     layer.open({
-                        type:2,
-                        title:'添加评价分项',
-                        content:'adminAddAppraise',
-                        shadeClose:true,
-                        area:['455px','270px']
+                        type: 2,
+                        title: '添加评价分项',
+                        content: 'adminAddAppraise',
+                        shadeClose: true,
+                        area: ['455px', '270px']
                     });
                     break;
             }
         });
 
-        table.on('tool(test)', function(obj){
+        //表格行内工具栏事件
+        table.on('tool(test)', function (obj) {
             var data = obj.data;//获取当前行数据
-            if(obj.event === 'update'){
+            if (obj.event === 'update') {//编辑
                 layer.open({
-                    type:2,
-                    title:'修改评价分项',
-                    content:"adminEditAppraise?appraiseId=" + data.appraiseId + "&appraise=" + data.appraise,
-                    shadeClose:true,
-                    area:['455px','300px'],
-                    end:function () {
+                    type: 2,
+                    title: '修改评价分项',
+                    content: "adminEditAppraise?appraiseId=" + data.appraiseId + "&appraise=" + data.appraise,
+                    shadeClose: true,
+                    area: ['455px', '300px'],
+                    end: function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();
                     }
                 });
-            } else if(obj.event === 'delete'){
-                layer.confirm('确定要删除吗？', function(index){
+            } else if (obj.event === 'delete') { //删除
+                layer.confirm('确定要删除吗？', function (index) {
                     $.ajax({
-                        url:'delAppraiseById_admin',
-                        type:'post',
-                        data:{
-                            appraiseId:data.appraiseId
+                        url: 'delAppraiseById_admin',
+                        type: 'post',
+                        data: {
+                            appraiseId: data.appraiseId
                         },
-                        success:function (data) {
-                            if (data == "true"){
+                        success: function (data) {
+                            if (data == "true") {
                                 layer.msg("删除成功")
                             } else if (data == "1") {
                                 layer.msg("该评价分项已被使用，无法删除")
                             } else {
                                 layer.msg("删除失败")
                             }
-                            table.reload("demo",function () {
+                            table.reload("demo", function () {
                                 url:'getAllAppraise_admin'
                             })
                         },
-                        error:function () {
+                        error: function () {
                             layer.msg("执行失败")
                         }
                     })

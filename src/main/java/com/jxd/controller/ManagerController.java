@@ -1,5 +1,6 @@
 package com.jxd.controller;
 
+import com.jxd.model.DisAppraise;
 import com.jxd.model.LoginUser;
 import com.jxd.model.Manager;
 import com.jxd.service.ILoginUserService;
@@ -48,6 +49,7 @@ public class ManagerController {
         return "adminRePwdManager";
     }
 
+    //获取项目经理列表并进行分页
     @RequestMapping(value = "/getAllManager_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllManager_admin(Integer limit, Integer page, String mName){
@@ -62,6 +64,7 @@ public class ManagerController {
         return jsonObject.toString();
     }
 
+    //添加项目经理
     @RequestMapping(value = "/addManager_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String addManager_admin(Manager manager){
@@ -72,14 +75,21 @@ public class ManagerController {
         return String.valueOf(isAdd && isAddLogin);
     }
 
+    //删除项目经理
     @RequestMapping("/delManagerById_admin")
     @ResponseBody
     public String delManagerById_admin(Integer mId){
-        boolean isDel = managerService.delManager_admin(mId);
-        boolean isDelLogin = loginUserService.delLoginUser_admin(mId);
-        return String.valueOf(isDel && isDelLogin);
+        List<DisAppraise> list = managerService.getDisAppraiseBymId(mId);//获取该项目经理已经参与的评分项分配列表
+        if (list.size() > 0){
+            return "1";//该项目经理已参与评分项分配，不能删除
+        } else {//该项目经理未参与评分项分配，可以删除
+            boolean isDel = managerService.delManager_admin(mId);
+            boolean isDelLogin = loginUserService.delLoginUser_admin(mId);
+            return String.valueOf(isDel && isDelLogin);
+        }
     }
 
+    //获取项目经理信息
     @RequestMapping("/getManagerById_admin")
     @ResponseBody
     public Manager getManagerById_admin(Integer mId){
@@ -87,6 +97,7 @@ public class ManagerController {
         return manager;
     }
 
+    //编辑项目经理信息
     @RequestMapping("/editManager_admin")
     @ResponseBody
     public String editManager_admin(Manager manager){
@@ -94,6 +105,7 @@ public class ManagerController {
         return String.valueOf(isEdit);
     }
 
+    //给经理重置密码
     @RequestMapping(value = "/rePwdManager_admin")
     @ResponseBody
     public String rePwdManager_admin(LoginUser loginUser){

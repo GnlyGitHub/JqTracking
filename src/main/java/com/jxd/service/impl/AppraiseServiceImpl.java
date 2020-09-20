@@ -18,6 +18,7 @@ import java.util.List;
 public class AppraiseServiceImpl implements IAppraiseService {
     @Autowired
     IAppraiseDao appraiseDao;
+
     @Override
     public List<Appraise> getAllAppraise_Manage() {
         return appraiseDao.getAllAppraise_Manage();
@@ -57,6 +58,4 @@ public class AppraiseServiceImpl implements IAppraiseService {
     public List<Appraise> checkRepAppraise_admin(String appraise) {
         return appraiseDao.checkRepAppraise_admin(appraise);
     }
-
-
 }

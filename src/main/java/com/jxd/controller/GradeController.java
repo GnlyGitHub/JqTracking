@@ -34,10 +34,12 @@ public class GradeController {
     IScoreService scoreService;
     @Autowired
     IGradeService getGradeService;
+
     @RequestMapping("empAppraise_Manage")
     public String empAppraise_Manage(){
         return "empGrade";
     }
+
     @RequestMapping("detailEmpMsg_Manage")
     public String detailEmpMsg_Manage(Integer mId, Integer sId, String className, Model model){
         Map<String,String> map =studentService.getStudentById_Manage(sId);
@@ -72,6 +74,7 @@ public class GradeController {
         model.addAttribute("score",scores);
         return "empDetailMsg";
     }
+
     @RequestMapping("addGrade_Manage")
     public String addGrade_Manage(Integer sId, Integer classId, Model model,HttpServletRequest request){
         Map<String,String> map =studentService.getStudentById_Manage(sId);
@@ -80,6 +83,7 @@ public class GradeController {
         model.addAttribute("classId",classId);
         return "empAddGrade";
     }
+
     @ResponseBody
     @RequestMapping("addGradeData_Manage")
     public Boolean addGradeData_Manage(String dataBak,String appraiser,String appr,Integer sId,Integer number){
@@ -97,6 +101,7 @@ public class GradeController {
        boolean isAdd =gradeService.addGradeData_Manage(list);
         return chaState&&isAdd;
     }
+
     @RequestMapping("editGrade_Manage")
     public String editGrade_Manage(Integer sId,Integer classId,Model model,HttpServletRequest request){
         Map<String,String> map =studentService.getStudentById_Manage(sId);
@@ -105,12 +110,14 @@ public class GradeController {
         request.setAttribute("sDate",map.get("sHireDate"));
         return "empEditGrade";
     }
+
     @RequestMapping("getGradeData_Manage")
     @ResponseBody
     public List<Grade> getGradeData_Manage(Integer number,Integer sId){
         List<Grade> list=gradeService.getGradeById_Manage(sId,number);
         return list;
     }
+
     @RequestMapping("editGradeData_Manage")
     @ResponseBody
     public boolean editGradeData_Manage(String dataBak,String appraiser,String appr,Integer sId,Integer number){

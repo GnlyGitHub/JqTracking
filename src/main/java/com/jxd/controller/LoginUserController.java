@@ -43,6 +43,7 @@ public class LoginUserController {
     public String login(){
         return "login";
     }
+
     @RequestMapping("editPassword_Manage")
     public String editPassword_Manage(){
         return "empEditPassword";
@@ -103,13 +104,12 @@ public class LoginUserController {
         return loginUserService.editPassword_Manage(loginUser);
     }
 
-
-
     @RequestMapping("/adminRePwdAdmin")
     public String adminRePwdAdmin(){
         return "adminRePwdAdmin";
     }
 
+    //管理员修改自己的密码
     @RequestMapping("/rePwdAdmin_admin")
     @ResponseBody
     public String rePwdAdmin_admin(String oldPwd, String newPwd, HttpServletRequest request){
@@ -117,19 +117,22 @@ public class LoginUserController {
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         Integer userId = loginUser.getUserId();
         LoginUser loginUser1 = new LoginUser(userId,oldPwd);
+
+        //验证旧密码
         List<LoginUser> list = loginUserService.loginCheck(loginUser1);
-        if (list.size() == 1){
+        if (list.size() == 1){//旧密码验证通过
             LoginUser loginUser2 = new LoginUser(userId,newPwd);
             if (loginUserService.editLoginUser_admin(loginUser2)){
-                return "1";
+                return "1";//修改成功
             } else {
-                return "3";
+                return "3";//修改失败
             }
         } else {
-            return "2";
+            return "2";//旧密码验证不通过
         }
     }
 
+    //退出
     @RequestMapping("/quit")
     public String quit(HttpSession session){
         session.removeAttribute("loginUser");
@@ -141,9 +144,8 @@ public class LoginUserController {
             session.removeAttribute("manage");
         }
 
-//如果要清除session中的内容多采用下面的失效方法
+        //如果要清除session中的内容多采用下面的失效方法
         session.invalidate();
         return "login";
     }
-
 }

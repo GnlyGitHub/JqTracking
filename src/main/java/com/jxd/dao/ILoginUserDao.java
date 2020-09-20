@@ -7,6 +7,7 @@ import java.util.List;
 public interface ILoginUserDao {
     /**
      * 添加登录账户
+     *
      * @param loginUser 要添加的登录账户
      * @return 是否添加成功
      */
@@ -14,6 +15,7 @@ public interface ILoginUserDao {
 
     /**
      * 删除登录账户
+     *
      * @param userId 要删除的登录账户名
      * @return 是否删除成功
      */
@@ -21,6 +23,7 @@ public interface ILoginUserDao {
 
     /**
      * 修改登录账户
+     *
      * @param loginUser 要修改的登录账户
      * @return 是否修改成功
      */

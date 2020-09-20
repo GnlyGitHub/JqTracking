@@ -31,8 +31,10 @@ import java.util.List;
 public class ClassController {
     @Autowired
     IClassService classService;
+
     @Autowired
     IDisSubjectService disSubjectService;
+
     @Autowired
     IStudentService studentService;
 
@@ -60,16 +62,19 @@ public class ClassController {
         model.addAttribute("sClasses",list);
         return "studentAppraise";
     }
+
     @ResponseBody
     @RequestMapping("getAllClass_Manage")
     public List<Class> getAllClass_Manage(){
 return classService.getAllClass_Manage();
     }
 
+    //获取所有班期
     @RequestMapping(value = "/getAllClass_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllClass_admin(){
-        List<Class> list = classService.getAllClass_admin();
+        List<Class> list = classService.getAllClass_admin();//班期列表
+        //将班期列表返回前端页面
         JSONArray jsonArray = JSONArray.fromObject(list);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code",0);
@@ -79,11 +84,13 @@ return classService.getAllClass_Manage();
         return jsonObject.toString();
     }
 
+    //获取所有班期并将其分页
     @RequestMapping(value = "/getAllClasses_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllClasses_admin(Integer limit, Integer page, String className){
         List<Class> list = classService.getAllClasses_admin(className);
         List<Class> list1 = classService.getClasses_admin(limit, page, className);
+        //将班期列表返回前端页面
         JSONArray jsonArray = JSONArray.fromObject(list1);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
@@ -93,12 +100,13 @@ return classService.getAllClass_Manage();
         return jsonObject.toString();
     }
 
+    //根据班期编号删除班期
     @RequestMapping("/delClassById_admin")
     @ResponseBody
     public String delClassById_admin(Integer classId) {
         String curTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()); //获取系统时间
-        Class aClass = classService.getClassById_admin(classId);
-        String startDate = aClass.getStartDate();
+        Class aClass = classService.getClassById_admin(classId);//获取要删除的班期
+        String startDate = aClass.getStartDate();//获取该班期的开课时间
         DateFormat df = DateFormat.getDateInstance();
         long time1 = 0;
         long time2 = 0;
@@ -109,38 +117,46 @@ return classService.getAllClass_Manage();
         } catch (ParseException e){
             e.printStackTrace();
         }
-        List<Student> list = studentService.getStudentByClassId_admin(classId);
+        List<Student> list = studentService.getStudentByClassId_admin(classId);//获取该班期的学生列表
         if (list.size() > 0) {
             return "1";//该班期有学生
         } else if (time1 > time2) {
             return "2";//该班期已开课
-        } else {
+        } else {//该班期未开课且没有学生
             boolean isDelDisClass = disSubjectService.delDisSubjectByClassId(classId);
             boolean isDelClass = classService.delClass_admin(classId);
             return String.valueOf(isDelClass && isDelDisClass);
         }
     }
 
+    //添加班期
     @RequestMapping("/addClass_admin")
     @ResponseBody
     public String addClass_admin(String className, String startDate, String endDate, Integer tId, String subjectIds){
         Class aClass = new Class(className, startDate, endDate, tId);
+
+        //添加班期
         Integer classId = 0;
         if (classService.addClass_admin(aClass)){
-            classId = classService.getCurClassId();
+            classId = classService.getCurClassId();//获取当前班期的编号
         }
+
+        //为当前班期添加课程
         JSONArray subjectIdss = JSONArray.fromObject(subjectIds);
         List<DisSubject> list = new ArrayList<>();
         for (int i = 0; i < subjectIdss.size(); i++) {
             DisSubject disSubject = new DisSubject(subjectIdss.getInt(i), classId);
             list.add(disSubject);
         }
+        //添加默认必选的课程
         list.add(new DisSubject(11,classId));
         list.add(new DisSubject(12,classId));
+        //将课程分配添加到数据库
         boolean isAdd = disSubjectService.addBatchDisSubject(list);
         return String.valueOf(isAdd);
     }
 
+    //将班期信息转发到班期编辑页面
     @RequestMapping("/adminBeforeEditClass")
     public String adminBeforeEditClass(Integer classId, String tName, Model model){
         List<DisSubject> list = disSubjectService.checkDisSubject_admin(classId);
@@ -152,17 +168,20 @@ return classService.getAllClass_Manage();
         return "adminEditClass";
     }
 
+    //编辑班期
     @RequestMapping("/editClass_admin")
     @ResponseBody
     public String editClass_admin(Integer classId, String className, String startDate, String endDate, Integer tId, String subjectIds){
-        Class aClass = new Class(classId, className, startDate, endDate, tId);
-        boolean isEditClass = classService.editClassById_admin(aClass);
-        List<DisSubject> checkList = disSubjectService.checkDisSubject_admin(classId);
+        Class aClass = new Class(classId, className, startDate, endDate, tId);//要编辑的班期
+        boolean isEditClass = classService.editClassById_admin(aClass);//编辑班期
+        List<DisSubject> checkList = disSubjectService.checkDisSubject_admin(classId);//编辑前的选课列表
         JSONArray subjectIdss = JSONArray.fromObject(subjectIds);
         List<DisSubject> addList = new ArrayList<>();
         List<DisSubject> delList = new ArrayList<>();
         boolean isAdd = true;
         boolean isDel = true;
+
+        //获取需要新增的课程列表
         for (int i = 0; i < subjectIdss.size(); i++){
             for (int j = 0; j < checkList.size(); j++){
                 if (subjectIdss.getInt(i) != checkList.get(j).getSubjectId()){
@@ -175,6 +194,8 @@ return classService.getAllClass_Manage();
                 }
             }
         }
+
+        //获取需要删除的课程列表
         for (int i = 0; i < checkList.size(); i++) {
             for (int j = 0; j < subjectIdss.size(); j++) {
                 if (subjectIdss.getInt(j) != checkList.get(i).getSubjectId()){
@@ -187,6 +208,8 @@ return classService.getAllClass_Manage();
                 }
             }
         }
+
+        //更新课程列表
         if (addList.size() > 0) {
             isAdd = disSubjectService.addBatchDisSubject(addList);
         }
@@ -196,10 +219,11 @@ return classService.getAllClass_Manage();
         return String.valueOf(isEditClass && isAdd && isDel);
     }
 
+    //班期名查重
     @RequestMapping("/checkRepClass_admin")
     @ResponseBody
     public String checkRepClass_admin(String className){
-        List<Class> list = classService.checkRepClass_admin(className);
+        List<Class> list = classService.checkRepClass_admin(className);//已存在的班期列表
         boolean isExit = false;
         if (list.size() > 0){
             isExit = true;

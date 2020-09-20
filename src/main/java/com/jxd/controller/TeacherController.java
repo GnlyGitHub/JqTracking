@@ -54,6 +54,7 @@ public class TeacherController {
         return "adminRePwdTeacher";
     }
 
+    //获取所有教师并将其分页
     @RequestMapping(value = "/getAllTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllTeacher_admin(Integer limit, Integer page, String tName){
@@ -68,6 +69,7 @@ public class TeacherController {
         return jsonObject.toString();
     }
 
+    //添加老师
     @RequestMapping(value = "/addTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String addTeacher_admin(Teacher teacher){
@@ -78,10 +80,11 @@ public class TeacherController {
         return String.valueOf(isAdd && isAddLogin);
     }
 
+    //删除老师
     @RequestMapping("/delTeacherById_admin")
     @ResponseBody
     public String delTeacherById_admin(Integer tId){
-        List<Class> list = classService.getClassBytId_admin(tId);
+        List<Class> list = classService.getClassBytId_admin(tId);//获取该老师教的班期
         String curTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()); //获取系统时间
         DateFormat df = DateFormat.getDateInstance();
         long time1 = 0;
@@ -95,7 +98,7 @@ public class TeacherController {
             } catch (ParseException e){
                 e.printStackTrace();
             }
-            if (time1 < time2){
+            if (time1 < time2){//该老师尚有未结束的班期
                 isEnd = false;
                 break;
             }
@@ -109,6 +112,7 @@ public class TeacherController {
         }
     }
 
+    //获取老师信息
     @RequestMapping("/getTeacherById_admin")
     @ResponseBody
     public Teacher getTeacherById_admin(Integer tId){
@@ -116,6 +120,7 @@ public class TeacherController {
         return teacher;
     }
 
+    //编辑老师
     @RequestMapping(value = "/editTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String editTeacher_admin(Teacher teacher){
@@ -123,6 +128,7 @@ public class TeacherController {
         return String.valueOf(isEdit);
     }
 
+    //给老师重置密码
     @RequestMapping(value = "/rePwdTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String rePwdTeacher_admin(LoginUser loginUser){
@@ -130,14 +136,15 @@ public class TeacherController {
         return String.valueOf(isRe);
     }
 
+    //获取所有老师以供班期选择
     @RequestMapping(value = "/getAllTeacherForChoose_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllTeacherForChoose_admin(){
         List<Teacher> teacherList1 = teacherService.getAllTeacher_admin("");
-        List<Teacher> teacherList2 = new ArrayList<>();
+        List<Teacher> teacherList2 = new ArrayList<>();//没有未结束班期的老师
         for (Teacher teacher : teacherList1) {
             Integer tId = teacher.gettId();
-            List<Class> classList = classService.getClassBytId_admin(tId);
+            List<Class> classList = classService.getClassBytId_admin(tId);//获取该老师教的班期
             String curTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()); //获取系统时间
             DateFormat df = DateFormat.getDateInstance();
             long time1 = 0;
@@ -153,7 +160,7 @@ public class TeacherController {
                     } catch (ParseException e){
                         e.printStackTrace();
                     }
-                    if (time1 > time2){
+                    if (time1 > time2){//该老师没有未结束的班期，可以分配
                         teacherList2.add(teacher);
                         break;
                     }

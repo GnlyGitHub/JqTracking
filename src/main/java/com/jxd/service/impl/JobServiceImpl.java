@@ -18,7 +18,6 @@ public class JobServiceImpl implements IJobService {
     @Autowired
     IJobDao jobDao;
 
-
     @Override
     public List<Job> getAllJobByDeptNo_admin(Integer deptNo) {
         return jobDao.getAllJobByDeptNo_admin(deptNo);
