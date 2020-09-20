@@ -161,6 +161,8 @@
                         success:function (data) {
                             if (data == "true"){
                                 layer.msg("删除成功")
+                            } else if (data == "1") {
+                                layer.msg("该课程已被选，无法删除")
                             } else {
                                 layer.msg("删除失败")
                             }

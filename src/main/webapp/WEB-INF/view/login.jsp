@@ -26,7 +26,7 @@
                 /*绝对定位的方式*/
                 position: absolute;
                 /*定位登录div的位置*/
-                left: 75%;
+                left: 80%;
                 top: 40%;
                 transform: translate(-50%, -50%);
                 /*内边距*/
@@ -143,7 +143,7 @@
         carousel.render({
             elem: '#test10'
             ,width: '850px'
-            ,height: '600px'
+            ,height: '550px'
             ,interval: 3000
         });
     });

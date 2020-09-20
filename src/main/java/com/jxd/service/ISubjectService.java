@@ -56,4 +56,11 @@ public interface ISubjectService {
      * @return 是否修改成功
      */
     boolean editSubjectById_admin(Subject subject);
+
+    /**
+     * 查重课程
+     * @param subject 待查询课程
+     * @return 课程列表
+     */
+    List<Subject> checkRepSubject_admin(String subject);
 }

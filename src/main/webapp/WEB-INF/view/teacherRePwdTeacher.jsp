@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ANA
@@ -74,7 +75,7 @@
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                     <div id="editMsg" align="center">
-                        ${editMsg}
+                            ${editMsg}
                     </div>
 
                 </div>
@@ -114,19 +115,18 @@
                 }
             });
 
-            $(function () {
-                var editMsg = ${editMsg};
-                if(editMsg != null){
-                    location.href="quit";
-                }
-            })
 
+            /*$("#editMsg").bind("DOMNodeInserted",changes());*/
 
         });
         //关闭当前弹框
         var close = function () {
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
+        };
+
+        var changes = function () {
+            location.href="quit";
         }
     </script>
 </body>

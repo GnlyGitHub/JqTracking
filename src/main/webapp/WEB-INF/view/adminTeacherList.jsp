@@ -176,6 +176,8 @@
                         success:function (data) {
                             if (data == "true"){
                                 layer.msg("删除成功")
+                            } else if (data == "1") {
+                                layer.msg("该老师正在代课，无法删除")
                             } else {
                                 layer.msg("删除失败")
                             }
@@ -194,7 +196,7 @@
                     title:'重置密码',
                     content:'adminRePwdTeacher?tId=' + data.tId,
                     shadeClose:true,
-                    area:['400px','330px'],
+                    area:['420px','370px'],
                     end:function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();

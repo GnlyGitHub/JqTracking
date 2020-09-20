@@ -54,4 +54,11 @@
         update subject set subject=#{subject}
         where subjectId=#{subjectId}
     </update>
+
+    <!--List<Subject> checkRepSubject_admin(String subject);-->
+    <select id="checkRepSubject_admin" resultType="Subject">
+        select subjectId, subject
+        from subject
+        where subject=#{subject}
+    </select>
 </mapper>

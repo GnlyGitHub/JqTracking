@@ -23,4 +23,14 @@
             delete from dissubject where (id=#{dissubject.id})
         </foreach>
     </delete>
+
+    <!--boolean delDisSubjectByClassId(Integer classId);-->
+    <delete id="delDisSubjectByClassId">
+        delete from dissubject where classId=#{classId}
+    </delete>
+
+    <!--List<DisSubject> getDisSubjectBySubjectId(Integer subjectId);-->
+    <select id="getDisSubjectBySubjectId" resultType="DisSubject">
+        select id from dissubject where subjectId=#{subjectId}
+    </select>
 </mapper>

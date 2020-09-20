@@ -75,4 +75,18 @@ public interface IClassDao {
      * @return 当前插入的班期编号
      */
     Integer getCurClassId();
+
+    /**
+     * 班期查重
+     * @param className 带查重班期
+     * @return 查询结果列表
+     */
+    List<Class> checkRepClass_admin(String className);
+
+    /**
+     * 获取某个教师带过的班期
+     * @param tId 教师工号
+     * @return 班期列表
+     */
+    List<Class> getClassBytId_admin(Integer tId);
 }

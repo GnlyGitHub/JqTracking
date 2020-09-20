@@ -102,4 +102,11 @@ public interface IStudentService {
      * @return boolean
      */
     boolean changeAppraiseState_Manage(Integer appraiseState,Integer sId);
+
+    /**
+     * 根据班期获取学生列表
+     * @param classId 班期号
+     * @return 学生列表
+     */
+    List<Student> getStudentByClassId_admin(Integer classId);
 }

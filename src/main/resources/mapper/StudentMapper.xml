@@ -23,7 +23,7 @@
                 and s.sName like '%' #{sName} '%'
             </if>
         </where>
-        order by s.sId desc
+        order by s.scoreState,s.sId desc
     </select>
     <resultMap id="getAllStudent_TeacherMap" type="Student">
         <id column="sId" property="sId"></id>
@@ -57,7 +57,7 @@
                 and s.sName like '%' #{sName} '%'
             </if>
         </where>
-        order by s.sId desc
+        order by s.scoreState,s.sId desc
         limit ${pageSize * (pageIndex - 1)}, ${pageSize}
     </select>
     <resultMap id="getAllStudentByPage_TeacherMap" type="Student">
@@ -258,4 +258,11 @@
     <update id="changeAppraiseState_Manage">
         update student set appraisestate=#{appraiseState} where sid=#{sId}
     </update>
+
+    <!--List<Student> getStudentByClassId_admin(Integer classId)-->
+    <select id="getStudentByClassId_admin" resultType="Student">
+        select
+        sId,sName,sSex,sNation,sBirthday,sPlace,sMarry
+        from student where sClass=#{classId}
+    </select>
 </mapper>

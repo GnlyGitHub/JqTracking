@@ -1,11 +1,10 @@
 package com.jxd.controller;
 
+import com.jxd.model.*;
 import com.jxd.model.Class;
-import com.jxd.model.DisSubject;
-import com.jxd.model.Subject;
-import com.jxd.model.LoginUser;
 import com.jxd.service.IClassService;
 import com.jxd.service.IDisSubjectService;
+import com.jxd.service.IStudentService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -30,6 +33,8 @@ public class ClassController {
     IClassService classService;
     @Autowired
     IDisSubjectService disSubjectService;
+    @Autowired
+    IStudentService studentService;
 
     @RequestMapping("/adminClassList")
     public String adminClassList(){
@@ -90,9 +95,30 @@ return classService.getAllClass_Manage();
 
     @RequestMapping("/delClassById_admin")
     @ResponseBody
-    public String delClassById_admin(Integer classId){
-        boolean isDel = classService.delClass_admin(classId);
-        return String.valueOf(isDel);
+    public String delClassById_admin(Integer classId) {
+        String curTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()); //获取系统时间
+        Class aClass = classService.getClassById_admin(classId);
+        String startDate = aClass.getStartDate();
+        DateFormat df = DateFormat.getDateInstance();
+        long time1 = 0;
+        long time2 = 0;
+        try {
+            //把字符串转化为时间
+            time1 = df.parse(curTime).getTime();
+            time2 = df.parse(startDate).getTime();
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        List<Student> list = studentService.getStudentByClassId_admin(classId);
+        if (list.size() > 0) {
+            return "1";//该班期有学生
+        } else if (time1 > time2) {
+            return "2";//该班期已开课
+        } else {
+            boolean isDelDisClass = disSubjectService.delDisSubjectByClassId(classId);
+            boolean isDelClass = classService.delClass_admin(classId);
+            return String.valueOf(isDelClass && isDelDisClass);
+        }
     }
 
     @RequestMapping("/addClass_admin")
@@ -116,10 +142,11 @@ return classService.getAllClass_Manage();
     }
 
     @RequestMapping("/adminBeforeEditClass")
-    public String adminBeforeEditClass(Integer classId, Model model){
+    public String adminBeforeEditClass(Integer classId, String tName, Model model){
         List<DisSubject> list = disSubjectService.checkDisSubject_admin(classId);
         Class aClass = classService.getClassById_admin(classId);
         model.addAttribute("aClass", aClass);
+        model.addAttribute("tName", tName);
         JSONArray jsonArray = JSONArray.fromObject(list);
         model.addAttribute("SubjectList",jsonArray);
         return "adminEditClass";
@@ -167,5 +194,16 @@ return classService.getAllClass_Manage();
             isDel = disSubjectService.delBatchDisSubject(delList);
         }
         return String.valueOf(isEditClass && isAdd && isDel);
+    }
+
+    @RequestMapping("/checkRepClass_admin")
+    @ResponseBody
+    public String checkRepClass_admin(String className){
+        List<Class> list = classService.checkRepClass_admin(className);
+        boolean isExit = false;
+        if (list.size() > 0){
+            isExit = true;
+        }
+        return String.valueOf(isExit);
     }
 }

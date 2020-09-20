@@ -52,4 +52,11 @@ public class AppraiseServiceImpl implements IAppraiseService {
     public boolean editAppraiseById_admin(Appraise appraise) {
         return appraiseDao.editAppraiseById_admin(appraise);
     }
+
+    @Override
+    public List<Appraise> checkRepAppraise_admin(String appraise) {
+        return appraiseDao.checkRepAppraise_admin(appraise);
+    }
+
+
 }

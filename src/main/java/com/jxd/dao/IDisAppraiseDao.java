@@ -56,4 +56,11 @@ public interface IDisAppraiseDao {
      * @return java.util.List<com.jxd.model.DisAppraise>
      */
     List<DisAppraise> getDisAppraiseTable_Manage(@Param("mId") Integer mId, @Param("classId") Integer classId,@Param("number") Integer number);
+
+    /**
+     * 根据评价分项获取评价分项分配列表
+     * @param appraiseId 评价分项
+     * @return 评价分项分配列表
+     */
+    List<DisAppraise> getDisAppraiseByAppraiseId(Integer appraiseId);
 }

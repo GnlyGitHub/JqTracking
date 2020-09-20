@@ -77,4 +77,10 @@
             delete from disappraise where (classid=#{disappraise.classId} and number=#{disappraise.number} and mid=#{disappraise.mId})
         </foreach>
     </delete>
+
+    <!--List<DisAppraise> getDisAppraiseByAppraiseId(Integer appraiseId)-->
+    <select id="getDisAppraiseByAppraiseId" resultType="DisAppraise">
+        select id,appraiseid,classid,mid,number from disappraise
+        where appraiseId=#{appraiseId}
+    </select>
 </mapper>

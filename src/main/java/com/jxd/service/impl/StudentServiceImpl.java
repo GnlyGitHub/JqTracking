@@ -84,4 +84,8 @@ public class StudentServiceImpl implements IStudentService {
         return studentDao.changeAppraiseState_Manage(appraiseState,sId);
     }
 
+    @Override
+    public List<Student> getStudentByClassId_admin(Integer classId) {
+        return studentDao.getStudentByClassId_admin(classId);
+    }
 }

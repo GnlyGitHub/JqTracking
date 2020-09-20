@@ -146,6 +146,22 @@ public class StudentController {
         return map;
     }
 
+    @RequestMapping(value = "/delFile", produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String delFile(String path,HttpServletRequest request) {
+        String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\" + path;
+        File file = new File(filepath);
+        if (file.exists() && file.isFile()){
+            if (file.delete()){
+                return "删除成功";
+            } else {
+                return "删除失败";
+            }
+        } else {
+            return "不存在该文件";
+        }
+    }
+
     @RequestMapping(value = "/getAllJobByDeptNo_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllJobByDeptNo_admin(Integer deptNo){
@@ -183,8 +199,14 @@ public class StudentController {
     @RequestMapping("/delStudentById_admin")
     @ResponseBody
     public String delStudentById_admin(Integer sId){
-        boolean isDel = studentService.delStudent_admin(sId);
-        return String.valueOf(isDel);
+        Student student = studentService.getStudentById_admin(sId);
+        String sHireDate = student.getsHireDate();
+        if (sHireDate == null) {
+            boolean isDel = studentService.delStudent_admin(sId);
+            return String.valueOf(isDel);
+        } else {
+            return "1";//该学生已入职
+        }
     }
     @RequestMapping("GetAllStudent_Manage/{projectId}")
     @ResponseBody
