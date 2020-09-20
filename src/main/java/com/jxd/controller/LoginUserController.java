@@ -26,7 +26,7 @@ import java.util.List;
  * @date 2020/9/10 19:49
  */
 @Controller
-@SessionAttributes({"loginUser","teacher","manage"})
+/*@SessionAttributes({"loginUser","teacher","manage"})*/
 public class LoginUserController {
     @Autowired
     ILoginUserService loginUserService;
@@ -40,6 +40,10 @@ public class LoginUserController {
     @Autowired
     IClassService classService;
 
+    @RequestMapping("login")
+    public String login(){
+        return "login";
+    }
     @RequestMapping("editPassword_Manage")
     public String editPassword_Manage(){
         return "empEditPassword";

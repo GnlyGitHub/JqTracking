@@ -56,8 +56,8 @@
     <!-- 登录拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/controller/*"/> <!-- 拦截路径 -->
-            <mvc:exclude-mapping path="/controller/LoginUser"/>  <!-- 排除的拦截路径 -->
+            <mvc:mapping path="/**"/> <!-- 拦截路径 -->
+            <mvc:exclude-mapping path="/LoginUserController/**"/><!-- 排除的拦截路径 -->
             <bean class="com.jxd.interceptor.Loginterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
