@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
-        .layui-table-tool-self{
+        .layui-table-tool-self {
             display: none;
         }
-        .layui-icon-ok{
+
+        .layui-icon-ok {
             margin-top: 7px;
         }
-        .layui-table-tool-temp{
+
+        .layui-table-tool-temp {
             padding-right: 0;
         }
     </style>
@@ -43,7 +45,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域 -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item"><a href="adminTeacherList">教师管理</a></li>
                 <li class="layui-nav-item"><a href="adminManagerList">项目经理管理</a></li>
                 <li class="layui-nav-item"><a href="adminStudentList">学生管理</a></li>
@@ -92,92 +94,96 @@
     </div>
 </div>
 <script>
-    layui.use(['element','table','layer'], function(){
+    layui.use(['element', 'table', 'layer'], function () {
         var element = layui.element;
         var table = layui.table;
         var layer = layui.layer;
         var $ = layui.$;
 
+        //向表格加载数据
         table.render({
             elem: '#demo'
-            ,toolbar: '#toolbarDemo' //添加工具栏
-            ,height: 450
-            ,width: 1080
-            ,url: '/getAllClasses_admin' //数据接口
-            ,page: true
-            ,limit: 8
-            ,limits:[8,15,20]
-            ,cols: [[
+            , toolbar: '#toolbarDemo' //添加工具栏
+            , height: 450
+            , width: 1080
+            , url: '/getAllClasses_admin' //数据接口
+            , page: true
+            , limit: 8
+            , limits: [8, 15, 20]
+            , cols: [[
                 /*{type: 'checkbox'}*/
-                {field: 'classId', title: '班期号', width:200, hide:true}
-                ,{field: 'className', title: '班期', width:200, sort: true}
-                ,{field: 'startDate', title: '开课日期', width:200}
-                ,{field: 'endDate', title: '结课日期', width:200, templet: '#titleTpl'}
-                ,{field: 'tName', title: '代课教师', width:220}
-                ,{fixed: 'right', title:'操作', width:250, align:'center', toolbar: '#barDemo'}
+                {field: 'classId', title: '班期号', width: 200, hide: true}
+                , {field: 'className', title: '班期', width: 200, sort: true}
+                , {field: 'startDate', title: '开课日期', width: 200}
+                , {field: 'endDate', title: '结课日期', width: 200, templet: '#titleTpl'}
+                , {field: 'tName', title: '代课教师', width: 220}
+                , {fixed: 'right', title: '操作', width: 250, align: 'center', toolbar: '#barDemo'}
             ]]
         });
-        table.on('toolbar(test)', function(obj){
-            switch(obj.event){
+
+        //表格头部工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            switch (obj.event) {
                 case 'query':
                     var filter = $("#filter").val();//获取过滤条件
                     //重新加载表格
-                    table.reload("demo",{
-                        where:{className:filter},
-                        page:{
-                            curr:1
+                    table.reload("demo", {
+                        where: {className: filter},
+                        page: {
+                            curr: 1
                         }
                     });
                     break;
                 case 'add':
                     layer.open({
-                        type:2,
-                        title:'添加班期',
-                        content:'adminAddClass',
-                        shadeClose:true,
-                        area:['500px','460px']
+                        type: 2,
+                        title: '添加班期',
+                        content: 'adminAddClass',
+                        shadeClose: true,
+                        area: ['500px', '460px']
                     });
                     break;
             }
         });
 
-        table.on('tool(test)', function(obj){
+        //表格行内工具栏事件
+        table.on('tool(test)', function (obj) {
             var data = obj.data;//获取当前行数据
-            if(obj.event === 'update'){
+            if (obj.event === 'update') {
                 layer.open({
-                    type:2,
-                    title:'修改班期信息',
-                    content:"adminBeforeEditClass?classId=" + data.classId + "&tName=" + data.tName,
-                    shadeClose:true,
-                    area:['500px','460px'],
-                    end:function () {
+                    type: 2,
+                    title: '修改班期信息',
+                    content: "adminBeforeEditClass?classId=" + data.classId + "&tName=" + data.tName,
+                    shadeClose: true,
+                    area: ['500px', '460px'],
+                    end: function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();
                     }
                 });
-            } else if(obj.event === 'delete'){
-                layer.confirm('确定要删除吗？', function(index){
+            } else if (obj.event === 'delete') { //删除
+                layer.confirm('确定要删除吗？', function (index) {
                     $.ajax({
-                        url:'delClassById_admin',
-                        type:'post',
-                        data:{
-                            classId:data.classId
+                        url: 'delClassById_admin',
+                        type: 'post',
+                        data: {
+                            classId: data.classId
                         },
-                        success:function (data) {
-                            if (data == "true"){
+                        success: function (data) {
+                            if (data == "true") {
                                 layer.msg("删除成功")
                             } else if (data == "1") {
                                 layer.msg("改班期已分配学生，不能删除")
-                            }else if (data == "2") {
+                            } else if (data == "2") {
                                 layer.msg("改班期已开课，不能删除")
                             } else {
                                 layer.msg("删除失败，请重试")
                             }
-                            table.reload("demo",function () {
+                            table.reload("demo", function () {
                                 url:'getAllClasses_admin'
                             })
                         },
-                        error:function () {
+                        error: function () {
                             layer.msg("执行失败")
                         }
                     })

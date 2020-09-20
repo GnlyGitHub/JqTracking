@@ -50,6 +50,7 @@ public class SubjectController {
         return "adminEditSubject";
     }
 
+    //获取所有课程并将其分页
     @RequestMapping(value = "/getAllSubject_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllSubject_admin(Integer limit, Integer page, String subject){
@@ -64,6 +65,7 @@ public class SubjectController {
         return jsonObject.toString();
     }
 
+    //获取所有课程以供班期选择
     @RequestMapping(value = "/getAllSubjectForChoose_admin")
     @ResponseBody
     public List<Subject> getAllSubjectForChoose_admin(){
@@ -71,18 +73,20 @@ public class SubjectController {
         return list;
     }
 
+    //删除课程
     @RequestMapping("/delSubjectById_admin")
     @ResponseBody
     public String delSubjectById_admin(Integer subjectId){
         List<DisSubject> list = disSubjectService.getDisSubjectBySubjectId(subjectId);
         if (list.size() > 0){
-            return "1";//该课程已被选，不能删
+            return "1";//该课程已被选，不能删除
         } else {
             boolean isDel = subjectService.delSubject_admin(subjectId);
             return String.valueOf(isDel);
         }
     }
 
+    //添加课程
     @RequestMapping("/addSubject_admin")
     @ResponseBody
     public String addSubject_admin(Subject subject){
@@ -90,6 +94,7 @@ public class SubjectController {
         return String.valueOf(isAdd);
     }
 
+    //编辑课程
     @RequestMapping("/editSubject_admin")
     @ResponseBody
     public String editSubject_admin(Subject subject){
@@ -97,6 +102,7 @@ public class SubjectController {
         return String.valueOf(isEdit);
     }
 
+    //课程查重
     @RequestMapping("/checkRepSubject_admin")
     @ResponseBody
     public String checkRepSubject_admin(String subject){

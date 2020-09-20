@@ -12,6 +12,7 @@ import java.util.List;
 public interface IDeptDao {
     /**
      * 获取所有部门
+     *
      * @return 部门集合
      */
     List<Dept> getAllDept_admin();

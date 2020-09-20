@@ -22,6 +22,7 @@ import java.util.List;
 public class AppraiseController {
     @Autowired
     IAppraiseService appraiseService;
+
     @Autowired
     IDisAppraiseService disAppraiseService;
 
@@ -47,11 +48,14 @@ public class AppraiseController {
         return "adminEditAppraise";
     }
 
+    //获取所有评价分项并将其分页
     @RequestMapping(value = "/getAllAppraise_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllAppraise_admin(Integer limit, Integer page, String appraise){
         List<Appraise> list = appraiseService.getAllAppraise_admin(appraise);
         List<Appraise> list1 = appraiseService.getAppraise_admin(limit, page, appraise);
+
+        //将查询结果返回前端页面
         JSONArray jsonArray = JSONArray.fromObject(list1);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
@@ -61,18 +65,22 @@ public class AppraiseController {
         return jsonObject.toString();
     }
 
+    //删除评价分项
     @RequestMapping("/delAppraiseById_admin")
     @ResponseBody
     public String delAppraiseById_admin(Integer appraiseId){
+        //获取已使用的评价分项列表
         List<DisAppraise> list = disAppraiseService.getDisAppraiseByAppraiseId(appraiseId);
         if (list.size() > 0){
             return "1";//该评价分项已被使用
         } else {
+            //删除评价分项
             boolean isDel = appraiseService.delAppraise_admin(appraiseId);
             return String.valueOf(isDel);
         }
     }
 
+    //添加评价分项
     @RequestMapping("/addAppraise_admin")
     @ResponseBody
     public String addAppraise_admin(Appraise appraise){
@@ -80,6 +88,7 @@ public class AppraiseController {
         return String.valueOf(isAdd);
     }
 
+    //编辑评价分项
     @RequestMapping("/editAppraise_admin")
     @ResponseBody
     public String editAppraise_admin(Appraise appraise){
@@ -87,9 +96,11 @@ public class AppraiseController {
         return String.valueOf(isEdit);
     }
 
+    //评价分项查重
     @RequestMapping("/checkRepAppraise_admin")
     @ResponseBody
     public String checkRepAppraise_admin(String appraise){
+        //获取已存在的评价分项列表
         List<Appraise> list = appraiseService.checkRepAppraise_admin(appraise);
         boolean isExit = false;
         if (list.size() > 0){

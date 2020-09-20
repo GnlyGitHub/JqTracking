@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
-        .layui-table-tool-self{
+        .layui-table-tool-self {
             display: none;
         }
-        .layui-icon-ok{
+
+        .layui-icon-ok {
             margin-top: 7px;
         }
-        .layui-table-tool-temp{
+
+        .layui-table-tool-temp {
             padding-right: 0;
         }
     </style>
@@ -43,7 +45,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域 -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item"><a href="adminTeacherList">教师管理</a></li>
                 <li class="layui-nav-item"><a href="adminManagerList">项目经理管理</a></li>
                 <li class="layui-nav-item layui-this"><a href="adminStudentList">学生管理</a></li>
@@ -112,43 +114,47 @@
 
 </div>
 <script>
-    layui.use(['element','table','layer','form'], function(){
+    layui.use(['element', 'table', 'layer', 'form'], function () {
         var element = layui.element;
         var table = layui.table;
         var layer = layui.layer;
         var $ = layui.$;
         var form = layui.form;
 
+        //向表格加载数据
         table.render({
             elem: '#demo'
-            ,toolbar: '#toolbarDemo' //添加工具栏
-            ,height: 450
-            ,width: 1080
-            ,url: '/getAllStudent_admin' //数据接口
-            ,page: true
-            ,limit: 8
-            ,limits:[8,15,20]
-            ,cols: [[
+            , toolbar: '#toolbarDemo' //添加工具栏
+            , height: 450
+            , width: 1080
+            , url: '/getAllStudent_admin' //数据接口
+            , page: true
+            , limit: 8
+            , limits: [8, 15, 20]
+            , cols: [[
                 /*{type: 'checkbox'}*/
-                {field: 'sId', title: '工号', width:80, sort: true}
-                ,{field: 'sName', title: '姓名', width:100}
-                ,{field: 'sSex', title: '性别', width:80, templet: '#titleTpl'}
-                ,{field: 'sBirthday', title: '出生年月', width:120}
-                ,{field: 'sSchool', title: '学校', width:170}
-                ,{field: 'sMajor', title: '专业', width:200}
-                ,{field: 'sClass', title: '班期号', width:150, hide:true}
-                ,{field: 'className', title: '班期', width:150, templet: function (data) {
+                {field: 'sId', title: '工号', width: 80, sort: true}
+                , {field: 'sName', title: '姓名', width: 100}
+                , {field: 'sSex', title: '性别', width: 80, templet: '#titleTpl'}
+                , {field: 'sBirthday', title: '出生年月', width: 120}
+                , {field: 'sSchool', title: '学校', width: 170}
+                , {field: 'sMajor', title: '专业', width: 200}
+                , {field: 'sClass', title: '班期号', width: 150, hide: true}
+                , {
+                    field: 'className', title: '班期', width: 150, templet: function (data) {
                         return data.aClass.className
-                    }}
-                ,{fixed: 'right', title:'操作', width:170, align:'center', toolbar: '#barDemo'}
+                    }
+                }
+                , {fixed: 'right', title: '操作', width: 170, align: 'center', toolbar: '#barDemo'}
             ]]
         });
 
-        var getAllClass = function(){
+        //向班期下拉框添加数据
+        var getAllClass = function () {
             $.ajax({
                 url: '/getAllClass_admin',
                 dataType: 'json',
-                data:{'state': 0},
+                data: {'state': 0},
                 type: 'post',
                 success: function (data) {
                     $.each(data.data, function (index, item) {
@@ -161,69 +167,71 @@
 
         getAllClass();
 
-        table.on('toolbar(test)', function(obj){
-            switch(obj.event){
-                case 'query':
+        //表格头部工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            switch (obj.event) {
+                case 'query'://查询
                     var filter = $("#filter").val();
                     //重新加载表格
-                    table.reload("demo",{
-                        where:{
+                    table.reload("demo", {
+                        where: {
                             sName: filter,
                             sClass: $("#sClass").val()
                         },
-                        page:{
-                            curr:1
+                        page: {
+                            curr: 1
                         }
                     });
                     getAllClass();
                     break;
-                case 'add':
+                case 'add'://添加
                     layer.open({
-                        type:2,
-                        title:'添加学生',
-                        content:'adminAddStudent',
-                        shadeClose:true,
-                        area:['700px','500px']
+                        type: 2,
+                        title: '添加学生',
+                        content: 'adminAddStudent',
+                        shadeClose: true,
+                        area: ['700px', '500px']
                     });
                     break;
             }
         });
 
-        table.on('tool(test)', function(obj){
+        //表格行内工具栏事件
+        table.on('tool(test)', function (obj) {
             var data = obj.data;//获取当前行数据
-            if(obj.event === 'update'){
+            if (obj.event === 'update') {//编辑
                 layer.open({
-                    type:2,
-                    title:'修改学生信息',
-                    content:"adminEditStudent?sId=" + data.sId + "&sPlace=" + data.sPlace,
-                    shadeClose:true,
-                    area:['700px','500px'],
-                    end:function () {
+                    type: 2,
+                    title: '修改学生信息',
+                    content: "adminEditStudent?sId=" + data.sId + "&sPlace=" + data.sPlace,
+                    shadeClose: true,
+                    area: ['700px', '500px'],
+                    end: function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();
                     }
                 });
-            } else if(obj.event === 'delete'){
-                layer.confirm('确定要删除吗？', function(index){
+            } else if (obj.event === 'delete') {//删除
+                layer.confirm('确定要删除吗？', function (index) {
                     $.ajax({
-                        url:'delStudentById_admin',
-                        type:'post',
-                        data:{
-                            sId:data.sId
+                        url: 'delStudentById_admin',
+                        type: 'post',
+                        data: {
+                            sId: data.sId
                         },
-                        success:function (data) {
-                            if (data == "true"){
+                        success: function (data) {
+                            if (data == "true") {
                                 layer.msg("删除成功")
                             } else if (data == "1") {
                                 layer.msg("该学生已入职，无法删除")
                             } else {
                                 layer.msg("删除失败")
                             }
-                            table.reload("demo",function () {
+                            table.reload("demo", function () {
                                 url:'getAllStudent_admin'
                             })
                         },
-                        error:function () {
+                        error: function () {
                             layer.msg("执行失败")
                         }
                     })

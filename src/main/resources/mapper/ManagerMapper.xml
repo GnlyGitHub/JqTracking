@@ -116,4 +116,9 @@
     <select id="getCurManager_admin" resultType="Integer">
         select max(mId) from manager
     </select>
+
+    <!--List<DisAppraise> getDisAppraiseBymId(Integer mId)-->
+    <select id="getDisAppraiseBymId" resultType="DisAppraise">
+        select id from disappraise where mId=#{mId}
+    </select>
 </mapper>

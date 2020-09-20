@@ -146,6 +146,7 @@ public class StudentController {
         return map;
     }
 
+    //删除已上传的图片
     @RequestMapping(value = "/delFile", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String delFile(String path,HttpServletRequest request) {
@@ -162,6 +163,7 @@ public class StudentController {
         }
     }
 
+    //根据部门编号获取所有职务
     @RequestMapping(value = "/getAllJobByDeptNo_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllJobByDeptNo_admin(Integer deptNo){
@@ -175,6 +177,7 @@ public class StudentController {
         return jsonObject.toString();
     }
 
+    //添加学生
     @RequestMapping("/addStudent_admin")
     @ResponseBody
     public String addStudent_admin(Student student){
@@ -182,6 +185,7 @@ public class StudentController {
         return String.valueOf(isAdd);
     }
 
+    //编辑学生
     @RequestMapping("/editStudentById_admin")
     @ResponseBody
     public String editStudentById_admin(Student student){
@@ -189,6 +193,7 @@ public class StudentController {
         return String.valueOf(isEdit);
     }
 
+    //获取学生信息
     @RequestMapping("/getStudentById_admin")
     @ResponseBody
     public Student getStudentById_admin(Integer sId){
@@ -196,12 +201,13 @@ public class StudentController {
         return student;
     }
 
+    //删除学生
     @RequestMapping("/delStudentById_admin")
     @ResponseBody
     public String delStudentById_admin(Integer sId){
         Student student = studentService.getStudentById_admin(sId);
-        String sHireDate = student.getsHireDate();
-        if (sHireDate == null) {
+        String sHireDate = student.getsHireDate();//获取学生的入职日期
+        if (sHireDate == null) {//未入职
             boolean isDel = studentService.delStudent_admin(sId);
             return String.valueOf(isDel);
         } else {

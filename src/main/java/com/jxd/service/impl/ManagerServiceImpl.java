@@ -1,6 +1,7 @@
 package com.jxd.service.impl;
 
 import com.jxd.dao.IManagerDao;
+import com.jxd.model.DisAppraise;
 import com.jxd.model.Manager;
 import com.jxd.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,10 @@ public class ManagerServiceImpl implements IManagerService {
     @Override
     public Integer getCurManager_admin() {
         return managerDao.getCurManager_admin();
+    }
+
+    @Override
+    public List<DisAppraise> getDisAppraiseBymId(Integer mId) {
+        return managerDao.getDisAppraiseBymId(mId);
     }
 }

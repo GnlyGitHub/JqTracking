@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
-        .red{
+        .red {
             border-color: red;
         }
     </style>
@@ -26,8 +26,10 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">姓名</label>
                         <div class="layui-input-inline">
-                            <input id="sName" type="text" name="sName" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-                            <p id="sNameP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入姓名</p>
+                            <input id="sName" type="text" name="sName" required lay-verify="required"
+                                   placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                            <p id="sNameP"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入姓名</p>
                         </div>
                     </div>
                 </td>
@@ -48,13 +50,15 @@
                 </td>
             </tr>
             <tr>
-                <td><div class="layui-form-item">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="sSex" value="1" title="男" checked>
-                        <input type="radio" name="sSex" value="2" title="女">
+                <td>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="sSex" value="1" title="男" checked>
+                            <input type="radio" name="sSex" value="2" title="女">
+                        </div>
                     </div>
-                </div></td>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -72,8 +76,11 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">出生年月</label>
                         <div class="layui-input-inline">
-                            <input id="sBirthday" type="date" name="sBirthday" required  lay-verify="date" placeholder="请输入出生年月" autocomplete="off" class="layui-input">
-                            <p id="sBirthdayP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入出生年月</p>
+                            <input id="sBirthday" type="date" name="sBirthday" required lay-verify="date"
+                                   placeholder="请输入出生年月" autocomplete="off" class="layui-input">
+                            <p id="sBirthdayP"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
+                                请输入出生年月</p>
                         </div>
                     </div>
                 </td>
@@ -83,26 +90,29 @@
                 //String sPlace = "山东省青岛市崂山区";
                 int proIndex = sPlace.indexOf("省");
                 int cityIndex = sPlace.indexOf("市");
-                String province = sPlace.substring(0, proIndex+1);
-                String city = sPlace.substring(proIndex+1, cityIndex+1);
-                String county = sPlace.substring(cityIndex+1);
+                String province = sPlace.substring(0, proIndex + 1);
+                String city = sPlace.substring(proIndex + 1, cityIndex + 1);
+                String county = sPlace.substring(cityIndex + 1);
             %>
             <tr>
                 <td colspan="2">
                     <div class="layui-form-item" id="area-picker">
                         <div class="layui-form-label">籍贯</div>
                         <div class="layui-input-inline" style="width: 160px;">
-                            <select name="province" id="province" class="province-selector" data-value="<%=province%>" lay-filter="province-1">
+                            <select name="province" id="province" class="province-selector" data-value="<%=province%>"
+                                    lay-filter="province-1">
                                 <option value="">请选择省</option>
                             </select>
                         </div>
                         <div class="layui-input-inline" style="width: 160px;">
-                            <select name="city" id="city" class="city-selector" data-value="<%=city%>" lay-filter="city-1">
+                            <select name="city" id="city" class="city-selector" data-value="<%=city%>"
+                                    lay-filter="city-1">
                                 <option value="">请选择市</option>
                             </select>
                         </div>
                         <div class="layui-input-inline" style="width: 160px;">
-                            <select name="county" id="county" class="county-selector" data-value="<%=county%>" lay-filter="county-1">
+                            <select name="county" id="county" class="county-selector" data-value="<%=county%>"
+                                    lay-filter="county-1">
                                 <option value="">请选择区</option>
                             </select>
                         </div>
@@ -114,9 +124,13 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">电话</label>
                         <div class="layui-input-inline">
-                            <input id="sPhone" type="text" name="sPhone" required  lay-verify="phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
-                            <p id="sPhoneP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入电话</p>
-                            <p id="sPhoneP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确电话</p>
+                            <input id="sPhone" type="text" name="sPhone" required lay-verify="phone" placeholder="请输入电话"
+                                   autocomplete="off" class="layui-input">
+                            <p id="sPhoneP1"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入电话</p>
+                            <p id="sPhoneP2"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
+                                请输入正确电话</p>
                         </div>
                     </div>
                 </td>
@@ -135,9 +149,14 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">身份证</label>
                         <div class="layui-input-block" style="width: 500px;">
-                            <input id="sIdCard" type="text" name="sIdCard" required  lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
-                            <p id="sIdCardP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入身份证号码</p>
-                            <p id="sIdCardP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确身份证号码</p>
+                            <input id="sIdCard" type="text" name="sIdCard" required lay-verify="required"
+                                   placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+                            <p id="sIdCardP1"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
+                                请输入身份证号码</p>
+                            <p id="sIdCardP2"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
+                                请输入正确身份证号码</p>
                         </div>
                     </div>
                 </td>
@@ -147,8 +166,10 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">学校</label>
                         <div class="layui-input-inline">
-                            <input id="sSchool" type="text" name="sSchool" required  lay-verify="required" placeholder="请输入学校" autocomplete="off" class="layui-input">
-                            <p id="sSchoolP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入学校</p>
+                            <input id="sSchool" type="text" name="sSchool" required lay-verify="required"
+                                   placeholder="请输入学校" autocomplete="off" class="layui-input">
+                            <p id="sSchoolP"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入学校</p>
                         </div>
                     </div>
                 </td>
@@ -156,8 +177,10 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">专业</label>
                         <div class="layui-input-inline">
-                            <input id="sMajor" type="text" name="sMajor" required  lay-verify="required" placeholder="请输入专业" autocomplete="off" class="layui-input">
-                            <p id="sMajorP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入专业</p>
+                            <input id="sMajor" type="text" name="sMajor" required lay-verify="required"
+                                   placeholder="请输入专业" autocomplete="off" class="layui-input">
+                            <p id="sMajorP"
+                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入专业</p>
                         </div>
                     </div>
                 </td>
@@ -197,7 +220,8 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">入职日期</label>
                         <div class="layui-input-inline">
-                            <input id="sHireDate" type="date" name="sHireDate" required  lay-verify="date" placeholder="请输入入职日期" autocomplete="off" class="layui-input">
+                            <input id="sHireDate" type="date" name="sHireDate" required lay-verify="date"
+                                   placeholder="请输入入职日期" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </td>
@@ -219,7 +243,8 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block" style="width: 500px;">
-                            <input id="sRemarks" type="text" name="sRemarks" required  lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input">
+                            <input id="sRemarks" type="text" name="sRemarks" required lay-verify="required"
+                                   placeholder="请输入备注" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </td>
@@ -242,7 +267,7 @@
     });
 
     //引入layui
-    layui.use(['form','layer','upload','layarea'], function(){
+    layui.use(['form', 'layer', 'upload', 'layarea'], function () {
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.$;
@@ -252,78 +277,79 @@
         var regPhone = /^(([0-9]{7,8})|(1[0-9]{10}))$/;
         var regIdCard = /^\d{14}(\d|X|x)$|^\d{17}(\d|X|x)$/;
 
+        //表单验证
         $("#sName").blur(function () {
-            if ($("#sName").val() == ""){
+            if ($("#sName").val() == "") {
                 $("#sName").addClass("red");
-                $("#sNameP").css("display","inline");
+                $("#sNameP").css("display", "inline");
             }
         }).focus(function () {
             $("#sName").removeClass("red");
-            $("#sNameP").css("display","none");
+            $("#sNameP").css("display", "none");
         });
         $("#sBirthday").blur(function () {
             if ($("#sBirthday").val() == "") {
                 $("#sBirthday").addClass("red");
-                $("#sBirthdayP").css("display","inline");
+                $("#sBirthdayP").css("display", "inline");
             }
         }).focus(function () {
             $("#sBirthday").removeClass("red");
-            $("#sBirthdayP").css("display","none");
+            $("#sBirthdayP").css("display", "none");
         });
         $("#sPhone").blur(function () {
             if ($("#sPhone").val() == "") {
                 $("#sPhone").addClass("red");
-                $("#sPhoneP1").css("display","inline");
-                $("#sPhoneP2").css("display","none");
-            } else if (!regPhone.test($("#sPhone").val())){
+                $("#sPhoneP1").css("display", "inline");
+                $("#sPhoneP2").css("display", "none");
+            } else if (!regPhone.test($("#sPhone").val())) {
                 $("#sPhone").addClass("red");
-                $("#sPhoneP1").css("display","none");
-                $("#sPhoneP2").css("display","inline");
+                $("#sPhoneP1").css("display", "none");
+                $("#sPhoneP2").css("display", "inline");
             }
         }).focus(function () {
             $("#sPhone").removeClass("red");
-            $("#sPhoneP1").css("display","none");
-            $("#sPhoneP2").css("display","none");
+            $("#sPhoneP1").css("display", "none");
+            $("#sPhoneP2").css("display", "none");
         });
         $("#sIdCard").blur(function () {
             if ($("#sIdCard").val() == "") {
                 $("#sIdCard").addClass("red");
-                $("#sIdCardP1").css("display","inline");
-                $("#sIdCardP2").css("display","none");
-            } else if (!regIdCard.test($("#sIdCard").val())){
+                $("#sIdCardP1").css("display", "inline");
+                $("#sIdCardP2").css("display", "none");
+            } else if (!regIdCard.test($("#sIdCard").val())) {
                 $("#sIdCard").addClass("red");
-                $("#sIdCardP1").css("display","none");
-                $("#sIdCardP2").css("display","inline");
+                $("#sIdCardP1").css("display", "none");
+                $("#sIdCardP2").css("display", "inline");
             }
         }).focus(function () {
             $("#sIdCard").removeClass("red");
-            $("#sIdCardP1").css("display","none");
-            $("#sIdCardP2").css("display","none");
+            $("#sIdCardP1").css("display", "none");
+            $("#sIdCardP2").css("display", "none");
         });
         $("#sSchool").blur(function () {
             if ($("#sSchool").val() == "") {
                 $("#sSchool").addClass("red");
-                $("#sSchoolP").css("display","inline");
+                $("#sSchoolP").css("display", "inline");
             }
         }).focus(function () {
             $("#sSchool").removeClass("red");
-            $("#sSchoolP").css("display","none");
+            $("#sSchoolP").css("display", "none");
         });
         $("#sMajor").blur(function () {
             if ($("#sMajor").val() == "") {
                 $("#sMajor").addClass("red");
-                $("#sMajorP").css("display","inline");
+                $("#sMajorP").css("display", "inline");
             }
         }).focus(function () {
             $("#sMajor").removeClass("red");
-            $("#sMajorP").css("display","none");
+            $("#sMajorP").css("display", "none");
         });
 
         //向部门下拉框添加选项
         $.ajax({
             url: '/getAllDept_admin',
             dataType: 'json',
-            data:{'state': 0},
+            data: {'state': 0},
             type: 'post',
             success: function (data) {
                 $.each(data.data, function (index, item) {
@@ -334,11 +360,11 @@
         });
 
         //向职务及项目下拉框添加选项
-        form.on('select(test)', function(data){
+        form.on('select(test)', function (data) {
             $.ajax({
                 url: '/getAllJobByDeptNo_admin',
                 dataType: 'json',
-                data:{'state': 0, 'deptNo': data.value},
+                data: {'state': 0, 'deptNo': data.value},
                 type: 'post',
                 success: function (data) {
                     jobId.options.length = 0;
@@ -351,7 +377,7 @@
             $.ajax({
                 url: '/getProject_admin',
                 dataType: 'json',
-                data:{'state': 0, 'deptNo': data.value},
+                data: {'state': 0, 'deptNo': data.value},
                 type: 'post',
                 success: function (data) {
                     projectId.options.length = 0;
@@ -376,30 +402,30 @@
         //图片上传
         var uploadInst = upload.render({
             elem: '#test1'
-            ,url: '/upload'
-            ,accept:'images'
-            ,size:50000
-            ,before: function(obj){
-                obj.preview(function(index, file, result){
+            , url: '/upload'
+            , accept: 'images'
+            , size: 50000
+            , before: function (obj) {
+                obj.preview(function (index, file, result) {
                     $('#demo1').attr('src', result);
                 });
             }
-            ,done: function(res){
+            , done: function (res) {
                 //如果上传失败
-                if(res.code > 0){
+                if (res.code > 0) {
                     return layer.msg('上传失败');
                 }
                 //删除原图片
                 $.ajax({
-                    url:"delFile",
-                    type:"post",
-                    data:{
-                        path:$("#sPhoto").val()
+                    url: "delFile",
+                    type: "post",
+                    data: {
+                        path: $("#sPhoto").val()
                     },
-                    success:function (data) {
+                    success: function (data) {
                         //alert(data);
                     },
-                    error:function (data) {
+                    error: function (data) {
                         alert("执行失败");
                     }
                 });
@@ -407,14 +433,14 @@
                 //var demoText = $('#demoText');
                 //demoText.html('<span style="color: #4cae4c;">上传成功</span>');
                 var fileupload = $(".image");
-                fileupload.attr("value",res.data.src);
+                fileupload.attr("value", res.data.src);
                 //console.log(fileupload.attr("value"));
             }
-            ,error: function(){
+            , error: function () {
                 //演示失败状态，并实现重传
                 var demoText = $('#demoText');
                 demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function(){
+                demoText.find('.demo-reload').on('click', function () {
                     uploadInst.upload();
                 });
             }
@@ -426,7 +452,7 @@
             "达斡尔族", "仫佬族", "羌族", "布朗族", "撒拉族", "毛南族", "仡佬族", "锡伯族", "阿昌族", "普米族", "塔吉克族", "怒族", "乌孜别克族", "俄罗斯族", "鄂温克族",
             "德昂族", "保安族", "裕固族", "京族", "塔塔尔族", "独龙族", "鄂伦春族", "赫哲族", "门巴族", "珞巴族", "基诺族"];
         var option = "";
-        for(var i = 0; i < nations.length; i++) {
+        for (var i = 0; i < nations.length; i++) {
             option += '<option value="' + nations[i] + '">' + nations[i] + '</option>';
         }
         $(option).appendTo("#sNation");
@@ -435,7 +461,7 @@
         $.ajax({
             url: '/getAllClass_admin',
             dataType: 'json',
-            data:{'state': 0},
+            data: {'state': 0},
             type: 'post',
             success: function (data) {
                 $.each(data.data, function (index, item) {
@@ -445,17 +471,17 @@
             }
         });
 
-        //获取学生信息
+        //获取待编辑学生的信息
         $.ajax({
-            url:"getStudentById_admin",
-            type:"get",
-            dataType:"json",
-            data:{
+            url: "getStudentById_admin",
+            type: "get",
+            dataType: "json",
+            data: {
                 sId: sId
             },
-            success:function(data){
+            success: function (data) {
                 var sPhoto = "../.." + data.sPhoto;//获取照片路径
-                if (data.sPhoto == "" || data.sPhoto == null){
+                if (data.sPhoto == "" || data.sPhoto == null) {
                     sPhoto = "../../static/img/admin.jpg"
                 }
 
@@ -464,52 +490,52 @@
                 $("#sPhone").val(data.sPhone);
                 $("input[name=sSex][value='1']").attr("checked", data.sSex == 1 ? true : false);
                 $("input[name=sSex][value='2']").attr("checked", data.sSex == 2 ? true : false);
-                $("#sNation option[value=" + data.sNation + "]").attr("selected","selected");
+                $("#sNation option[value=" + data.sNation + "]").attr("selected", "selected");
                 $("#sPhoto").val(data.sPhoto);
-                $("#demo1").attr("src",sPhoto);
+                $("#demo1").attr("src", sPhoto);
                 $("input[name=sMarry][value='1']").attr("checked", data.sMarry == 1 ? true : false);
                 $("input[name=sMarry][value='2']").attr("checked", data.sMarry == 2 ? true : false);
                 $("#sIdCard").val(data.sIdCard);
                 $("#sSchool").val(data.sSchool);
                 $("#sMajor").val(data.sMajor);
-                $("#sClass option[value=" + data.sClass + "]").attr("selected","selected");
+                $("#sClass option[value=" + data.sClass + "]").attr("selected", "selected");
                 $("#sHireDate").val(data.sHireDate);
                 $("#sRemarks").val(data.sRemarks);
-                $("#deptNo option[value=" + data.deptNo + "]").attr("selected","selected");
+                $("#deptNo option[value=" + data.deptNo + "]").attr("selected", "selected");
 
                 var jobId1 = data.jobId;
                 var projectId1 = data.projectId;
                 $.ajax({
                     url: '/getProject_admin',
                     dataType: 'json',
-                    data:{'state': 0, 'deptNo': data.deptNo},
+                    data: {'state': 0, 'deptNo': data.deptNo},
                     type: 'post',
                     success: function (data) {
                         projectId.options.length = 0;
                         $.each(data.data, function (index, item) {
                             $('#projectId').append(new Option(item.projectName, item.projectId));//下拉菜单里添加元素
                         });
-                        $("#projectId option[value=" + projectId1 + "]").attr("selected","selected");
+                        $("#projectId option[value=" + projectId1 + "]").attr("selected", "selected");
                         layui.form.render("select");
                     }
                 });
                 $.ajax({
                     url: '/getAllJobByDeptNo_admin',
                     dataType: 'json',
-                    data:{'state': 0, 'deptNo': data.deptNo},
+                    data: {'state': 0, 'deptNo': data.deptNo},
                     type: 'post',
                     success: function (data) {
                         jobId.options.length = 0;
                         $.each(data.data, function (index, item) {
                             $('#jobId').append(new Option(item.jobName, item.jobId));//下拉菜单里添加元素
                         });
-                        $("#jobId option[value=" + jobId1 + "]").attr("selected","selected");
+                        $("#jobId option[value=" + jobId1 + "]").attr("selected", "selected");
                         layui.form.render("select");
                     }
                 });
                 form.render();
             },
-            error:function (data) {
+            error: function (data) {
                 layer.msg("执行失败");
             }
         });
@@ -517,15 +543,15 @@
         //重置
         $("#reset").click(function () {
             $.ajax({
-                url:"delFile",
-                type:"post",
-                data:{
-                    path:$("#sPhoto").val()
+                url: "delFile",
+                type: "post",
+                data: {
+                    path: $("#sPhoto").val()
                 },
-                success:function (data) {
+                success: function (data) {
                     //alert(data);
                 },
-                error:function (data) {
+                error: function (data) {
                     alert("执行失败");
                 }
             });
@@ -543,36 +569,36 @@
 
         //提交
         $("#sub").click(function () {
-            if ($("#sName").val() == ""){
+            if ($("#sName").val() == "") {
                 $("#sName").addClass("red");
-                $("#sNameP").css("display","inline");
+                $("#sNameP").css("display", "inline");
             } else if ($("#sBirthday").val() == "") {
                 $("#sBirthday").addClass("red");
-                $("#sBirthdayP").css("display","inline");
+                $("#sBirthdayP").css("display", "inline");
             } else if ($("#sPhone").val() == "") {
                 $("#sPhone").addClass("red");
-                $("#sPhoneP1").css("display","inline");
-            } else if (!regPhone.test($("#sPhone").val())){
+                $("#sPhoneP1").css("display", "inline");
+            } else if (!regPhone.test($("#sPhone").val())) {
                 $("#sPhone").addClass("red");
-                $("#sPhoneP2").css("display","inline");
+                $("#sPhoneP2").css("display", "inline");
             } else if ($("#sIdCard").val() == "") {
                 $("#sIdCard").addClass("red");
-                $("#sIdCardP1").css("display","inline");
-            } else if (!regIdCard.test($("#sIdCard").val())){
+                $("#sIdCardP1").css("display", "inline");
+            } else if (!regIdCard.test($("#sIdCard").val())) {
                 $("#sIdCard").addClass("red");
-                $("#sIdCardP2").css("display","inline");
+                $("#sIdCardP2").css("display", "inline");
             } else if ($("#sSchool").val() == "") {
                 $("#sSchool").addClass("red");
-                $("#sSchoolP").css("display","inline");
+                $("#sSchoolP").css("display", "inline");
             } else if ($("#sMajor").val() == "") {
                 $("#sMajor").addClass("red");
-                $("#sMajorP").css("display","inline");
+                $("#sMajorP").css("display", "inline");
             } else {
                 var sPlace = $("#province").val() + $("#city").val() + $("#county").val();
                 $.ajax({
-                    url:'editStudentById_admin',
-                    type:'post',
-                    data:{
+                    url: 'editStudentById_admin',
+                    type: 'post',
+                    data: {
                         "sId": sId,
                         "sName": $("#sName").val(),
                         "sSex": $('input[name="sSex"]:checked').val(),
@@ -592,17 +618,17 @@
                         "sRemarks": $("#sRemarks").val(),
                         "projectId": $("#projectId").val()
                     },
-                    dataType:'text',
-                    success:function (data) {
-                        if (data == "true"){
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == "true") {
                             layer.msg("修改成功");
-                            setTimeout('close()',1000)
+                            setTimeout('close()', 1000)
                         } else {
                             layer.msg("修改失败");
-                            setTimeout('close()',1000)
+                            setTimeout('close()', 1000)
                         }
                     },
-                    error:function () {
+                    error: function () {
                         layer.msg("执行失败");
                     }
                 })
