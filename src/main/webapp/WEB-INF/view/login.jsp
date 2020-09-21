@@ -88,9 +88,9 @@
     <div class="grid-demo grid-demo-bg1 rotation1" style="background-color:#fff;">
         <div class="layui-carousel" id="test10">
             <div carousel-item="">
-                <div><img src="../../static/img/banner-qiao.jpg" height="450px" width="800px"></div>
-                <div><img src="../../static/img/bannertext.jpg" height="450px" width="800px"></div>
-                <div><img src="../../static/img/bannertxt.jpg" height="450px" width="800px"></div>
+                <div><img src="../../static/img/banner-qiao.jpg" height="550px" width="950px"></div>
+                <div><img src="../../static/img/bannertext.jpg" height="550px" width="950px"></div>
+                <div><img src="../../static/img/bannertxt.jpg" height="550px" width="950px"></div>
             </div>
         </div>
 
@@ -164,8 +164,8 @@
         //图片轮播
         carousel.render({
             elem: '#test10'
-            ,width: '800px'
-            ,height: '450px'
+            ,width: '950px'
+            ,height: '550px'
             ,interval: 3000
         });
     });

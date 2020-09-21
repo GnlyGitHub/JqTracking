@@ -21,7 +21,10 @@ public class DeptController {
     @Autowired
     IDeptService deptService;
 
-    //获取所有部门
+    /**
+     * 获取所有部门
+     * @return 部门集合
+     */
     @RequestMapping(value = "/getAllDept_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllDept_admin(){

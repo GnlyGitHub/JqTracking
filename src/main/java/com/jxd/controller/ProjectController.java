@@ -21,7 +21,10 @@ public class ProjectController {
     @Autowired
     IProjectService projectService;
 
-    //获取所有项目
+    /**
+     * 获取所有项目
+     * @return 所有项目列表
+     */
     @RequestMapping(value = "/getAllProject_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllProject_admin(){
@@ -35,7 +38,11 @@ public class ProjectController {
         return jsonObject.toString();
     }
 
-    //根据部门编号获取所有项目
+    /**
+     * 根据部门编号获取所有项目
+     * @param deptNo 部门编号
+     * @return 该部门的项目集合
+     */
     @RequestMapping(value = "/getProject_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getProject_admin(Integer deptNo){

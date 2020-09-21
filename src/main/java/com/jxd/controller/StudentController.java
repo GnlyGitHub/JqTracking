@@ -79,6 +79,14 @@ public class StudentController {
         return null;
     }
 
+    /**
+     * 获取学生列表并将其分页
+     * @param limit 每页数量
+     * @param page 当前页数
+     * @param sName 过滤条件
+     * @param sClass 过滤条件
+     * @return 当前页的学生列表
+     */
     @RequestMapping(value = "/getAllStudent_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllStudent_admin(Integer limit, Integer page, String sName, Integer sClass) {
@@ -93,7 +101,12 @@ public class StudentController {
         return jsonObject.toString();
     }
 
-    //图片上传
+    /**
+     * 图片上传
+     * @param file 要上传的图片
+     * @param request HttpServletRequest对象
+     * @return 返回上传结果
+     */
     @ResponseBody
     @RequestMapping("/upload")
     public Map upload(MultipartFile file, HttpServletRequest request) {
@@ -147,11 +160,16 @@ public class StudentController {
         return map;
     }
 
-    //删除已上传的图片
+    /**
+     * 删除已上传的图片
+     * @param path 要删除的图片路径
+     * @param request HttpServletRequest对象
+     * @return 是否删除成功
+     */
     @RequestMapping(value = "/delFile", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String delFile(String path,HttpServletRequest request) {
-        String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\" + path;
+        String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\" + path;//获取存储路径
         File file = new File(filepath);
         if (file.exists() && file.isFile()){//如果存在
             if (file.delete()){
@@ -164,7 +182,11 @@ public class StudentController {
         }
     }
 
-    //根据部门编号获取所有职务
+    /**
+     * 根据部门编号获取所有职务
+     * @param deptNo 部门编号
+     * @return 该部门的职务集合
+     */
     @RequestMapping(value = "/getAllJobByDeptNo_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllJobByDeptNo_admin(Integer deptNo){
@@ -178,7 +200,11 @@ public class StudentController {
         return jsonObject.toString();
     }
 
-    //添加学生
+    /**
+     * 添加学生
+     * @param student 要添加的学生
+     * @return 是否添加成功
+     */
     @RequestMapping("/addStudent_admin")
     @ResponseBody
     public String addStudent_admin(Student student){
@@ -186,7 +212,11 @@ public class StudentController {
         return String.valueOf(isAdd);
     }
 
-    //编辑学生
+    /**
+     * 编辑学生
+     * @param student 要编辑的学生
+     * @return 是否编辑成功
+     */
     @RequestMapping("/editStudentById_admin")
     @ResponseBody
     public String editStudentById_admin(Student student){
@@ -194,7 +224,11 @@ public class StudentController {
         return String.valueOf(isEdit);
     }
 
-    //获取学生信息
+    /**
+     * 获取学生信息
+     * @param sId 要获取的学生的编号
+     * @return 该学生的信息
+     */
     @RequestMapping("/getStudentById_admin")
     @ResponseBody
     public Student getStudentById_admin(Integer sId){
@@ -202,7 +236,11 @@ public class StudentController {
         return student;
     }
 
-    //删除学生
+    /**
+     * 删除学生
+     * @param sId 要删除的学生的编号
+     * @return 是否删除成功
+     */
     @RequestMapping("/delStudentById_admin")
     @ResponseBody
     public String delStudentById_admin(Integer sId){
@@ -215,6 +253,7 @@ public class StudentController {
             return "1";//该学生已入职
         }
     }
+
     @RequestMapping("GetAllStudent_Manage/{projectId}")
     @ResponseBody
      public JSONObject GetAllStudent_Manage(Integer classId, String empName, String empId, @PathVariable("projectId") Integer projectId, Integer limit, Integer page){
@@ -228,5 +267,4 @@ public class StudentController {
             jsonObject.put("data",jsonArray);
             return jsonObject;
      }
-
 }

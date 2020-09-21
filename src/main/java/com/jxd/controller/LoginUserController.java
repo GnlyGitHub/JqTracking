@@ -128,10 +128,17 @@ public class LoginUserController {
         return "adminRePwdAdmin";
     }
 
-    //管理员修改自己的密码
+    /**
+     * 管理员修改自己的密码
+     * @param oldPwd 旧密码
+     * @param newPwd 新密码
+     * @param request HttpServletRequest对象
+     * @return 是否修改成功
+     */
     @RequestMapping("/rePwdAdmin_admin")
     @ResponseBody
     public String rePwdAdmin_admin(String oldPwd, String newPwd, HttpServletRequest request){
+        //从session中获取旧密码
         HttpSession session = request.getSession();
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         Integer userId = loginUser.getUserId();
