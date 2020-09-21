@@ -120,7 +120,7 @@
             elem: '#demo'
             , toolbar: '#toolbarDemo' //添加工具栏
             , height: 500
-            , width: 1300
+            , width: 1260
             , url: '/getAllStudent_Teacher' //数据接口
             , page: true
             , limit: 5
