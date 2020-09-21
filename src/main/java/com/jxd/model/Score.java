@@ -12,7 +12,7 @@ public class Score {
     private Integer subjectId;//课程id
     private String score;//成绩
     private String appraiser;//评价人
-    private String subject;
+    private String subject;//课程
 
     public Score() {
     }

@@ -54,7 +54,13 @@ public class TeacherController {
         return "adminRePwdTeacher";
     }
 
-    //获取所有教师并将其分页
+    /**
+     * 获取所有教师并将其分页
+     * @param limit 每页数量
+     * @param page 当前页数
+     * @param tName 过滤条件
+     * @return 当前页的课程列表
+     */
     @RequestMapping(value = "/getAllTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllTeacher_admin(Integer limit, Integer page, String tName){
@@ -69,7 +75,11 @@ public class TeacherController {
         return jsonObject.toString();
     }
 
-    //添加老师
+    /**
+     * 添加老师
+     * @param teacher 要添加的老师
+     * @return 是否添加成功
+     */
     @RequestMapping(value = "/addTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String addTeacher_admin(Teacher teacher){
@@ -80,7 +90,11 @@ public class TeacherController {
         return String.valueOf(isAdd && isAddLogin);
     }
 
-    //删除老师
+    /**
+     * 删除老师
+     * @param tId 要删除的老师编号
+     * @return 是否删除成功
+     */
     @RequestMapping("/delTeacherById_admin")
     @ResponseBody
     public String delTeacherById_admin(Integer tId){
@@ -90,7 +104,7 @@ public class TeacherController {
         long time1 = 0;
         long time2 = 0;
         boolean isEnd = true;
-        for (Class aClass : list) {
+        for (Class aClass : list) {//遍历该老师教过的班期
             String endDate = aClass.getEndDate();
             try {
                 time1 = df.parse(curTime).getTime();
@@ -112,7 +126,11 @@ public class TeacherController {
         }
     }
 
-    //获取老师信息
+    /**
+     * 获取老师信息
+     * @param tId 要获取信息的老师的编号
+     * @return 老师信息
+     */
     @RequestMapping("/getTeacherById_admin")
     @ResponseBody
     public Teacher getTeacherById_admin(Integer tId){
@@ -120,7 +138,11 @@ public class TeacherController {
         return teacher;
     }
 
-    //编辑老师
+    /**
+     * 编辑老师
+     * @param teacher 要编辑的老师
+     * @return 是否编辑成功
+     */
     @RequestMapping(value = "/editTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String editTeacher_admin(Teacher teacher){
@@ -128,7 +150,11 @@ public class TeacherController {
         return String.valueOf(isEdit);
     }
 
-    //给老师重置密码
+    /**
+     * 给老师重置密码
+     * @param loginUser 要密码的登录账户
+     * @return 是否重置成功
+     */
     @RequestMapping(value = "/rePwdTeacher_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String rePwdTeacher_admin(LoginUser loginUser){
@@ -136,7 +162,10 @@ public class TeacherController {
         return String.valueOf(isRe);
     }
 
-    //获取所有老师以供班期选择
+    /**
+     * 获取所有老师以供班期选择
+     * @return 所有老师
+     */
     @RequestMapping(value = "/getAllTeacherForChoose_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllTeacherForChoose_admin(){
@@ -152,7 +181,7 @@ public class TeacherController {
             if (classList.size() < 1){
                 teacherList2.add(teacher);
             } else {
-                for (Class aClass : classList) {
+                for (Class aClass : classList) {//遍历该老师教过的班期
                     String endDate = aClass.getEndDate();
                     try {
                         time1 = df.parse(curTime).getTime();

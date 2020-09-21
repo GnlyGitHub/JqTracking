@@ -6,9 +6,9 @@ package com.jxd.model;
  * @date 2020/9/12 10:15
  */
 public class Admin {
-    private Integer aId;
-    private String aName;
-    private Integer role;
+    private Integer aId;//编号
+    private String aName;//姓名
+    private Integer role;//角色
 
     public Admin() {
     }

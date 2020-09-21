@@ -49,7 +49,13 @@ public class ManagerController {
         return "adminRePwdManager";
     }
 
-    //获取项目经理列表并进行分页
+    /**
+     * 获取项目经理列表并进行分页
+     * @param limit 每页数量
+     * @param page 当前页数
+     * @param mName 过滤条件
+     * @return 当前页的项目经理列表
+     */
     @RequestMapping(value = "/getAllManager_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllManager_admin(Integer limit, Integer page, String mName){
@@ -64,7 +70,11 @@ public class ManagerController {
         return jsonObject.toString();
     }
 
-    //添加项目经理
+    /**
+     * 添加项目经理
+     * @param manager 要添加的项目经理
+     * @return 是否添加成功
+     */
     @RequestMapping(value = "/addManager_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String addManager_admin(Manager manager){
@@ -75,7 +85,11 @@ public class ManagerController {
         return String.valueOf(isAdd && isAddLogin);
     }
 
-    //删除项目经理
+    /**
+     * 删除项目经理
+     * @param mId 要删除的项目经理工号
+     * @return 是否删除成功
+     */
     @RequestMapping("/delManagerById_admin")
     @ResponseBody
     public String delManagerById_admin(Integer mId){
@@ -83,13 +97,19 @@ public class ManagerController {
         if (list.size() > 0){
             return "1";//该项目经理已参与评分项分配，不能删除
         } else {//该项目经理未参与评分项分配，可以删除
+
+            //执行删除方法并返回结果
             boolean isDel = managerService.delManager_admin(mId);
             boolean isDelLogin = loginUserService.delLoginUser_admin(mId);
             return String.valueOf(isDel && isDelLogin);
         }
     }
 
-    //获取项目经理信息
+    /**
+     * 获取项目经理信息
+     * @param mId 要获取的项目经理的工号
+     * @return 项目经理信息
+     */
     @RequestMapping("/getManagerById_admin")
     @ResponseBody
     public Manager getManagerById_admin(Integer mId){
@@ -97,7 +117,11 @@ public class ManagerController {
         return manager;
     }
 
-    //编辑项目经理信息
+    /**
+     * 编辑项目经理信息
+     * @param manager 要编辑的项目经理
+     * @return 是否编辑成功
+     */
     @RequestMapping("/editManager_admin")
     @ResponseBody
     public String editManager_admin(Manager manager){
@@ -105,7 +129,11 @@ public class ManagerController {
         return String.valueOf(isEdit);
     }
 
-    //给经理重置密码
+    /**
+     * 给经理重置密码
+     * @param loginUser 要重置密码的登录对象
+     * @return 是否登录成功
+     */
     @RequestMapping(value = "/rePwdManager_admin")
     @ResponseBody
     public String rePwdManager_admin(LoginUser loginUser){

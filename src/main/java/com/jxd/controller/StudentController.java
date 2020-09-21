@@ -62,6 +62,7 @@ public class StudentController {
     @ResponseBody
     public JSONObject getAllStudent_Teacher(Integer limit, Integer page, Integer sClass, String sName) {
         List<Student> list = studentService.getAllStudent_Teacher(sClass, sName);
+        //获取分页数据
 
         List<Student> list1 = studentService.getAllStudentByPage_Teacher(limit, page, sClass, sName);
 
@@ -78,11 +79,26 @@ public class StudentController {
         return jsonObject;
     }
 
+    /**
+     * @param
+     * @return 获得所有的员工数据
+     * @description: getAllStudent_Manage
+     * @author zhou yang
+     * @date 2020/9/21 16:21
+     */
     @RequestMapping("getAllStudent_Manage")
     public List<Student> getAllStudent_Manage() {
         return null;
     }
 
+    /**
+     * 获取学生列表并将其分页
+     * @param limit 每页数量
+     * @param page 当前页数
+     * @param sName 过滤条件
+     * @param sClass 过滤条件
+     * @return 当前页的学生列表
+     */
     @RequestMapping(value = "/getAllStudent_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllStudent_admin(Integer limit, Integer page, String sName, Integer sClass) {
@@ -97,7 +113,12 @@ public class StudentController {
         return jsonObject.toString();
     }
 
-    //图片上传
+    /**
+     * 图片上传
+     * @param file 要上传的图片
+     * @param request HttpServletRequest对象
+     * @return 返回上传结果
+     */
     @ResponseBody
     @RequestMapping("/upload")
     public Map upload(MultipartFile file, HttpServletRequest request) {
@@ -112,10 +133,10 @@ public class StudentController {
                 String originalName = file.getOriginalFilename();
                 prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
                 Date date = new Date();
-                String uuid = randomUUID() + "";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String uuid = randomUUID() + "";//生成随机字符串
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//获取系统时间作为存储路径
                 dateStr = simpleDateFormat.format(date);
-                String filepath = "I:\\IdeaProjecs\\finalProject\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
+                String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
                 File files = new File(filepath);
 
                 //打印查看上传路径
@@ -133,7 +154,8 @@ public class StudentController {
                 return map;
             }
         } catch (Exception e) {
-        } finally {
+            e.printStackTrace();
+        } finally {//关闭资源
             try {
                 if (out != null) {
                     out.close();
@@ -150,13 +172,18 @@ public class StudentController {
         return map;
     }
 
-    //删除已上传的图片
+    /**
+     * 删除已上传的图片
+     * @param path 要删除的图片路径
+     * @param request HttpServletRequest对象
+     * @return 是否删除成功
+     */
     @RequestMapping(value = "/delFile", produces = "text/html;charset=utf-8")
     @ResponseBody
-    public String delFile(String path,HttpServletRequest request) {
+    public String delFile(String path, HttpServletRequest request) {
         String filepath = "I:\\IdeaProjecs\\finalProject\\JqTracking\\src\\main\\webapp\\" + path;
         File file = new File(filepath);
-        if (file.exists() && file.isFile()){
+        if (file.exists() && file.isFile()){//如果存在
             if (file.delete()){
                 return "删除成功";
             } else {
@@ -167,10 +194,14 @@ public class StudentController {
         }
     }
 
-    //根据部门编号获取所有职务
+    /**
+     * 根据部门编号获取所有职务
+     * @param deptNo 部门编号
+     * @return 该部门的职务集合
+     */
     @RequestMapping(value = "/getAllJobByDeptNo_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
-    public String getAllJobByDeptNo_admin(Integer deptNo){
+    public String getAllJobByDeptNo_admin(Integer deptNo) {
         List<Job> list = jobService.getAllJobByDeptNo_admin(deptNo);
         JSONArray jsonArray = JSONArray.fromObject(list);
         JSONObject jsonObject = new JSONObject();
@@ -181,34 +212,50 @@ public class StudentController {
         return jsonObject.toString();
     }
 
-    //添加学生
+    /**
+     * 添加学生
+     * @param student 要添加的学生
+     * @return 是否添加成功
+     */
     @RequestMapping("/addStudent_admin")
     @ResponseBody
-    public String addStudent_admin(Student student){
+    public String addStudent_admin(Student student) {
         boolean isAdd = studentService.addStudent_admin(student);
         return String.valueOf(isAdd);
     }
 
-    //编辑学生
+    /**
+     * 编辑学生
+     * @param student 要编辑的学生
+     * @return 是否编辑成功
+     */
     @RequestMapping("/editStudentById_admin")
     @ResponseBody
-    public String editStudentById_admin(Student student){
+    public String editStudentById_admin(Student student) {
         boolean isEdit = studentService.editStudentById_admin(student);
         return String.valueOf(isEdit);
     }
 
-    //获取学生信息
+    /**
+     * 获取学生信息
+     * @param sId 要获取的学生的编号
+     * @return 该学生的信息
+     */
     @RequestMapping("/getStudentById_admin")
     @ResponseBody
-    public Student getStudentById_admin(Integer sId){
+    public Student getStudentById_admin(Integer sId) {
         Student student = studentService.getStudentById_admin(sId);
         return student;
     }
 
-    //删除学生
+    /**
+     * 删除学生
+     * @param sId 要删除的学生的编号
+     * @return 是否删除成功
+     */
     @RequestMapping("/delStudentById_admin")
     @ResponseBody
-    public String delStudentById_admin(Integer sId){
+    public String delStudentById_admin(Integer sId) {
         Student student = studentService.getStudentById_admin(sId);
         String sHireDate = student.getsHireDate();//获取学生的入职日期
         if (sHireDate == null) {//未入职
@@ -218,18 +265,31 @@ public class StudentController {
             return "1";//该学生已入职
         }
     }
+
+    /**
+     * @param classId 班级id
+     * @param empName 员工姓名
+     * @param empId 员工id
+     * @param projectId 项目id
+     * @param limit 每页数据限制
+     * @param page 第几页
+     * @return 返回一个员工的jsonobject对象
+     * @description: GetAllStudent_Manage 用来获得自己项目组下的员工集合
+     * @author zhou yang
+     * @date 2020/9/21 16:22
+     */
     @RequestMapping("GetAllStudent_Manage/{projectId}")
     @ResponseBody
-     public JSONObject GetAllStudent_Manage(Integer classId, String empName, String empId, @PathVariable("projectId") Integer projectId, Integer limit, Integer page){
-            List<Student> list=studentService.GetAllSizeStudent_Manage(classId,empName,empId,projectId);
-            List<Student> list1=studentService.GetAllPageStudent_Manage(classId,empName,empId,projectId,limit,page);
-            JSONArray jsonArray=JSONArray.fromObject(list1);
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.put("code",0);
-            jsonObject.put("msg","");
-            jsonObject.put("count",list.size());
-            jsonObject.put("data",jsonArray);
-            return jsonObject;
-     }
+    public JSONObject GetAllStudent_Manage(Integer classId, String empName, String empId, @PathVariable("projectId") Integer projectId, Integer limit, Integer page) {
+        List<Student> list = studentService.GetAllSizeStudent_Manage(classId, empName, empId, projectId);
+        List<Student> list1 = studentService.GetAllPageStudent_Manage(classId, empName, empId, projectId, limit, page);
+        JSONArray jsonArray = JSONArray.fromObject(list1);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("msg", "");
+        jsonObject.put("count", list.size());
+        jsonObject.put("data", jsonArray);
+        return jsonObject;
+    }
 
 }
