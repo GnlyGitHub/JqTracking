@@ -40,7 +40,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;"><iframe frameborder="1" class="layadmin-iframe" src="/empAppraise_Manage"
+        <div style="padding: 15px;"><iframe frameborder="0" class="layadmin-iframe" src="/empAppraise_Manage"
                                             style="width: 100%; height:90%;" id="mainframe"
                                             name="mainframe" scrolling="false"></iframe></div>
     </div>

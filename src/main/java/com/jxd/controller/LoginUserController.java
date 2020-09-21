@@ -38,12 +38,24 @@ public class LoginUserController {
 
     @Autowired
     IClassService classService;
-
+/**
+ * @param
+ * @return 返回到登录页面
+ * @description: login
+ * @author zhou yang
+ * @date 2020/9/21 16:19
+ */
     @RequestMapping("login")
     public String login(){
         return "login";
     }
-
+/**
+ * @param
+ * @return 返回到编辑密码页面
+ * @description: editPassword_Manage
+ * @author zhou yang
+ * @date 2020/9/21 16:19
+ */
     @RequestMapping("editPassword_Manage")
     public String editPassword_Manage(){
         return "empEditPassword";
@@ -97,6 +109,13 @@ public class LoginUserController {
             return "用户名或密码错误";
         }
     }
+    /**
+     * @param loginUser 登录者对象
+     * @return 是否登录成功
+     * @description: editPasswordData_Manage 判断经理是否编辑成功
+     * @author zhou yang
+     * @date 2020/9/21 16:20
+     */
     @ResponseBody
     @RequestMapping("editPasswordData_Manage")
     public boolean editPasswordData_Manage(LoginUser loginUser){
