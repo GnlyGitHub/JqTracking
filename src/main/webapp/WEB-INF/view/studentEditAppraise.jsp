@@ -16,6 +16,7 @@
 <body>
 <div style="display: flex;justify-content: center; margin-top: 50px">
     <div class="layui-form" action="">
+        <%--获取表单内容--%>
         <c:forEach var="i" items="${list}">
             <c:choose>
                 <c:when test="${i.subject eq '整体评价'}">
@@ -30,7 +31,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">${i.subject}</label>
                         <div class="layui-input-block">
-                            <input type="text" name="${i.subjectId}" required lay-verify="required" value="${i.score}" autocomplete="off" class="layui-input">
+                            <input type="text" name="${i.subjectId}" required lay-verify="required|number|score" value="${i.score}" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </c:otherwise>
@@ -54,11 +55,27 @@
         var form = layui.form;
         var $ = layui.jquery;
 
+        form.verify({
+            score:function (value, item) {
+                if(value < 0 || value > 100){
+                    return '成绩在0-100之间';
+                }
+            }
+        });
+
         //监听提交
         $("#formDemo").click(function(){
             //layer.msg(JSON.stringify(data.field));
             var list = $("input");
             var array = [];
+            var count = 0;
+
+            for (var i=0; i<list.length -1 && list[i]; i++){
+                var v = parseInt(list[i].value);
+                if(v < 0 || v > 100){
+                    count++;
+                }
+            }
 
             for(var i=0; i<list.length && list[i]; i++){
                 //判断不是空的 input,进行表单提交
@@ -70,7 +87,7 @@
                     array.push(s); //把对象放入对象数组中
                 }
             }
-            if(list.length == array.length){
+            if(list.length == array.length && count==0){
                 var postData = JSON.stringify(array);
 
                 $.ajax({
@@ -95,11 +112,7 @@
                         setTimeout('closeAdd()',1000);
                     }
                 });
-            }else {
-                layer.msg("必填项不能为空")
             }
-
-
         });
     });
 

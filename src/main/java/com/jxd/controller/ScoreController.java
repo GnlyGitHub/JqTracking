@@ -31,6 +31,7 @@ public class ScoreController {
     @Autowired
     IStudentService studentService;
 
+    //老师添加评价
     @RequestMapping("/addAppraise_Teacher")
     @ResponseBody
     public boolean addAppraise_Teacher(String postData, Integer sId, String appraiser) {
@@ -48,6 +49,7 @@ public class ScoreController {
             list.add(score);
         }
         boolean isAdd =  scoreService.addScore_Teacher(list);
+        //更新评价状态
         boolean isUpdate = studentService.updateScoreState_Teacher(sId);
         return isAdd && isUpdate;
     }

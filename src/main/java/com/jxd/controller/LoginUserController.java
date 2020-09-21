@@ -8,6 +8,7 @@ import com.jxd.service.IClassService;
 import com.jxd.service.ILoginUserService;
 import com.jxd.service.IManagerService;
 import com.jxd.service.ITeacherService;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -72,10 +75,26 @@ public class LoginUserController {
     //登录
     @RequestMapping(value = "/checkLogin",produces = "text/html;charset=utf-8")
     @ResponseBody
-    public String checkLogin(LoginUser loginUser, Model model,HttpSession session) {
+    public String checkLogin(LoginUser loginUser, String rememberPwd, Model model, HttpSession session, HttpServletResponse response) {
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
             session.setAttribute("loginUser",loginUser);
+            if ("y".equals(rememberPwd)){
+                //创建存放用户名的cookie
+                String userId = String.valueOf(loginUser.getUserId());
+                Cookie nameCookie = new Cookie("nameCookie", userId);
+                //设置cookie的生命周期,单位是秒
+                nameCookie.setMaxAge(60*3);
+                //将cookie添加至响应流
+                response.addCookie(nameCookie);
+
+                //创建存放密码的cookie
+                Cookie pwdCookie = new Cookie("pwdCookie",loginUser.getPassword());
+                //设置cookie的生命周期,单位是秒
+                pwdCookie.setMaxAge(60*3);
+                //将cookie添加至响应流
+                response.addCookie(pwdCookie);
+            }
             if (list.get(0).getRole() == 1) {
                 //转发至管理员页面
                 return "adminTeacherList";
