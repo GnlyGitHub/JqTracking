@@ -266,7 +266,7 @@
                 clearData()
                 layer.msg("无转正数据", {icon: 5, time: 1500})
                 $('#addGrade').addClass("layui-btn-disabled").attr("disabled", true);
-            } else if (time >= 90 && time < 366) {
+            } else if (time >= 30 && time < 90) {
                 if (number != "") {
                     if (number == 1 || number == 2 || number == 3) {
                         clearData()
@@ -277,10 +277,9 @@
                 } else {
                     layer.msg("请选择下拉框", {time: 1500})
                 }
-
-            } else if (time >= 366 && time < 730) {
+            } else if (time >= 90 && time < 366) {
                 if (number != "") {
-                    if (number == 2 || number == 3) {
+                    if (number == 2 || number == 366) {
                         clearData()
                         layer.msg("工作未满两年", {icon: 5, time: 1500})
                     } else if (number == 0) {
@@ -293,7 +292,7 @@
                     layer.msg("请选择下拉框", {time: 1500})
                 }
 
-            } else if (time >= 730 && time < 1095) {
+            } else if (time >= 366 && time < 730) {
                 if (number != "") {
                     if (number == 3) {
                         clearData()
@@ -307,7 +306,7 @@
                 } else {
                     layer.msg("请选择下拉框", {time: 1500})
                 }
-            } else if (time >= 1095 && time < 1460) {
+            } else if (time >= 730 && time < 1095) {
                 if (number != "") {
                     if (number == 0 || number == 1 || number == 2) {
                         clearData()

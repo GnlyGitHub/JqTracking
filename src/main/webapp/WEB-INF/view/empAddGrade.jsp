@@ -307,7 +307,7 @@
                 })
             } else {
                 if (time >= 0 && time < 30) {
-                    layer.msg("不能评价", {icon: 5, time: 1500})
+                    layer.msg("未满一个月，不能评", {icon: 5, time: 1500})
                     $('#add').addClass("layui-btn-disabled").attr("disabled", true);
                     $('#add').addClass("layui-btn-disabled").attr("disabled", true);
                 } else if (time >= 30 && time < 90) {
