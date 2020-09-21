@@ -53,7 +53,12 @@ public class ClassController {
         return "adminEditClass";
     }
 
-    //老师获取班级列表并转发到老师评价主页面
+
+    /**
+     * @Description 老师获得他的班级列表转发至学生评价主页
+     * @params [model, session]
+     * @return java.lang.String
+     **/
     @RequestMapping("/studentAppraise")
     public String studentAppraise_Teacher(Model model,HttpSession session){
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
