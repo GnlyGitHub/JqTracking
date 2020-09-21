@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <script src="../../static/layui/layui.js"></script>
     <style>
-        .red{
+        .red {
             border-color: red;
         }
     </style>
@@ -30,7 +30,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-inline">
-                <input id="mName" type="text" name="mName" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <input id="mName" type="text" name="mName" required lay-verify="required" placeholder="请输入姓名"
+                       autocomplete="off" class="layui-input">
             </div>
             <p id="mNameP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入姓名</p>
         </div>
@@ -46,15 +47,18 @@
         <div class="layui-form-item">
             <label class="layui-form-label">出生年月</label>
             <div class="layui-input-inline">
-                <input id="mBirthday" type="date" name="mBirthday" required  lay-verify="date" placeholder="请输入出生年月" autocomplete="off" class="layui-input">
+                <input id="mBirthday" type="date" name="mBirthday" required lay-verify="date" placeholder="请输入出生年月"
+                       autocomplete="off" class="layui-input">
             </div>
-            <p id="mBirthdayP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入出生年月</p>
+            <p id="mBirthdayP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
+                请输入出生年月</p>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">电话</label>
             <div class="layui-input-inline">
-                <input id="mPhone" type="text" name="mPhone" required  lay-verify="phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+                <input id="mPhone" type="text" name="mPhone" required lay-verify="phone" placeholder="请输入电话"
+                       autocomplete="off" class="layui-input">
             </div>
             <p id="mPhoneP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入电话</p>
             <p id="mPhoneP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确电话</p>
@@ -86,7 +90,7 @@
 </div>
 
 <script>
-    layui.use(['form','layer','upload'], function(){
+    layui.use(['form', 'layer', 'upload'], function () {
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.$;
@@ -94,44 +98,46 @@
         var mId = ${param.mId};
         var reg = /^(([0-9]{7,8})|(1[0-9]{10}))$/;
 
+        //表单验证
         $("#mName").blur(function () {
-            if ($("#mName").val() == ""){
+            if ($("#mName").val() == "") {
                 $("#mName").addClass("red");
-                $("#mNameP").css("display","inline");
+                $("#mNameP").css("display", "inline");
             }
         }).focus(function () {
             $("#mName").removeClass("red");
-            $("#mNameP").css("display","none");
+            $("#mNameP").css("display", "none");
         });
         $("#mBirthday").blur(function () {
             if ($("#mBirthday").val() == "") {
                 $("#mBirthday").addClass("red");
-                $("#mBirthdayP").css("display","inline");
+                $("#mBirthdayP").css("display", "inline");
             }
         }).focus(function () {
             $("#mBirthday").removeClass("red");
-            $("#mBirthdayP").css("display","none");
+            $("#mBirthdayP").css("display", "none");
         });
         $("#mPhone").blur(function () {
             if ($("#mPhone").val() == "") {
                 $("#mPhone").addClass("red");
-                $("#mPhoneP1").css("display","inline");
-                $("#mPhoneP2").css("display","none");
-            } else if (!reg.test($("#mPhone").val())){
+                $("#mPhoneP1").css("display", "inline");
+                $("#mPhoneP2").css("display", "none");
+            } else if (!reg.test($("#mPhone").val())) {
                 $("#mPhone").addClass("red");
-                $("#mPhoneP1").css("display","none");
-                $("#mPhoneP2").css("display","inline");
+                $("#mPhoneP1").css("display", "none");
+                $("#mPhoneP2").css("display", "inline");
             }
         }).focus(function () {
             $("#mPhone").removeClass("red");
-            $("#mPhoneP1").css("display","none");
-            $("#mPhoneP2").css("display","none");
+            $("#mPhoneP1").css("display", "none");
+            $("#mPhoneP2").css("display", "none");
         });
 
+        //向部门下拉框添加数据
         $.ajax({
             url: '/getAllDept_admin',
             dataType: 'json',
-            data:{'state': 0},
+            data: {'state': 0},
             type: 'post',
             success: function (data) {
                 $.each(data.data, function (index, item) {
@@ -141,11 +147,12 @@
             }
         });
 
-        form.on('select(test)', function(data){
+        //向项目下拉框添加数据
+        form.on('select(test)', function (data) {
             $.ajax({
                 url: '/getProject_admin',
                 dataType: 'json',
-                data:{'state': 0, 'deptNo': data.value},
+                data: {'state': 0, 'deptNo': data.value},
                 type: 'post',
                 success: function (data) {
                     projectId.options.length = 0;
@@ -157,68 +164,71 @@
             });
         });
 
+        //获取待编辑的项目经理的信息
         $.ajax({
-            url:"getManagerById_admin",
-            type:"get",
-            dataType:"json",
-            data:{
+            url: "getManagerById_admin",
+            type: "get",
+            dataType: "json",
+            data: {
                 mId: mId
             },
-            success:function(data){
+            success: function (data) {
                 $("#mId").html(mId);
                 $("#mName").val(data.mName);
                 $("#mBirthday").val(data.mBirthday);
                 $("#mPhone").val(data.mPhone);
                 $("input[name=mSex][value='1']").attr("checked", data.mSex == 1 ? true : false);
                 $("input[name=mSex][value='2']").attr("checked", data.mSex == 2 ? true : false);
-                $("#deptNo option[value=" + data.deptNo + "]").attr("selected","selected");
+                $("#deptNo option[value=" + data.deptNo + "]").attr("selected", "selected");
                 var projectId1 = data.projectId;
                 $.ajax({
                     url: '/getProject_admin',
                     dataType: 'json',
-                    data:{'state': 0, 'deptNo': data.deptNo},
+                    data: {'state': 0, 'deptNo': data.deptNo},
                     type: 'post',
                     success: function (data) {
                         projectId.options.length = 0;
                         $.each(data.data, function (index, item) {
                             $('#projectId').append(new Option(item.projectName, item.projectId));//下拉菜单里添加元素
                         });
-                        $("#projectId option[value=" + projectId1 + "]").attr("selected","selected");
+                        $("#projectId option[value=" + projectId1 + "]").attr("selected", "selected");
                         layui.form.render("select");
                     }
                 });
                 //$("#projectId option[value=" + 4 + "]").attr("selected","selected");
                 form.render();
             },
-            error:function (data) {
+            error: function (data) {
                 layer.msg("执行失败");
             }
         });
 
+        //重置按钮
         $("#reset").click(function () {
             $("#mName").val("");
             $("#mBirthday").val("");
             $("#mPhone").val("");
         });
 
+        //提交
         $("#sub").click(function () {
-            if ($("#mName").val() == ""){
+            if ($("#mName").val() == "") {
                 $("#mName").addClass("red");
-                $("#mNameP").css("display","inline");
+                $("#mNameP").css("display", "inline");
             } else if ($("#mBirthday").val() == "") {
                 $("#mBirthday").addClass("red");
-                $("#mBirthdayP").css("display","inline");
+                $("#mBirthdayP").css("display", "inline");
             } else if ($("#mPhone").val() == "") {
                 $("#mPhone").addClass("red");
-                $("#mPhoneP1").css("display","inline");
-            } else if (!reg.test($("#mPhone").val())){
+                $("#mPhoneP1").css("display", "inline");
+            } else if (!reg.test($("#mPhone").val())) {
                 $("#mPhone").addClass("red");
-                $("#mPhoneP2").css("display","inline");
+                $("#mPhoneP2").css("display", "inline");
             } else {
                 $.ajax({
-                    url:'editManager_admin',
-                    type:'post',
-                    data:{
+                    url: 'editManager_admin',
+                    type: 'post',
+                    data: {
                         "mId": mId,
                         "mName": $("#mName").val(),
                         "mSex": $('input[name="mSex"]:checked').val(),
@@ -227,23 +237,24 @@
                         "deptNo": $("#deptNo").val(),
                         "projectId": $("#projectId").val(),
                     },
-                    dataType:'text',
-                    success:function (data) {
-                        if (data == "true"){
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == "true") {
                             layer.msg("修改成功");
-                            setTimeout('close()',1000)
+                            setTimeout('close()', 1000)
                         } else {
                             layer.msg("修改失败");
-                            setTimeout('close()',1000)
+                            setTimeout('close()', 1000)
                         }
                     },
-                    error:function () {
+                    error: function () {
                         layer.msg("执行失败");
                     }
                 })
             }
         });
     });
+
     //关闭当前弹框
     var close = function () {
         var index = parent.layer.getFrameIndex(window.name);

@@ -102,7 +102,7 @@
                 if (oldPwd == nowPws) {
                     if (flagOld && flagPwd && flagRepwd) {
                         if (rePwd == pwd) {
-                            $("#oldDiv").html("<p><img src='../../static/img/warning.PNG' >输入与原密码一致</p>");
+                            $("#oldDiv").html("<p><img src='../../static/img/right.PNG' >两次输入密码一致</p>");
                             $("#oldDiv p").addClass("green");
                             $.ajax({
                                 url: 'editPasswordData_Manage',

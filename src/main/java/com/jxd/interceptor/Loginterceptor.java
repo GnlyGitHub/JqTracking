@@ -43,5 +43,4 @@ public class Loginterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception e) throws
             Exception {
     }
-
 }

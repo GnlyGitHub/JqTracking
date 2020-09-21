@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author Liang Yue
- * @description TODO
+ * @description 评价分项分配
  * @date 2020/9/12 16:01
  */
 public class DisAppraise {

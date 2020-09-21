@@ -45,8 +45,13 @@
 
 </script>
 <script type="text/html" id="barDemo">
+
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="grade" id="gra">评分</a>
+        {{# if (d.appraiseState ==4){}}
+    <a class="layui-btn layui-btn-xs gra layui-btn-disabled" lay-event="1"  >评分</a>
+        {{#  } else { }}
+    <a class="layui-btn layui-btn-xs gra" lay-event="grade"  >评分</a>
+        {{#}}}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">修改</a>
 </script>
 <script>
@@ -80,18 +85,18 @@
                 , {field: 'sHireDate', title: '入职日期', width: 150}
                 , {fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo'}
             ]]
-            , done: function (data) {
+            /*, done: function (data) {
                 for (var i = 0; i < data.data.length; i++) {
                     var appraiseState = data.data[i].appraiseState
                     if (appraiseState == 4) {
-                        $('#gra').addClass("layui-btn-disabled").attr("disabled", true);
+                        $('#demo[name=gra]').addClass("layui-btn-disabled").attr("disabled", true);
                         $("#gra").attr("lay-event", "1")
                     } else {
                         $('#gra').removeClass("layui-btn-disabled").attr("disabled", false);
                         $("#gra").attr("lay-event", "grade")
                     }
                 }
-            }
+            }*/
         });
         var reloadClass = function () {
             $.ajax({
@@ -139,9 +144,6 @@
             var className = data.aClass.className
             var classId = data.aClass.classId
             var appraiseState = data.appraiseState
-            if (layEvent === '1') {
-                layer.msg("全部已评", {icon: 6, time: 1500})
-            }
             if (layEvent === 'detail') {
                 layer.open({
                     type: 2, //弹出完整div，type：1弹出隐藏div
@@ -156,7 +158,7 @@
                     title: '评分页面',
                     content: "addGrade_Manage?sId=" + sid + "&classId=" + classId,
                     shadeClose: true,
-                    area: ['500px', '500px']
+                    area: ['600px', '500px']
                 })
             } else if (layEvent === 'edit') {
                 if (data.length < 1) {

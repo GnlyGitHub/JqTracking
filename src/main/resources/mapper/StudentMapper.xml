@@ -193,16 +193,17 @@
     </update>
 
     <select id="GetAllSizeStudent_Manage" resultType="Student">
-        select sid from student where  projectId=#{projectId}
+        select s.sid from student s, class c where s.sClass=c.classId and  s.projectId=#{projectId}
         <if test="classId != null and classId != ''">
-            and sClass=#{classId}
+            and s.sClass=#{classId}
         </if>
         <if test="empName != null and empName != ''">
-            and sName like '%' #{empName} '%'
+            and s.sName like '%' #{empName} '%'
         </if>
         <if test="empId != null and empId != ''">
-            and sId=#{empId}
+            and s.sId=#{empId}
         </if>
+        order by s.shiredate desc
     </select>
     <select id="getStudentById_Manage" resultType="map">
     select  s.sId sId, s.sName sName,s.sSex sSex,s.snation sNation,s.sBirthday sBirthday,
@@ -227,7 +228,7 @@
         <if test="empId != null and empId != ''">
             and s.sId=#{empId}
         </if>
-        order by s.shiredate desc ,s.sclass desc
+        order by s.shiredate desc
         limit ${limit * (page - 1)}, ${limit}
     </select>
     <resultMap id="stu_Manage" type="Student">

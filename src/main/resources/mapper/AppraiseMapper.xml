@@ -9,7 +9,7 @@
     <!--List<Appraise> getAllAppraise_admin(@Param("appraise") String appraise);-->
     <select id="getAllAppraise_admin" resultType="Appraise">
         select appraiseId, appraise from appraise
-        where appraiseId not in (3,4)
+        where appraiseId not in (9,10)
         <if test="appraise != null and appraise != ''">
             and appraise like '%' #{appraise} '%'
         </if>
@@ -19,7 +19,7 @@
     <!--List<Appraise> getAppraise_admin(@Param("pageSize") Integer pageSize, @Param("pageIndex") Integer pageIndex, @Param("appraise") String appraise);-->
     <select id="getAppraise_admin" resultType="Appraise">
         select appraiseId, appraise from appraise
-        where appraiseId not in (3,4)
+        where appraiseId not in (9,10)
         <if test="appraise != null and appraise != ''">
             and appraise like '%' #{appraise} '%'
         </if>

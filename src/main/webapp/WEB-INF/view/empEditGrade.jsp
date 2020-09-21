@@ -44,6 +44,13 @@
         .displ {
             display: none;
         }
+
+        .red {
+            border: 1px solid #FF8765;
+            background-color: #FFF2E5;
+            outline: none;
+        }
+
     </style>
 </head>
 <body>
@@ -70,6 +77,11 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <div class="layui-input-block" id="checkNumber">
+                <p>(请输入0-100)的整数</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">请评分：</label>
             <div class="layui-input-block" id="div1">
                 <table id="tab1" lay-filter="test"></table>
@@ -80,7 +92,6 @@
                 <label class="layui-form-label">评价：</label>
                 <div class="layui-input-block" id="div2">
                <textarea id="text1" rows="5" class="layui-textarea">
-
                </textarea>
                 </div>
             </div>
@@ -120,6 +131,26 @@
                 , {field: 'grade', title: '评价分数', edit: 'text', width: 90}
             ]],
         });
+        //监听单元格编辑
+        table.on('edit(test)', function (obj) {
+            $("#checkNumber p").text("(请输入0-100)的整数");
+            $("#checkNumber p").removeClass("red");
+            var value = obj.value //得到修改后的值
+            var data1 = obj.data //得到所在行所有键值
+            var field1 = obj.field; //得到字段
+            if (isNaN(Number(data1.grade))) {
+                $("#checkNumber p").text("数字格式有误");
+                $("#checkNumber p").addClass("red");
+            } else {
+                if (parseInt(value)<0||parseInt(value)>100) {
+                    $("#checkNumber p").text("数字格式有误");
+                    $("#checkNumber p").addClass("red");
+                }else {
+                    $("#checkNumber p").text("(请输入0-100)的整数");
+                    $("#checkNumber p").removeClass("red");
+                }
+            }
+        });
         /*获取数据*/
         var getGradeData = function (number) {
             $.ajax({
@@ -127,7 +158,7 @@
                 type: 'get',
                 data: {
                     sId:${stu.get("sId")},
-                    number:number
+                    number: number
                 },
                 dataType: 'json',
                 success: function (data) {
@@ -170,7 +201,7 @@
             })
         }
         /*清空并隐藏*/
-        var clearData=function(){
+        var clearData = function () {
             var tab = table.cache.tab1;
             $.each(tab, function (index, item) {
                 tab.pop();
@@ -181,40 +212,46 @@
             layui.form.render();
             $(".displ").css("display", "none")
         }
+
 //点击提交按钮
         $("#addGrade").click(function () {
             var number = $("#appraise option:checked").val();
             if (number != "") {
-                var dataBak = [];   //定义一个空数组,用来存储之前编辑过的数据已经存放新数据
-                var tableBak = table.cache.tab1;
-                for (var i = 0; i < tableBak.length; i++) {
-                    dataBak.push(tableBak[i]);      //将之前的数组备份
-                }
-                $.ajax({
-                    url: 'editGradeData_Manage',
-                    type: 'get',
-                    data: {
-                        dataBak: JSON.stringify(dataBak),
-                        appraiser: $("#appraiser").val(),
-                        /*文本框内容*/
-                        appr: $("#text1").val(),
-                        sId:${stu.get("sId")},
-                        number: number
-                    },
-                    traditional: true,
-                    success: function (data) {
-                        if (true == data) {
-                            layer.msg("修改成功", {icon: 6, time: 1500});
-                            setTimeout('close()', 1000)
-                        } else {
-                            layer.msg("修改失败", {icon: 5, time: 1500});
-                            setTimeout('close()', 1000)
-                        }
-                    },
-                    error: function () {
-                        layer.msg("执行失败")
+                var n=$("#checkNumber p").text()
+                if (n=="(请输入0-100)的整数"){
+                    var dataBak = [];   //定义一个空数组,用来存储之前编辑过的数据已经存放新数据
+                    var tableBak = table.cache.tab1;
+                    for (var i = 0; i < tableBak.length; i++) {
+                        dataBak.push(tableBak[i]);      //将之前的数组备份
                     }
-                })
+                    $.ajax({
+                        url: 'editGradeData_Manage',
+                        type: 'get',
+                        data: {
+                            dataBak: JSON.stringify(dataBak),
+                            appraiser: $("#appraiser").val(),
+                            /*文本框内容*/
+                            appr: $("#text1").val(),
+                            sId:${stu.get("sId")},
+                            number: number
+                        },
+                        traditional: true,
+                        success: function (data) {
+                            if (true == data) {
+                                layer.msg("修改成功", {icon: 6, time: 1500});
+                                setTimeout('close()', 1000)
+                            } else {
+                                layer.msg("修改失败", {icon: 5, time: 1500});
+                                setTimeout('close()', 1000)
+                            }
+                        },
+                        error: function () {
+                            layer.msg("执行失败")
+                        }
+                    })
+                }else {
+                    layer.msg("数据格式有误", {icon: 5, time: 1500});
+                }
             } else {
                 layer.msg("请选择下拉框内容", {icon: 5, time: 1500})
             }
@@ -264,7 +301,7 @@
                     } else if (number == 0 || number == 1) {
                         clearData()
                         layer.msg("已评或超时", {icon: 5, time: 1500})
-                    } else if (number==2) {
+                    } else if (number == 2) {
                         getGradeData(2)
                     }
                 } else {
@@ -277,7 +314,6 @@
                         layer.msg("已评或超时", {icon: 5, time: 1500})
                     } else if (number == 3) {
                         getGradeData(3)
-
                     }
                 } else {
                     layer.msg("请选择下拉框", {time: 1500})

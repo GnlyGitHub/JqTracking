@@ -26,7 +26,7 @@
                     ${sessionScope.teacher.tName}
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="/quit">退出</a></li>
+            <li class="layui-nav-item"><a href="quit">退出</a></li>
         </ul>
     </div>
 
