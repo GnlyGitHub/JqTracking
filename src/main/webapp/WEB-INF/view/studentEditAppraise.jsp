@@ -18,7 +18,7 @@
     <div class="layui-form" action="">
         <c:forEach var="i" items="${list}">
             <c:choose>
-                <c:when test="${i.subject eq '评价'}">
+                <c:when test="${i.subject eq '整体评价'}">
                     <div class="layui-form-item layui-form-text">
                         <label class="layui-form-label">${i.subject}</label>
                         <div class="layui-input-block">
