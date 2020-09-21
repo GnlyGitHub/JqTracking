@@ -11,8 +11,8 @@ public class Grade {
     private Integer appraiseId;//评价分项id
     private String grade;//评价
     private Integer number;//评价序数 转正0 一年1 两年2 三年3
-    private String appraiser;
-    private Appraise appraise;
+    private String appraiser;//评价人
+    private Appraise appraise;//评价内容
 
     public Grade() {
     }

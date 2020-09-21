@@ -12,10 +12,10 @@ public class DisAppraise {
     private Integer appraiseId;//评价分项id
     private Integer classId;//班期id
     private Integer mId;//项目经理id
-    private Integer number;
-    private Class aClass;
-    private String appraise;
-    private List<Appraise> appraises;
+    private Integer number;//评价序数
+    private Class aClass;//班期
+    private String appraise;//评价内容
+    private List<Appraise> appraises;//评价内容集合
 
     public Class getaClass() {
         return aClass;

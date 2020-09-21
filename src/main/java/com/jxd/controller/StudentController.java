@@ -108,8 +108,8 @@ public class StudentController {
                 String originalName = file.getOriginalFilename();
                 prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
                 Date date = new Date();
-                String uuid = randomUUID() + "";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String uuid = randomUUID() + "";//生成随机字符串
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//获取系统时间作为存储路径
                 dateStr = simpleDateFormat.format(date);
                 String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
                 File files = new File(filepath);
@@ -129,7 +129,8 @@ public class StudentController {
                 return map;
             }
         } catch (Exception e) {
-        } finally {
+            e.printStackTrace();
+        } finally {//关闭资源
             try {
                 if (out != null) {
                     out.close();
@@ -152,7 +153,7 @@ public class StudentController {
     public String delFile(String path,HttpServletRequest request) {
         String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\" + path;
         File file = new File(filepath);
-        if (file.exists() && file.isFile()){
+        if (file.exists() && file.isFile()){//如果存在
             if (file.delete()){
                 return "删除成功";
             } else {
