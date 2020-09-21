@@ -53,11 +53,11 @@ public class StudentController {
         return "adminEditStudent";
     }
 
+    //获取学生
     @RequestMapping("/getAllStudent_Teacher")
     @ResponseBody
     public JSONObject getAllStudent_Teacher(Integer limit, Integer page, Integer sClass, String sName) {
         List<Student> list = studentService.getAllStudent_Teacher(sClass, sName);
-        //获取分页数据
 
         List<Student> list1 = studentService.getAllStudentByPage_Teacher(limit, page, sClass, sName);
 

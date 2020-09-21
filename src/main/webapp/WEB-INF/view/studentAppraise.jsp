@@ -92,6 +92,7 @@
     </div>
 </script>
 <script type="text/html" id="barDemo">
+    <%--按钮控制--%>
     {{# if (d.sHireDate !=="" && d.sHireDate !== null ){}}
     <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">评价</button>
     <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">修改</button>
@@ -182,8 +183,8 @@
                     shadeClose: true, //点击遮罩，关闭弹窗
                     area: ['500px', '700px']
                 });
-                //location.href='studentAddAppraise?classId=' + classId + '&sId=' + sId
             } else if (obj.event === 'edit') {
+                //打开编辑页面
                 layer.open({
                     type: 2,//弹出完整jsp，type=1：弹出隐藏div
                     title: '编辑评价',
@@ -192,6 +193,7 @@
                     area: ['500px', '700px']
                 });
             } else if (obj.event === 'see') {
+                //打开查看页面
                 layer.open({
                     type: 2, //弹出完整div，type：1弹出隐藏div
                     title: '员工资料查看',
