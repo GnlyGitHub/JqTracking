@@ -53,7 +53,12 @@ public class ClassController {
         return "adminEditClass";
     }
 
-    //老师获取班级列表并转发到老师评价主页面
+    /**
+     * 老师获取班级列表并转发到老师评价主页面
+     * @param model Model对象
+     * @param session Session对象
+     * @return 班级列表
+     */
     @RequestMapping("/studentAppraise")
     public String studentAppraise_Teacher(Model model,HttpSession session){
         LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -69,7 +74,10 @@ public class ClassController {
 return classService.getAllClass_Manage();
     }
 
-    //获取所有班期
+    /**
+     * 获取所有班期
+     * @return 班期列表
+     */
     @RequestMapping(value = "/getAllClass_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllClass_admin(){
@@ -84,7 +92,13 @@ return classService.getAllClass_Manage();
         return jsonObject.toString();
     }
 
-    //获取所有班期并将其分页
+    /**
+     * 获取所有班期并将其分页
+     * @param limit 每页数量
+     * @param page 当前页数
+     * @param className 过滤条件
+     * @return 当前页班期列表
+     */
     @RequestMapping(value = "/getAllClasses_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllClasses_admin(Integer limit, Integer page, String className){
@@ -100,7 +114,11 @@ return classService.getAllClass_Manage();
         return jsonObject.toString();
     }
 
-    //根据班期编号删除班期
+    /**
+     * 根据班期编号删除班期
+     * @param classId 要删除的班期的编号
+     * @return 是否删除成功
+     */
     @RequestMapping("/delClassById_admin")
     @ResponseBody
     public String delClassById_admin(Integer classId) {
@@ -129,7 +147,15 @@ return classService.getAllClass_Manage();
         }
     }
 
-    //添加班期
+    /**
+     * 添加班期
+     * @param className 班期名
+     * @param startDate 开课日期
+     * @param endDate 结课日期
+     * @param tId 老师工号
+     * @param subjectIds 已选课程编号
+     * @return 是否添加成功
+     */
     @RequestMapping("/addClass_admin")
     @ResponseBody
     public String addClass_admin(String className, String startDate, String endDate, Integer tId, String subjectIds){
@@ -156,7 +182,13 @@ return classService.getAllClass_Manage();
         return String.valueOf(isAdd);
     }
 
-    //将班期信息转发到班期编辑页面
+    /**
+     * 将班期信息转发到班期编辑页面
+     * @param classId 班期编号
+     * @param tName 班期名
+     * @param model Model对象
+     * @return 班期信息
+     */
     @RequestMapping("/adminBeforeEditClass")
     public String adminBeforeEditClass(Integer classId, String tName, Model model){
         List<DisSubject> list = disSubjectService.checkDisSubject_admin(classId);
@@ -168,7 +200,16 @@ return classService.getAllClass_Manage();
         return "adminEditClass";
     }
 
-    //编辑班期
+    /**
+     * 编辑班期
+     * @param classId 班期编号
+     * @param className 班期名
+     * @param startDate 开课日期
+     * @param endDate 结课日期
+     * @param tId 老师工号
+     * @param subjectIds 已选课程编号
+     * @return 是否编辑成功
+     */
     @RequestMapping("/editClass_admin")
     @ResponseBody
     public String editClass_admin(Integer classId, String className, String startDate, String endDate, Integer tId, String subjectIds){
@@ -219,7 +260,11 @@ return classService.getAllClass_Manage();
         return String.valueOf(isEditClass && isAdd && isDel);
     }
 
-    //班期名查重
+    /**
+     * 班期名查重
+     * @param className 要查询的班期名
+     * @return 是否重名
+     */
     @RequestMapping("/checkRepClass_admin")
     @ResponseBody
     public String checkRepClass_admin(String className){

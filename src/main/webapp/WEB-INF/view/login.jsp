@@ -15,6 +15,8 @@
         <link href="../../static/layui/css/layui.css" rel="stylesheet">
         <script src="../../static/layui/layui.js"></script>
         <style>
+            .layui-icon-ok{
+            }
             /*body的相关设置*/
             .myBody{
                 /*背景图片*/
@@ -65,6 +67,23 @@
         </style>
     </head>
 <body class="myBody">
+<%
+    String userId = "";
+    String password = "";
+    //获取当前web应用的所有cookie
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null){
+        //遍历cookies，取出用户名密码
+        for (int i = 0;i < cookies.length;i++){
+            //判断当前cookie是否为用户名和密码cookie
+            if ("nameCookie".equals(cookies[i].getName())){
+                userId = cookies[i].getValue();
+            }else if("pwdCookie".equals(cookies[i].getName())){
+                password = cookies[i].getValue();
+            }
+        }
+    }
+%>
 <div class="layui-row">
     <div class="grid-demo grid-demo-bg1 rotation1" style="background-color:#fff;">
         <div class="layui-carousel" id="test10">
@@ -84,16 +103,18 @@
             <!--            账号-->
             <div class="layui-form-item">
                 <i class="layui-icon layui-icon-username myIcon" style="top: 80px;"></i>
-                <input class="layui-input myInput"  type="text" id="userId" name="userId" required  lay-verify="required" placeholder="账号" autocomplete="off">
+                <input class="layui-input myInput"  type="text" id="userId" name="userId" value="<%=userId%>" required  lay-verify="required" placeholder="账号" autocomplete="off">
             </div>
             <!--            密码-->
             <div class="layui-form-item">
                 <i class="layui-icon layui-icon-password myIcon" style="top: 133px;"></i>
-                <input class="layui-input myInput" type="password" id="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off">
+                <input class="layui-input myInput" type="password" id="password" name="password" value="<%=password%>" required lay-verify="required" placeholder="密码" autocomplete="off">
             </div>
-                <div class="layui-input-block" style="margin-left: 0;height: 10px;color: #ff7752">
-                    ${loginMsg}
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 0;">
+                    <input type="checkbox" class="fl" id="rememberPwd" name="rememberPwd" checked value="y" title="记住密码">
                 </div>
+            </div>
             <div class="layui-form-item">
                 <button class="layui-btn myButton"  id="sub" lay-filter="formDemo">立即登录</button>
             </div>
@@ -114,7 +135,8 @@
                 type:"post",
                 data : {
                     userId:$("#userId").val(),
-                    password:$("#password").val()
+                    password:$("#password").val(),
+                    rememberPwd:$("#rememberPwd").val()
                 },
                 success:function (data) {
                     if(data == "studentAppraise"){
@@ -124,7 +146,7 @@
                     }else if(data == "empManage"){
                         location.href = "empManage";
                     }else {
-                        layer.msg(data)
+                        layer.msg(data,{icon:5})
                     }
                 },
                 error:function (data) {

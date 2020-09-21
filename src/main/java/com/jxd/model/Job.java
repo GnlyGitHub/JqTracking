@@ -6,9 +6,9 @@ package com.jxd.model;
  * @date 2020/9/12 12:36
  */
 public class Job {
-    private Integer jobId;
-    private String jobName;
-    private Integer deptNo;
+    private Integer jobId;//编号
+    private String jobName;//职务
+    private Integer deptNo;//部门编号
 
     public Job() {
     }

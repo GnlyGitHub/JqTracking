@@ -52,7 +52,13 @@ public class AppraiseController {
         return "adminEditAppraise";
     }
 
-    //获取所有评价分项并将其分页
+    /**
+     * 获取所有评价分项并将其分页
+     * @param limit 每页数量
+     * @param page 当前页数
+     * @param appraise 过滤条件
+     * @return 当前页的数据
+     */
     @RequestMapping(value = "/getAllAppraise_admin", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getAllAppraise_admin(Integer limit, Integer page, String appraise) {
@@ -69,7 +75,11 @@ public class AppraiseController {
         return jsonObject.toString();
     }
 
-    //删除评价分项
+    /**
+     * 删除评价分项
+     * @param appraiseId 要删除的评价分项编号
+     * @return 是否删除成功
+     */
     @RequestMapping("/delAppraiseById_admin")
     @ResponseBody
     public String delAppraiseById_admin(Integer appraiseId) {
@@ -84,7 +94,11 @@ public class AppraiseController {
         }
     }
 
-    //添加评价分项
+    /**
+     * 添加评价分项
+     * @param appraise 要添加的评价分项
+     * @return 是否添加成功
+     */
     @RequestMapping("/addAppraise_admin")
     @ResponseBody
     public String addAppraise_admin(Appraise appraise) {
@@ -92,7 +106,11 @@ public class AppraiseController {
         return String.valueOf(isAdd);
     }
 
-    //编辑评价分项
+    /**
+     * 编辑评价分项
+     * @param appraise 要编辑的评价分项
+     * @return 是否修改成功
+     */
     @RequestMapping("/editAppraise_admin")
     @ResponseBody
     public String editAppraise_admin(Appraise appraise) {
@@ -100,7 +118,11 @@ public class AppraiseController {
         return String.valueOf(isEdit);
     }
 
-    //评价分项查重
+    /**
+     * 评价分项查重
+     * @param appraise 要检查的评价分项
+     * @return 是否已存在
+     */
     @RequestMapping("/checkRepAppraise_admin")
     @ResponseBody
     public String checkRepAppraise_admin(String appraise) {
