@@ -111,7 +111,7 @@ public class StudentController {
                 String uuid = randomUUID() + "";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 dateStr = simpleDateFormat.format(date);
-                String filepath = "I:\\IdeaProjecs\\finalProject\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
+                String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
                 File files = new File(filepath);
 
                 //打印查看上传路径
@@ -150,7 +150,7 @@ public class StudentController {
     @RequestMapping(value = "/delFile", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String delFile(String path,HttpServletRequest request) {
-        String filepath = "I:\\IdeaProjecs\\finalProject\\JqTracking\\src\\main\\webapp\\" + path;
+        String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\" + path;
         File file = new File(filepath);
         if (file.exists() && file.isFile()){
             if (file.delete()){
