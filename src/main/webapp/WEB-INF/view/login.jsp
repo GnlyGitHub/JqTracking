@@ -146,7 +146,7 @@
                     }else if(data == "empManage"){
                         location.href = "empManage";
                     }else {
-                        layer.msg(data)
+                        layer.msg(data,{icon:5})
                     }
                 },
                 error:function (data) {
