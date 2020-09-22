@@ -154,6 +154,7 @@
                             curr: 1
                         }
                     });
+                    $("#filter").val(filter);
                     break;
                 case 'add'://添加
                     layer.open({

@@ -103,7 +103,7 @@ public class LoginUserController {
                 //创建存放密码的cookie
                 Cookie pwdCookie = new Cookie("pwdCookie",loginUser.getPassword());
                 //设置cookie的生命周期,单位是秒
-                pwdCookie.setMaxAge(60*3);
+                pwdCookie.setMaxAge(60*30);
                 //将cookie添加至响应流
                 response.addCookie(pwdCookie);
             }

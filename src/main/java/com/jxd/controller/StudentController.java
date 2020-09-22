@@ -177,7 +177,7 @@ public class StudentController {
     @RequestMapping(value = "/delFile", produces = "text/html;charset=utf-8")
     @ResponseBody
     public String delFile(String path, HttpServletRequest request) {
-        String filepath = "I:\\IdeaProjecs\\finalProject\\JqTracking\\src\\main\\webapp\\" + path;
+        String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\" + path;
         File file = new File(filepath);
         if (file.exists() && file.isFile()){//如果存在
             if (file.delete()){
