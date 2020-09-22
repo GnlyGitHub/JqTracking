@@ -53,13 +53,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">旧密码</label>
                     <div class="layui-input-block">
-                        <input type="password" value="" placeholder="请输入旧密码" lay-verify="required|oldPwd" class="layui-input pwd">
+                        <input type="password" value="" placeholder="请输入旧密码" lay-verify="required|oldPwd" id="oldPwd1" class="layui-input pwd">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">新密码</label>
                     <div class="layui-input-block">
-                        <input type="password" placeholder="请输入新密码" lay-verify="required|newPwd" name="password" id="oldPwd" class="layui-input pwd">
+                        <input type="password" placeholder="请输入新密码" lay-verify="required|newPwd|notOld" name="password" id="oldPwd" class="layui-input pwd">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -111,6 +111,12 @@
                 confirmPwd: function (value, item) {
                     if (!new RegExp($("#oldPwd").val()).test(value)) {
                         return "两次输入密码不一致，请重新输入！";
+                    }
+                },
+                notOld: function (value, item) {
+                    var oldPwd1 = $("#oldPwd1").val();
+                    if (oldPwd1 == value) {
+                        return "新密码不能与旧密码相同，请重新输入！";
                     }
                 }
             });

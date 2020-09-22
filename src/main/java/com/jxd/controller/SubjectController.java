@@ -26,10 +26,15 @@ public class SubjectController {
     @Autowired
     IDisSubjectService disSubjectService;
 
-    //老师获取评分项转发至评分页面
+    /**
+     * @Description 获得该学生的评分项转发至评分页面
+     * @params [classId 班级id, sId 学生id, model]
+     * @return java.lang.String
+     **/
     @RequestMapping("/studentAddAppraise")
     public String studentAddAppraise_Teacher(Integer classId,Integer sId,Model model){
         List<Subject> list =  subjectService.getSubjectByClassId_Teacher(classId);
+        //获得评分项
         model.addAttribute("list",list);
         model.addAttribute("sId",sId);
         return "studentAddAppraise";

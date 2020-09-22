@@ -53,7 +53,11 @@ public class StudentController {
         return "adminEditStudent";
     }
 
-    //获取学生
+    /**
+     * @Description 获取学生列表
+     * @params [limit 每页几条数据, page 掠过第几条开始, sClass 班期, sName 姓名]
+     * @return net.sf.json.JSONObject
+     **/
     @RequestMapping("/getAllStudent_Teacher")
     @ResponseBody
     public JSONObject getAllStudent_Teacher(Integer limit, Integer page, Integer sClass, String sName) {
