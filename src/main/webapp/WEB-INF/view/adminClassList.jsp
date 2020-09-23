@@ -141,7 +141,7 @@
                         title: '添加班期',
                         content: 'adminAddClass',
                         shadeClose: true,
-                        area: ['500px', '460px']
+                        area: ['500px', '500px']
                     });
                     break;
             }
@@ -156,7 +156,7 @@
                     title: '修改班期信息',
                     content: "adminBeforeEditClass?classId=" + data.classId + "&tName=" + data.tName,
                     shadeClose: true,
-                    area: ['500px', '460px'],
+                    area: ['500px', '500px'],
                     end: function () {
                         //刷新当前页
                         $(".layui-laypage-btn").click();
