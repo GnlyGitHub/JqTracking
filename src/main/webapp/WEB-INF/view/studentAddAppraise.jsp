@@ -71,7 +71,7 @@
 
             for (var i=0; i<list.length -1 && list[i]; i++){
                 var v = parseInt(list[i].value);
-                if(v < 0 || v > 100){
+                if(v < 0 || v > 100 || isNaN(v)){
                     count++;
                 }
             }
