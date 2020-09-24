@@ -101,15 +101,15 @@
                     },
                     success:function (data) {
                         if(data){
-                            layer.msg("评价成功");
+                            layer.msg("评价成功",{icon:1});
                             setTimeout('closeAdd()',1000);
                         }else {
-                            layer.msg("评价失败");
+                            layer.msg("评价失败",{icon:2});
                             setTimeout('closeAdd()',1000);
                         }
                     },
                     error:function (data) {
-                        layer.msg("执行失败");
+                        layer.msg("执行失败",{icon:2});
                         setTimeout('closeAdd()',1000);
                     }
                 });

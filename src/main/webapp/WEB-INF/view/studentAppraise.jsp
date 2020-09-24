@@ -30,7 +30,6 @@
     String datetime2 = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()); //获取系统时间
     DateFormat df = DateFormat.getDateInstance();
     long l2 = df.parse(datetime2).getTime();
-    int timediff = (int) (l2 / 3600000 / 24);
 %>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
@@ -179,6 +178,7 @@
                         curr: 1
                     }
                 });
+                $("#sName").val(sName);
             }
         });
         //操作栏
@@ -201,7 +201,7 @@
                         title: '添加评价',
                         content: 'studentAddAppraise?classId=' + classId + '&sId=' + sId,
                         shadeClose: true, //点击遮罩，关闭弹窗
-                        area: ['500px', '700px']
+                        area: ['450px', '600px']
                     });
                 }
             } else if (obj.event === 'edit') {
@@ -211,7 +211,7 @@
                     title: '编辑评价',
                     content: 'getAllScoreBySId_Teacher?sId=' + sId,
                     shadeClose: true, //点击遮罩，关闭弹窗
-                    area: ['500px', '700px']
+                    area: ['450px', '600px']
                 });
             } else if (obj.event === 'see') {
                 //打开查看页面

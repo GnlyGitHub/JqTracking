@@ -64,11 +64,21 @@ public class LoginUserController {
         return "empEditPassword";
     }
 
+    /**
+     * @Description 老师修改密码页面
+     * @params []
+     * @return java.lang.String
+     **/
     @RequestMapping("/teacherRePwd_Teacher")
     public String teacherRePwd_Teacher(){
         return "teacherRePwdTeacher";
     }
 
+    /**
+     * @Description 老师修改密码
+     * @params [password, model, session]
+     * @return java.lang.String
+     **/
     @RequestMapping("/editPassword_Teacher")
     public String editPassword_Teacher(String password,Model model,HttpSession session){
         LoginUser oldLoginUser = (LoginUser) session.getAttribute("loginUser");
@@ -84,26 +94,31 @@ public class LoginUserController {
         return "teacherRePwdTeacher";
     }
 
-    //登录
+    /**
+     * @Description 登录验证
+     * @params [loginUser, rememberPwd, model, session, response]
+     * @return java.lang.String
+     **/
     @RequestMapping(value = "/checkLogin",produces = "text/html;charset=utf-8")
     @ResponseBody
     public String checkLogin(LoginUser loginUser, String rememberPwd, Model model, HttpSession session, HttpServletResponse response) {
         List<LoginUser> list = loginUserService.loginCheck(loginUser);
         if (list.size() != 0) {
             session.setAttribute("loginUser",loginUser);
+
             if ("y".equals(rememberPwd)){
                 //创建存放用户名的cookie
                 String userId = String.valueOf(loginUser.getUserId());
                 Cookie nameCookie = new Cookie("nameCookie", userId);
                 //设置cookie的生命周期,单位是秒
-                nameCookie.setMaxAge(60*3);
+                nameCookie.setMaxAge(60*30);
                 //将cookie添加至响应流
                 response.addCookie(nameCookie);
 
                 //创建存放密码的cookie
                 Cookie pwdCookie = new Cookie("pwdCookie",loginUser.getPassword());
                 //设置cookie的生命周期,单位是秒
-                pwdCookie.setMaxAge(60*3);
+                pwdCookie.setMaxAge(60*30);
                 //将cookie添加至响应流
                 response.addCookie(pwdCookie);
             }
@@ -177,7 +192,11 @@ public class LoginUserController {
         }
     }
 
-    //退出
+    /**
+     * @Description 退出
+     * @params [session]
+     * @return java.lang.String
+     **/
     @RequestMapping("/quit")
     public String quit(HttpSession session){
         session.removeAttribute("loginUser");

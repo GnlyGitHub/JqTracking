@@ -14,15 +14,12 @@
         select
         s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId classId,c.className className,c.endDate endDate
         from student s, class c
-        <where>
-            <if test="true">
-                s.sClass=c.classId
-            </if>
-                and s.sClass=#{sClass}
+        where
+            s.sClass=c.classId
+            and s.sClass=#{sClass}
             <if test="sName != null and sName != ''">
                 and s.sName like '%' #{sName} '%'
             </if>
-        </where>
         order by s.scoreState,s.sId desc
     </select>
     <resultMap id="getAllStudent_TeacherMap" type="Student">
@@ -37,11 +34,11 @@
         <result column="sClass" property="sClass"></result>
         <result column="sHireDate" property="sHireDate"></result>
         <result column="scoreState" property="scoreState"></result>
-        <association property="aClass" javaType="Class">
+        <collection property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
             <result column="endDate" property="endDate"></result>
-        </association>
+        </collection>
     </resultMap>
 
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
@@ -49,15 +46,12 @@
         select
         s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId classId,c.className className,c.endDate endDate
         from student s, class c
-        <where>
-            <if test="true">
-                s.sClass=c.classId
-            </if>
-                and s.sClass=#{sClass}
+        where
+            s.sClass=c.classId
+            and s.sClass=#{sClass}
             <if test="sName != null and sName != ''">
                 and s.sName like '%' #{sName} '%'
             </if>
-        </where>
         order by s.scoreState,s.sId desc
         limit ${pageSize * (pageIndex - 1)}, ${pageSize}
     </select>
@@ -73,11 +67,11 @@
         <result column="sClass" property="sClass"></result>
         <result column="sHireDate" property="sHireDate"></result>
         <result column="scoreState" property="scoreState"></result>
-        <association property="aClass" javaType="Class">
+        <collection property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
             <result column="endDate" property="endDate"></result>
-        </association>
+        </collection>
     </resultMap>
 
     <!--List<Student> getAllStudent_admin(@Param("sClass") Integer sClass, @Param("sName") String sName);-->

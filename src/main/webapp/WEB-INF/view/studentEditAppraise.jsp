@@ -70,9 +70,10 @@
             var array = [];
             var count = 0;
 
+            //判断数据是否合法，合法count==0
             for (var i=0; i<list.length -1 && list[i]; i++){
                 var v = parseInt(list[i].value);
-                if(v < 0 || v > 100){
+                if(v < 0 || v > 100 || isNaN(v)){
                     count++;
                 }
             }
@@ -87,7 +88,8 @@
                     array.push(s); //把对象放入对象数组中
                 }
             }
-            if(list.length == array.length && count==0){
+            //如果数据合法 提交表单
+            if(list.length == array.length && count == 0){
                 var postData = JSON.stringify(array);
 
                 $.ajax({
@@ -100,15 +102,15 @@
                     },
                     success:function (data) {
                         if(data){
-                            layer.msg("编辑成功");
+                            layer.msg("编辑成功",{icon:1});
                             setTimeout('closeAdd()',1000);
                         }else {
-                            layer.msg("编辑失败");
+                            layer.msg("编辑失败",{icon:5});
                             setTimeout('closeAdd()',1000);
                         }
                     },
                     error:function (data) {
-                        layer.msg("执行失败");
+                        layer.msg("执行失败",{icon:5});
                         setTimeout('closeAdd()',1000);
                     }
                 });
