@@ -184,9 +184,6 @@
                 if (parseInt(value) < 0 || parseInt(value) > 100) {
                     $("#checkNumber p").text("数字格式有误");
                     $("#checkNumber p").addClass("red");
-                } else {
-                    $("#checkNumber p").text("(请输入0-100)的整数");
-                    $("#checkNumber p").removeClass("red");
                 }
             }
         });
@@ -322,7 +319,7 @@
                         getAppra(parseInt(number))
                             $('#add').removeClass("layui-btn-disabled").attr("disabled", false);
                     }
-                } else if (time >= 366 && time < 730) {
+                } else if (time >= 90 && time < 366) {
                     if (parseInt(number) >= 2) {
                         layer.msg("时间未到", {icon: 5, time: 1500})
                         clearData()
@@ -338,7 +335,7 @@
                         getAppra(parseInt(number))
                         $('#add').removeClass("layui-btn-disabled").attr("disabled", false);
                     }
-                } else if (time >= 730 && time < 1095) {
+                } else if (time >= 366 && time < 730) {
                     if (parseInt(number) >= 3) {
                         layer.msg("时间未到", {icon: 5, time: 1500})
                         clearData()
@@ -354,7 +351,7 @@
                         getAppra(parseInt(number))
                             $('#add').removeClass("layui-btn-disabled").attr("disabled", false);
                     }
-                } else if (time >= 1095 && time < 1460) {
+                } else if (time >= 730 && time < 1095) {
                     if (parseInt(number) == 3) {
                         $("#text1").text("")
                         getAppra(parseInt(number))
@@ -396,6 +393,18 @@
         //点击提交按钮
         $("#add").click(function () {
             var number = $("#appraise option:checked").val();
+            var tableBak = table.cache.tab1;
+            $.each(tableBak,function (index,item) {
+                if (isNaN(Number(item.grade))) {
+                    $("#checkNumber p").text("数字格式有误");
+                    $("#checkNumber p").addClass("red");
+                } else {
+                    if (parseInt(item.grade) < 0 || parseInt(item.grade) > 100) {
+                        $("#checkNumber p").text("数字格式有误");
+                        $("#checkNumber p").addClass("red");
+                    }
+                }
+            })
             if (number != "") {
                 var n = $("#checkNumber p").text()
                 if (n == "(请输入0-100)的整数") {

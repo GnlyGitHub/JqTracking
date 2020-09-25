@@ -34,9 +34,9 @@
                 <option value="">请选择班期</option>
             </select>
         </div>
-        <div class="layui-input-inline "><input type="text" id="filterId" placeholder="请输入员工编号" class="layui-input">
+        <div class="layui-input-inline "><input type="text" id="filterId"autocomplete="true" placeholder="请输入员工编号" class="layui-input">
         </div>
-        <div class="layui-input-inline "><input type="text" id="filterName" placeholder="请输入员工姓名" class="layui-input">
+        <div class="layui-input-inline "><input type="text" id="filterName"autocomplete="true" placeholder="请输入员工姓名" class="layui-input">
         </div>
         <div class="layui-input-inline">
             <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="query">查询</button>
@@ -98,7 +98,7 @@
                 }
             }*/
         });
-        var reloadClass = function () {
+        var reloadClass = function (m) {
             $.ajax({
                 url: 'getAllClass_Manage',
                 dataType: 'json',
@@ -107,6 +107,7 @@
                     $.each(data, function (index, item) {
                         $('#Class').append(new Option(item.className, item.classId));//下拉菜单里添加元素
                     });
+                    $("#Class option[value='"+m+"']").prop("selected","selected");
                     layui.form.render("select");
                 },
                 error: function () {
@@ -114,7 +115,8 @@
                 }
             });
         }
-        reloadClass();
+        var m=''
+        reloadClass(m);
         //监听事件，监听lay-filter为"test"的员工的工具栏
         table.on('toolbar(test)', function (obj) {
             switch (obj.event) {
@@ -132,7 +134,9 @@
                             curr: 1
                         }
                     })
-                    reloadClass();
+                    reloadClass(classId);
+                    $("#filterId").val(empId)
+                    $("#filterName").val(empName)
                     break;
             }
         });

@@ -115,7 +115,7 @@
                                     if (data == true) {
                                         layer.msg("修改成功",{icon:6,time:1500},function () {
                                             location.href="quit"
-                                            parent.location.reload();
+                                            parent.location.href='login'
                                         })
                                     } else {
                                         layer.msg("修改失败")
