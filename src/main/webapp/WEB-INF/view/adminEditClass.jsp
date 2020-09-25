@@ -15,6 +15,13 @@
         .red {
             border-color: red;
         }
+        .warnP{
+            color: red;
+            display: none;
+            position: relative;
+            top: 9px;
+            font-size: 14px
+        }
     </style>
 </head>
 <body>
@@ -26,10 +33,9 @@
                 <input id="className" type="text" name="className" required lay-verify="required" placeholder="请输入班期数"
                        autocomplete="off" class="layui-input">
             </div>
-            <p id="classNameP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
-                请输入班期数</p>
-            <p id="classNameP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
-                该班期已存在</p>
+            <p id="classNameP1" class="warnP">请输入班期数</p>
+            <p id="classNameP2" class="warnP">该班期已存在</p>
+            <p id="classNameP3" class="warnP">请输入正整数</p>
         </div>
 
         <div class="layui-form-item">
@@ -38,8 +44,7 @@
                 <input id="startDate" type="date" name="startDate" value="${aClass.startDate}" required
                        lay-verify="date" placeholder="开课日期" autocomplete="off" class="layui-input">
             </div>
-            <p id="startDateP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">
-                请输入开课日期</p>
+            <p id="startDateP" class="warnP">请输入开课日期</p>
         </div>
 
         <div class="layui-form-item">
@@ -48,7 +53,7 @@
                 <input id="endDate" type="date" name="endDate" value="${aClass.endDate}" required lay-verify="date"
                        placeholder="结课日期" autocomplete="off" class="layui-input">
             </div>
-            <p id="endDateP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入结课日期</p>
+            <p id="endDateP" class="warnP">请输入结课日期</p>
         </div>
 
         <div class="layui-form-item">
@@ -63,8 +68,7 @@
             <label class="layui-form-label">选择课程：</label>
             <div class="layui-input-block" id="AllSubject">
             </div>
-            <p id="subjectP" style="color: red; display: none; position: relative;top: 9px;left: 110px;font-size: 14px">
-                请选择课程</p>
+            <p id="subjectP" style="color: red; display: none; position: relative;top: 9px;left: 110px;font-size: 14px">请选择课程</p>
         </div>
 
         <div class="layui-form-item" style="display: flex; justify-content: center">
@@ -81,6 +85,7 @@
         var layer = layui.layer;
         var $ = layui.$;
         var upload = layui.upload;
+        var reg = /^\d+$/;
 
         //获取后台传递来的数据
         var SubjectList = ${SubjectList};
@@ -119,11 +124,15 @@
             if ($("#className").val() == "") {
                 $("#className").addClass("red");
                 $("#classNameP1").css("display", "inline");
+            } else if (!reg.test($("#className").val())) {
+                $("#className").addClass("red");
+                $("#classNameP3").css("display", "inline");
             }
         }).focus(function () {
             $("#className").removeClass("red");
             $("#classNameP1").css("display", "none");
             $("#classNameP2").css("display", "none");
+            $("#classNameP3").css("display", "none");
         });
         $("#startDate").blur(function () {
             if ($("#startDate").val() == "") {
@@ -205,6 +214,9 @@
                 $("#classNameP2").css("display", "inline");
             } else if (arr_box.length < 1) {
                 $("#subjectP").css("display", "inline")
+            } else if (!reg.test($("#className").val())) {
+                $("#className").addClass("red");
+                $("#classNameP3").css("display", "inline");
             } else {
                 $.ajax({
                     url: 'editClass_admin',

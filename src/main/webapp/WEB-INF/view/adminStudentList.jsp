@@ -150,7 +150,7 @@
         });
 
         //向班期下拉框添加数据
-        var getAllClass = function () {
+        var getAllClass = function (sClass) {
             $.ajax({
                 url: '/getAllClass_admin',
                 dataType: 'json',
@@ -160,6 +160,7 @@
                     $.each(data.data, function (index, item) {
                         $('#sClass').append(new Option(item.className, item.classId));//下拉菜单里添加元素
                     });
+                    $("#sClass option[value='" + sClass + "']").attr("selected", "selected");
                     layui.form.render("select");
                 }
             });
@@ -172,17 +173,19 @@
             switch (obj.event) {
                 case 'query'://查询
                     var filter = $("#filter").val();
+                    var sClass = $("#sClass").val();
                     //重新加载表格
                     table.reload("demo", {
                         where: {
                             sName: filter,
-                            sClass: $("#sClass").val()
+                            sClass: sClass
                         },
                         page: {
                             curr: 1
                         }
                     });
-                    getAllClass();
+                    $("#filter").val(filter);
+                    getAllClass(sClass);
                     break;
                 case 'add'://添加
                     layer.open({

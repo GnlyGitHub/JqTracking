@@ -12,7 +12,7 @@
     <!--List<Student> getAllStudent_Teacher(Integer sClass,String sName);-->
     <select id="getAllStudent_Teacher" resultMap="getAllStudent_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId classId,c.className className,c.endDate endDate
         from student s, class c
         <where>
             <if test="true">
@@ -40,13 +40,14 @@
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
+            <result column="endDate" property="endDate"></result>
         </association>
     </resultMap>
 
     <!--List<Student> getAllStudentByPage_Teacher(Integer pageSize, Integer pageIndex,Integer sClass,String sName);-->
     <select id="getAllStudentByPage_Teacher" resultMap="getAllStudentByPage_TeacherMap">
         select
-        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId,c.className
+        s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor sMajor,s.sPlace sPlace,s.sClass sClass,s.sHireDate sHireDate,s.scoreState scoreState,c.classId classId,c.className className,c.endDate endDate
         from student s, class c
         <where>
             <if test="true">
@@ -75,6 +76,7 @@
         <association property="aClass" javaType="Class">
             <id column="classId" property="classId"></id>
             <result column="className" property="className"></result>
+            <result column="endDate" property="endDate"></result>
         </association>
     </resultMap>
 

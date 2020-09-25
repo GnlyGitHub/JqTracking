@@ -7,6 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.*" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>教师评价页面</title>
@@ -23,6 +26,12 @@
     </style>
 </head>
 <body>
+<%
+    String datetime2 = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()); //获取系统时间
+    DateFormat df = DateFormat.getDateInstance();
+    long l2 = df.parse(datetime2).getTime();
+    int timediff = (int) (l2 / 3600000 / 24);
+%>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">金桥学员跟踪系统(教师)</div>
@@ -93,6 +102,7 @@
 </script>
 <script type="text/html" id="barDemo">
     <%--按钮控制--%>
+
     {{# if (d.sHireDate !=="" && d.sHireDate !== null ){}}
     <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">评价</button>
     <button class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="dis">修改</button>
@@ -139,6 +149,9 @@
                 ,{field: 'className', title: '班期', width:150, templet: function (data) {
                         return data.aClass.className
                     }}
+                ,{field: 'endDate', title: '结课日期', width:150, templet: function (data) {
+                        return data.aClass.endDate
+                    }, hide:true}
                 , {field: 'sHireDate', title: '入职日期', width: 250, hide:true}
                 , {field: 'scoreState', title: '评价状态', width: 250, hide:true}
                 , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
@@ -174,15 +187,23 @@
             var classId = data.sClass;
             var sId = data.sId;
             var className = data.aClass.className;
+            var endDate = data.aClass.endDate;
+            endDate = new Date(endDate);
+
             //评论
             if (obj.event === 'appraise') {
-                layer.open({
-                    type: 2,//弹出完整jsp，type=1：弹出隐藏div
-                    title: '添加评价',
-                    content: 'studentAddAppraise?classId=' + classId + '&sId=' + sId,
-                    shadeClose: true, //点击遮罩，关闭弹窗
-                    area: ['500px', '700px']
-                });
+
+                if(endDate.getTime() > <%=l2%> ){
+                    layer.msg("该班级未结课",{icon:5})
+                }else {
+                    layer.open({
+                        type: 2,//弹出完整jsp，type=1：弹出隐藏div
+                        title: '添加评价',
+                        content: 'studentAddAppraise?classId=' + classId + '&sId=' + sId,
+                        shadeClose: true, //点击遮罩，关闭弹窗
+                        area: ['500px', '700px']
+                    });
+                }
             } else if (obj.event === 'edit') {
                 //打开编辑页面
                 layer.open({
@@ -202,11 +223,11 @@
                     area: ['1000px', '700px']
                 })
             }else if(obj.event === 'dis'){
-                layer.msg("该员工已入职")
+                layer.msg("该员工已入职",{icon:5})
             }else if(obj.event === 'disApp') {
-                layer.msg("请先评价")
+                layer.msg("请先评价",{icon:5})
             }else {
-                layer.msg("已评价")
+                layer.msg("已评价",{icon:5})
             }
         });
 

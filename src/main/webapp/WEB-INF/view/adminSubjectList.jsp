@@ -128,6 +128,7 @@
                             curr: 1
                         }
                     });
+                    $("#filter").val(filter);
                     break;
                 case 'add':
                     layer.open({
