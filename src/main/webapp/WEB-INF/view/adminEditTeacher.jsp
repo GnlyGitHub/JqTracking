@@ -68,7 +68,7 @@
         <div class="layui-form-item" style="display: flex; justify-content: center">
             <div class="layui-input-inline">
                 <button id="sub" class="layui-btn" lay-filter="formDemo">提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="reset">重置</button>
             </div>
         </div>
     </div>
@@ -138,6 +138,13 @@
             error: function (data) {
                 layer.msg("执行失败");
             }
+        });
+
+        //重置按钮
+        $("#reset").click(function () {
+            $("#tName").val("");
+            $("#tBirthday").val("");
+            $("#tPhone").val("");
         });
 
         //提交

@@ -99,26 +99,8 @@ public class TeacherController {
     @ResponseBody
     public String delTeacherById_admin(Integer tId){
         List<Class> list = classService.getClassBytId_admin(tId);//获取该老师教的班期
-        String curTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()); //获取系统时间
-        DateFormat df = DateFormat.getDateInstance();
-        long time1 = 0;
-        long time2 = 0;
-        boolean isEnd = true;
-        for (Class aClass : list) {//遍历该老师教过的班期
-            String endDate = aClass.getEndDate();
-            try {
-                time1 = df.parse(curTime).getTime();
-                time2 = df.parse(endDate).getTime();
-            } catch (ParseException e){
-                e.printStackTrace();
-            }
-            if (time1 < time2){//该老师尚有未结束的班期
-                isEnd = false;
-                break;
-            }
-        }
-        if (!isEnd) {
-            return "1";//该老师正在代课
+        if (list.size() > 0) {
+            return "1";//该老师已被分配到班期
         } else {
             boolean isDel = teacherService.delTeacherById_admin(tId);
             boolean isDelLogin = loginUserService.delLoginUser_admin(tId);

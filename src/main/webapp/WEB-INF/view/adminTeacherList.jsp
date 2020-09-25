@@ -143,6 +143,7 @@
                             curr: 1
                         }
                     });
+                    $("#filter").val(filter);
                     break;
                 case 'add'://添加
                     layer.open({
@@ -183,7 +184,7 @@
                             if (data == "true") {
                                 layer.msg("删除成功")
                             } else if (data == "1") {
-                                layer.msg("该老师正在代课，无法删除")
+                                layer.msg("该老师已被分配到班期，无法删除")
                             } else {
                                 layer.msg("删除失败")
                             }
