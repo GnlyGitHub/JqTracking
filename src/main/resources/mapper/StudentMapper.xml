@@ -86,17 +86,13 @@
         s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
         sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
         from student s, class c
-        <where>
-            <if test="true">
-                s.sClass=c.classId
-            </if>
-            <if test="sClass != null and sClass != ''">
-                and s.sClass=#{sClass}
-            </if>
-            <if test="sName != null and sName != ''">
-                and s.sName like '%' #{sName} '%'
-            </if>
-        </where>
+        where s.sClass=c.classId
+        <if test="sClass != null and sClass != ''">
+            and s.sClass=#{sClass}
+        </if>
+        <if test="sName != null and sName != ''">
+            and s.sName like '%' #{sName} '%'
+        </if>
         order by s.sId desc
     </select>
     <resultMap id="getAllStudentAdminMap" type="Student">
@@ -121,17 +117,13 @@
         s.sId sId, s.sName sName,s.sSex sSex,s.sBirthday sBirthday,s.sPhone sPhone,s.sSchool sSchool,s.sMajor
         sMajor,s.sPlace sPlace,s.sClass sClass,c.classId,c.className
         from student s, class c
-        <where>
-            <if test="true">
-                s.sClass=c.classId
-            </if>
-            <if test="sClass != null and sClass != ''">
-                and s.sClass=#{sClass}
-            </if>
-            <if test="sName != null and sName != ''">
-                and s.sName like '%' #{sName} '%'
-            </if>
-        </where>
+        where s.sClass=c.classId
+        <if test="sClass != null and sClass != ''">
+            and s.sClass=#{sClass}
+        </if>
+        <if test="sName != null and sName != ''">
+            and s.sName like '%' #{sName} '%'
+        </if>
         order by s.sId desc
         limit ${pageSize * (pageIndex - 1)}, ${pageSize}
     </select>

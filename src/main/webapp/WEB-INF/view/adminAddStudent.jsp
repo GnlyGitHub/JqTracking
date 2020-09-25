@@ -15,6 +15,13 @@
         .red {
             border-color: red;
         }
+        .warnP {
+            color: red;
+            display: none;
+            position: relative;
+            top: 9px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -28,7 +35,7 @@
                         <div class="layui-input-inline">
                             <input id="sName" type="text" name="sName" required lay-verify="required"
                                    placeholder="请输入姓名" autocomplete="off" class="layui-input">
-                            <p id="sNameP" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入姓名</p>
+                            <p id="sNameP" class="warnP">请输入姓名</p>
                         </div>
                     </div>
                 </td>
@@ -64,9 +71,11 @@
                 <td>
                     <div class="layui-form-item">
                         <label class="layui-form-label">民族</label>
-                        <div class="layui-input-inline">
-                            <select id="sNation" name="sNation" lay-verify="required">
+                        <div class="layui-input-inline" id="sNation_select">
+                            <select id="sNation" name="sNation" lay-verify="required" lay-search lay-filter="sNation">
+                                <option value=""></option>
                             </select>
+                            <p id="sNationP" class="warnP">请选择民族</p>
                         </div>
                     </div>
                 </td>
@@ -78,8 +87,7 @@
                         <div class="layui-input-inline">
                             <input id="sBirthday" type="date" name="sBirthday" required lay-verify="date"
                                    placeholder="请输入出生年月" autocomplete="off" class="layui-input">
-                            <p id="sBirthdayP"
-                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入出生年月</p>
+                            <p id="sBirthdayP" class="warnP">请输入出生年月</p>
                         </div>
                     </div>
                 </td>
@@ -115,8 +123,8 @@
                         <div class="layui-input-inline">
                             <input id="sPhone" type="text" name="sPhone" required lay-verify="phone" placeholder="请输入电话"
                                    autocomplete="off" class="layui-input">
-                            <p id="sPhoneP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入电话</p>
-                            <p id="sPhoneP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确电话</p>
+                            <p id="sPhoneP1" class="warnP">请输入电话</p>
+                            <p id="sPhoneP2" class="warnP">请输入正确电话</p>
                         </div>
                     </div>
                 </td>
@@ -137,8 +145,8 @@
                         <div class="layui-input-block" style="width: 500px;">
                             <input id="sIdCard" type="text" name="sIdCard" required lay-verify="required"
                                    placeholder="请输入身份证号" autocomplete="off" class="layui-input">
-                            <p id="sIdCardP1" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入身份证号码</p>
-                            <p id="sIdCardP2" style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入正确身份证号码</p>
+                            <p id="sIdCardP1" class="warnP">请输入身份证号码</p>
+                            <p id="sIdCardP2" class="warnP">请输入正确身份证号码</p>
                         </div>
                     </div>
                 </td>
@@ -150,8 +158,7 @@
                         <div class="layui-input-inline">
                             <input id="sSchool" type="text" name="sSchool" required lay-verify="required"
                                    placeholder="请输入学校" autocomplete="off" class="layui-input">
-                            <p id="sSchoolP"
-                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入学校</p>
+                            <p id="sSchoolP" class="warnP">请输入学校</p>
                         </div>
                     </div>
                 </td>
@@ -161,8 +168,7 @@
                         <div class="layui-input-inline">
                             <input id="sMajor" type="text" name="sMajor" required lay-verify="required"
                                    placeholder="请输入专业" autocomplete="off" class="layui-input">
-                            <p id="sMajorP"
-                               style="color: red; display: none; position: relative;top: 9px;font-size: 14px">请输入专业</p>
+                            <p id="sMajorP" class="warnP">请输入专业</p>
                         </div>
                     </div>
                 </td>
@@ -325,6 +331,15 @@
             $("#sMajor").removeClass("red");
             $("#sMajorP").css("display", "none");
         });
+        form.on('select(sNation)', function (data) {
+            if ($("#sNation").val() == "") {
+                $("#sNation_select .layui-input").addClass("red");
+                $("#sNationP").css("display", "inline");
+            } else {
+                $("#sNation_select .layui-input").removeClass("red");
+                $("#sNationP").css("display", "none");
+            }
+        });
 
         //向部门下拉框添加选项
         $.ajax({
@@ -483,6 +498,9 @@
             if ($("#sName").val() == "") {
                 $("#sName").addClass("red");
                 $("#sNameP").css("display", "inline");
+            } else if ($("#sNation").val() == "") {
+                $("#sNation_select .layui-input").addClass("red");
+                $("#sNationP").css("display", "inline");
             } else if ($("#sBirthday").val() == "") {
                 $("#sBirthday").addClass("red");
                 $("#sBirthdayP").css("display", "inline");

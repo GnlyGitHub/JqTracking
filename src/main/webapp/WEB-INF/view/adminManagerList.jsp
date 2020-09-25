@@ -195,7 +195,7 @@
                             if (data == "true") {
                                 layer.msg("删除成功")
                             } else if (data == "1") {
-                                layer.msg("该项目经理尚有工作未完成，无法删除")
+                                layer.msg("该项目经理已参与评分项分配，无法删除")
                             } else {
                                 layer.msg("删除失败")
                             }

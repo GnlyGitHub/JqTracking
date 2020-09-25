@@ -69,7 +69,7 @@
                 <div align="right">
                     <div class="layui-input-inline" style="padding-right: 20px">
                         <div class="layui-input-inline">
-                            <h2>项目经理管理</h2>
+                            <h2>学生管理</h2>
                         </div>
                         <div class="layui-input-inline" style="padding-left: 280px">
                             <label style="font-size: 15px">选择班期&nbsp;&nbsp;</label>
