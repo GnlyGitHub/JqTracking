@@ -189,7 +189,7 @@
                 <td>${grade1.get(0).appraiser}</td>
                 <td id="scro32"></td>
             </tr>
-            <tr class="t3 tr2">
+            <tr class="t3 tr3">
                 <td class="t1 ">评价（包括主要优点及其缺陷）</td>
                 <td colspan="7" id="scro33"></td>
             </tr>

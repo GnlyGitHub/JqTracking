@@ -132,7 +132,7 @@ public class StudentController {
                 String uuid = randomUUID() + "";//生成随机字符串
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//获取系统时间作为存储路径
                 dateStr = simpleDateFormat.format(date);
-                String filepath = "D:\\IdeaProjects\\frame\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
+                String filepath = "I:\\IdeaProjecs\\finalProject\\JqTracking\\src\\main\\webapp\\static\\img\\" + dateStr + "\\" + uuid + "." + prefix;
                 File files = new File(filepath);
 
                 //打印查看上传路径

@@ -145,9 +145,6 @@
                 if (parseInt(value)<0||parseInt(value)>100) {
                     $("#checkNumber p").text("数字格式有误");
                     $("#checkNumber p").addClass("red");
-                }else {
-                    $("#checkNumber p").text("(请输入0-100)的整数");
-                    $("#checkNumber p").removeClass("red");
                 }
             }
         });
@@ -216,6 +213,18 @@
 //点击提交按钮
         $("#addGrade").click(function () {
             var number = $("#appraise option:checked").val();
+            var tableBak = table.cache.tab1;
+            $.each(tableBak,function (index,item) {
+                if (isNaN(Number(item.grade))) {
+                    $("#checkNumber p").text("数字格式有误");
+                    $("#checkNumber p").addClass("red");
+                } else {
+                    if (parseInt(item.grade) < 0 || parseInt(item.grade) > 100) {
+                        $("#checkNumber p").text("数字格式有误");
+                        $("#checkNumber p").addClass("red");
+                    }
+                }
+            })
             if (number != "") {
                 var n=$("#checkNumber p").text()
                 if (n=="(请输入0-100)的整数"){
@@ -279,7 +288,7 @@
                 }
             } else if (time >= 90 && time < 366) {
                 if (number != "") {
-                    if (number == 2 || number == 366) {
+                    if (number == 2 || number == 3) {
                         clearData()
                         layer.msg("工作未满两年", {icon: 5, time: 1500})
                     } else if (number == 0) {

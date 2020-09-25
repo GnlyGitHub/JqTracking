@@ -27,7 +27,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div align="right">
-        <div class="layui-input-inline " ><input type="text" id="filter" placeholder="请输入班期名" class="layui-input"></div>
+        <div class="layui-input-inline " ><input type="text" id="filter" autocomplete="true" placeholder="请输入班期名" class="layui-input"></div>
         <div class="layui-input-inline">
             <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="query">查询</button>
             <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
@@ -86,12 +86,14 @@
             switch (obj.event) {
                 case'query':
                     var filter=$("#filter").val();
+                    cId=filter;
                     table.reload("demo",{//demo对应是tableid，where对应的是过滤条件
                         where:{mname:filter},
                         page:{
                             curr:1
                         }
                     })
+                    $("#filter").val(filter)
                     break;
                 case 'add':
                     layer.open({

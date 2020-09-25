@@ -32,7 +32,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item"><a href="/makeAppraise_Manage" target="mainframe">员工评价表制作</a></li>
-                <li class="layui-nav-item"><a href="/empAppraise_Manage" target="mainframe">员工评价</a></li>
+                <li class="layui-nav-item" id="l1"><a href="/empAppraise_Manage" target="mainframe">员工评价</a></li>
                 <li class="layui-nav-item"><a href="/editPassword_Manage" target="mainframe">修改密码</a></li>
             </ul>
         </div>
@@ -57,6 +57,8 @@
         var element = layui.element;
         var layer=layui.layer;
         var table=layui.table;
+        var $=layui.$
+        $("#l1").addClass("layui-this")
     });
 </script>
 </body>
